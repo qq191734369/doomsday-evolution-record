@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://bco383xbt4gcc"]
+
+[ext_resource type="Script" uid="uid://ds54h0bdx70q5" path="res://Game/Scripts/grass.gd" id="1_3jojj"]
+[ext_resource type="Texture2D" uid="uid://sbf1caeyn1yy" path="res://Assets/Level/Road2-Items.png" id="1_qot1m"]
+[ext_resource type="Script" uid="uid://bopuny1e0e0mp" path="res://Game/Scripts/random_regoin.gd" id="3_717cm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wi1ue"]
+size = Vector2(45, 17)
+
+[node name="Grass" type="Area2D" unique_id=151577559]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_3jojj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1635120042]
+position = Vector2(-2, -3)
+shape = SubResource("RectangleShape2D_wi1ue")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1479990137]
+y_sort_enabled = true
+position = Vector2(0, -1)
+texture = ExtResource("1_qot1m")
+offset = Vector2(0, -14)
+region_enabled = true
+region_rect = Rect2(800, 320, 64, 64)
+script = ExtResource("3_717cm")
+randomRegoins = Array[Rect2]([Rect2(384, 320, 64, 64), Rect2(512, 320, 64, 64), Rect2(800, 320, 64, 64)])
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
