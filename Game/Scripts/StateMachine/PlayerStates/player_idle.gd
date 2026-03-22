@@ -9,4 +9,6 @@ func updatePhysics(delta: float):
 
 func update():
 	super.update()
-	character.updateAnimation()
+	
+	if character:
+		character.updateAnimation()

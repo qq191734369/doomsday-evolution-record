@@ -3,6 +3,8 @@ extends CharacterBody2D
 class_name BaseCharacter
 
 @export
+var showDebuggVisual = true
+@export
 var speed = 200
 @export
 var accelerate = 5

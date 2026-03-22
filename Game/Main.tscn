@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://vr84865kn8xf" path="res://Assets/Level/Round1-Items.png" id="2_w1egk"]
 [ext_resource type="Texture2D" uid="uid://sbf1caeyn1yy" path="res://Assets/Level/Road2-Items.png" id="6_haytw"]
 [ext_resource type="Script" uid="uid://cwegkb3slqgal" path="res://Game/Scripts/grass_generato_tilemaplayer.gd" id="7_3xx61"]
+[ext_resource type="PackedScene" uid="uid://ok1x11fbcb48" path="res://Game/Scene/Enemy.tscn" id="7_haytw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g5pn2"]
 texture = ExtResource("1_rchnd")
@@ -1798,7 +1799,7 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_q34ae")
 
-[node name="Node2D" type="Node2D" unique_id=249472695]
+[node name="SceneRoot" type="Node2D" unique_id=249472695]
 
 [node name="TileMapLayerBackgroud" type="TileMapLayer" parent="." unique_id=111949756]
 tile_map_data = PackedByteArray("AAAAAAAAAwAAAAAAAAAAAA4AAAAAAAAAAAA=")
@@ -1815,6 +1816,9 @@ y_sort_enabled = true
 position = Vector2(557, 292)
 speed = 200
 accelerate = 5
+
+[node name="Enemy" parent="Level" unique_id=1671108017 instance=ExtResource("7_haytw")]
+position = Vector2(344, 347)
 
 [node name="TileMapLayer_Grass" type="TileMapLayer" parent="Level" unique_id=635380689]
 tile_map_data = PackedByteArray("AAAQAAUAAAAMAAoAAAAQAAYAAAAMAAoAAAAQAAcAAAAMAAoAAAARAAUAAAAMAAoAAAARAAYAAAAMAAoAAAARAAcAAAAMAAoAAAASAAUAAAAMAAoAAAASAAYAAAAMAAoAAAASAAcAAAAMAAoAAAATAAUAAAAMAAoAAAATAAYAAAAMAAoAAAATAAcAAAAMAAoAAAA=")

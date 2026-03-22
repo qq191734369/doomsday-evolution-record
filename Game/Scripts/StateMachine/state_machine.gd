@@ -9,7 +9,7 @@ func _ready() -> void:
 	for child in get_children():
 		var childState = child as State
 		childState.parentStateMachine = self
-		childState.character = get_parent()
+		childState.character = get_parent() as BaseCharacter
 		childState.ready()
 	
 	# 设置初始状态
