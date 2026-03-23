@@ -1843,16 +1843,19 @@ y_sort_enabled = true
 [node name="Enemy" parent="Level/EnemyLevel" unique_id=1671108017 instance=ExtResource("7_haytw")]
 position = Vector2(344, 347)
 playerDetectionRadius = 150
+showDebuggVisual = false
 speed = 100
 
 [node name="Enemy2" parent="Level/EnemyLevel" unique_id=658004610 instance=ExtResource("7_haytw")]
 position = Vector2(303, 411)
 playerDetectionRadius = 200
+showDebuggVisual = false
 speed = 100
 
 [node name="Enemy3" parent="Level/EnemyLevel" unique_id=383538265 instance=ExtResource("7_haytw")]
 position = Vector2(457, 396)
 playerDetectionRadius = 200
+showDebuggVisual = false
 speed = 100
 
 [node name="TreeLevel" type="Node2D" parent="Level" unique_id=127305781]

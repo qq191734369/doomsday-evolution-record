@@ -6,9 +6,35 @@
 [ext_resource type="Script" uid="uid://cfxv8qect0vpa" path="res://Game/Scripts/StateMachine/state_machine.gd" id="4_8dfna"]
 [ext_resource type="Script" uid="uid://cbt4dbadkb1de" path="res://Game/Scripts/StateMachine/EnemyStates/enemy_idle.gd" id="5_gl57g"]
 [ext_resource type="Script" uid="uid://dhart3coylrcw" path="res://Game/Scripts/StateMachine/EnemyStates/enemy_move.gd" id="6_5g4l6"]
+[ext_resource type="Script" uid="uid://bdqhqakp8v0qu" path="res://Game/Scripts/StateMachine/EnemyStates/enemy_hurt.gd" id="7_gl57g"]
+[ext_resource type="Script" uid="uid://c5fn0h1252rb5" path="res://Game/Scripts/StateMachine/EnemyStates/enemy_die.gd" id="8_5g4l6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dikuv"]
 radius = 19.206585
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_26xaq"]
+atlas = ExtResource("1_enxmf")
+region = Rect2(384, 640, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2oko"]
+atlas = ExtResource("1_enxmf")
+region = Rect2(512, 640, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_miabd"]
+atlas = ExtResource("1_enxmf")
+region = Rect2(640, 640, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qa8oj"]
+atlas = ExtResource("1_enxmf")
+region = Rect2(768, 640, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c3gwu"]
+atlas = ExtResource("1_enxmf")
+region = Rect2(896, 640, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jpl7g"]
+atlas = ExtResource("1_enxmf")
+region = Rect2(256, 640, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dhgd6"]
 atlas = ExtResource("1_enxmf")
@@ -88,6 +114,34 @@ region = Rect2(512, 256, 128, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3ne2u"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_26xaq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2oko")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_miabd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qa8oj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c3gwu")
+}],
+"loop": false,
+"name": &"die",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jpl7g")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dhgd6")
@@ -193,7 +247,9 @@ shape = SubResource("CircleShape2D_dikuv")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=684841681]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_3ne2u")
-animation = &"move_up"
+animation = &"die"
+frame = 4
+frame_progress = 1.0
 offset = Vector2(2, -50)
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=266940423]
@@ -214,6 +270,12 @@ script = ExtResource("5_gl57g")
 
 [node name="Move" type="Node" parent="StateMachine" unique_id=176724785]
 script = ExtResource("6_5g4l6")
+
+[node name="Hurt" type="Node" parent="StateMachine" unique_id=704795080]
+script = ExtResource("7_gl57g")
+
+[node name="Die" type="Node" parent="StateMachine" unique_id=972616386]
+script = ExtResource("8_5g4l6")
 
 [node name="DebugLabel" type="Label" parent="." unique_id=1345008191]
 z_index = 100

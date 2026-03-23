@@ -60,10 +60,21 @@ func updateAttackAnimation():
 	animaitedSprite2D.flip_h = !flip
 	animaitedSprite2D.play("attack")	
 	
+func updateHurtAnimation():
+	animaitedSprite2D.play("hurt")
+
+func updateDieAnimation():
+	animaitedSprite2D.play("die")
+
 func getHit(damage: int):
 	if isDead:
 		return
 	
 	currentHealth -= damage
+	
+	if isDead:
+		state_machine.switchTo("Die")
+	else :
+		state_machine.switchTo("Hurt")
 	
 	
