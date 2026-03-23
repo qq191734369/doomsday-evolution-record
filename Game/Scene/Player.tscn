@@ -6,9 +6,26 @@
 [ext_resource type="Script" uid="uid://cfxv8qect0vpa" path="res://Game/Scripts/StateMachine/state_machine.gd" id="4_0vtvt"]
 [ext_resource type="Script" uid="uid://761ddqlnrmhm" path="res://Game/Scripts/StateMachine/PlayerStates/player_idle.gd" id="5_coiqp"]
 [ext_resource type="Script" uid="uid://pw7innqg621d" path="res://Game/Scripts/StateMachine/PlayerStates/player_run.gd" id="6_6lrsw"]
+[ext_resource type="Script" uid="uid://ogf2yehu27ce" path="res://Game/Scripts/StateMachine/PlayerStates/player_attack.gd" id="7_6lrsw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dikuv"]
 radius = 14.167776
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d302n"]
+atlas = ExtResource("2_coiqp")
+region = Rect2(640, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b3of2"]
+atlas = ExtResource("2_coiqp")
+region = Rect2(128, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_augxu"]
+atlas = ExtResource("2_coiqp")
+region = Rect2(256, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hignv"]
+atlas = ExtResource("2_coiqp")
+region = Rect2(768, 384, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6lrsw"]
 atlas = ExtResource("2_coiqp")
@@ -44,29 +61,33 @@ region = Rect2(640, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d0xhb"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(128, 128, 128, 128)
+region = Rect2(0, 128, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_spyjb"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(256, 128, 128, 128)
+region = Rect2(128, 128, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pgd8b"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(384, 128, 128, 128)
+region = Rect2(256, 128, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_86vor"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(512, 128, 128, 128)
+region = Rect2(384, 128, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xtxj0"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(640, 128, 128, 128)
+region = Rect2(512, 128, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3vevg"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(768, 128, 128, 128)
+region = Rect2(640, 128, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u36a4"]
+atlas = ExtResource("2_coiqp")
+region = Rect2(768, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_krcoe"]
 atlas = ExtResource("2_coiqp")
 region = Rect2(896, 128, 128, 128)
 
@@ -100,6 +121,23 @@ region = Rect2(896, 256, 128, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qepe2"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d302n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b3of2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_augxu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hignv")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 15.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6lrsw")
@@ -165,6 +203,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_u36a4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_krcoe")
 }],
 "loop": true,
 "name": &"run_right",
@@ -197,12 +238,13 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_coiqp"]
+size = Vector2(56.701195, 28.170158)
+
 [node name="Player" type="CharacterBody2D" unique_id=1029835329]
 y_sort_enabled = true
 collision_layer = 2
 script = ExtResource("1_dikuv")
-speed = null
-accelerate = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=651975218]
 position = Vector2(1, -2)
@@ -212,7 +254,9 @@ shape = SubResource("CircleShape2D_dikuv")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=684841681]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_qepe2")
-animation = &"run_up"
+animation = &"attack"
+frame = 3
+frame_progress = 1.0
 offset = Vector2(0, -50)
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=266940423]
@@ -234,11 +278,32 @@ script = ExtResource("5_coiqp")
 [node name="Run" type="Node" parent="StateMachine" unique_id=176724785]
 script = ExtResource("6_6lrsw")
 
+[node name="Attack" type="Node" parent="StateMachine" unique_id=1469415007]
+script = ExtResource("7_6lrsw")
+
 [node name="DebugLabel" type="Label" parent="." unique_id=1345008191]
 z_index = 100
-offset_left = 16.0
-offset_top = 1.0
-offset_right = 56.0
-offset_bottom = 24.0
-scale = Vector2(0.3, 0.3)
+offset_left = 22.0
+offset_top = -7.0
+offset_right = 62.0
+offset_bottom = 16.0
+scale = Vector2(0.48715386, 0.5124827)
 text = "state"
+
+[node name="AttacckHitBox" type="Area2D" parent="." unique_id=833487808]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D_left" type="CollisionShape2D" parent="AttacckHitBox" unique_id=156184486]
+position = Vector2(-22.713213, -22.000002)
+rotation = -3.1415925
+scale = Vector2(0.6953366, -2.1299136)
+shape = SubResource("RectangleShape2D_coiqp")
+
+[node name="CollisionShape2D_right" type="CollisionShape2D" parent="AttacckHitBox" unique_id=957599668]
+position = Vector2(22, -22)
+rotation = -3.1415925
+scale = Vector2(0.6953366, -2.1299136)
+shape = SubResource("RectangleShape2D_coiqp")
+
+[connection signal="area_entered" from="AttacckHitBox" to="StateMachine/Attack" method="_on_attacck_hit_box_area_entered"]

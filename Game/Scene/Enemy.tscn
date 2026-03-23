@@ -176,6 +176,10 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2p41y"]
+radius = 19.0
+height = 48.0
+
 [node name="Enemy" type="CharacterBody2D" unique_id=1029835329]
 y_sort_enabled = true
 collision_layer = 2
@@ -213,11 +217,11 @@ script = ExtResource("6_5g4l6")
 
 [node name="DebugLabel" type="Label" parent="." unique_id=1345008191]
 z_index = 100
-offset_left = 16.0
-offset_top = 1.0
-offset_right = 56.0
-offset_bottom = 24.0
-scale = Vector2(0.3, 0.3)
+offset_left = 13.0
+offset_top = -3.0
+offset_right = 53.0
+offset_bottom = 20.0
+scale = Vector2(0.5122422, 0.52772015)
 text = "state"
 metadata/_edit_use_anchors_ = true
 
@@ -234,10 +238,17 @@ target_desired_distance = 40.0
 avoidance_enabled = true
 radius = 50.0
 max_speed = 20.0
-debug_enabled = true
 
 [node name="PlayerPosUpdateTimer" type="Timer" parent="." unique_id=1138118964]
 wait_time = 0.5
+
+[node name="Area2D_Body" type="Area2D" parent="." unique_id=1949774385]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_Body" unique_id=978197719]
+position = Vector2(2, -23)
+shape = SubResource("CapsuleShape2D_2p41y")
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="StateMachine/Move" method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="timeout" from="PlayerPosUpdateTimer" to="StateMachine/Move" method="_on_player_pos_update_timer_timeout"]

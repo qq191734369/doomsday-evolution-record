@@ -11,7 +11,7 @@ func updatePhysics(delta: float):
 func update():
 	if parentStateMachine.debug_label:
 		if character.showDebuggVisual:
-			parentStateMachine.debug_label.text = name
+			parentStateMachine.debug_label.text = name + '/' + str(character.currentHealth)
 			parentStateMachine.debug_label.visible = true
 		else:
 			parentStateMachine.debug_label.visible = false

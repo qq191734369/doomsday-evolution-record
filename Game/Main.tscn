@@ -1801,10 +1801,16 @@ tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_q34ae")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_haytw"]
-vertices = PackedVector2Array(1038, 266, 1158.6797, 266, 1222.8281, 687.0078, 642, 458, 642, 422, 189.90625, 688.97656, 185.09375, 153.14063, 470, 157.21094, 470, 170, 398, 438, 1098, 190, 1066, 190, 1066, 165.72656, 1079.7891, 165.92969, 1083.8594, 170, 1130, 170, 1124.2031, 189.64844, 586, 170, 586, 158.86719, 1038, 165.32813, 618, 406, 610, 390, 1130, 166.64844, 1146.9609, 166.89063, 618, 422, 610, 406, 502, 390, 502, 422, 438, 422, 438, 438, 554, 506, 554, 490, 618, 490, 618, 458, 1178, 190.17969, 1178, 170, 1214.1875, 170, 1109.9219, 207.78125, 1098, 201.82031, 1129.3203, 202, 1116.1406, 214, 1124.1406, 214, 1143.0703, 232.92969, 1154.3594, 202, 1163.7969, 253.64844, 398, 506)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8, 9), PackedInt32Array(10, 11, 12, 13, 14), PackedInt32Array(10, 14, 15, 16), PackedInt32Array(17, 18, 19, 0, 4, 20, 21), PackedInt32Array(15, 22, 23), PackedInt32Array(15, 23, 16), PackedInt32Array(4, 24, 20), PackedInt32Array(20, 25, 21), PackedInt32Array(17, 21, 26, 8), PackedInt32Array(26, 27, 28, 8), PackedInt32Array(28, 29, 9), PackedInt32Array(30, 31, 32), PackedInt32Array(32, 33, 3, 2), PackedInt32Array(34, 35, 36, 2), PackedInt32Array(37, 38, 10, 16, 39), PackedInt32Array(40, 37, 39, 41), PackedInt32Array(42, 41, 39, 43, 44), PackedInt32Array(44, 43, 34), PackedInt32Array(44, 34, 2), PackedInt32Array(1, 44, 2), PackedInt32Array(32, 2, 5, 30), PackedInt32Array(45, 30, 5), PackedInt32Array(8, 28, 9), PackedInt32Array(5, 9, 45)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(175, 143, 180, 699, 1233, 697, 1224, 158)])
+vertices = PackedVector2Array(1238, 266, 1348.7891, 266, 1348, 1183.9922, 642, 458, 642, 422, 1066, 190, 1066, 152.14063, 1083.8594, 170, 1098, 190, 1238, 186, 1270, 196.14063, 1287.8594, 214, 1238, 214, 1178, 190.17969, 1130, 170, 1124.2031, 189.64844, 938, 22.617188, 1348.9922, 22.007813, 1348.9609, 54, 1334, 54, 938, 42, 30, 23.976563, 774, 22.867188, 774, 86, 742, 86, 586, 78, 1334, 86, 1298, 86, 1298, 78, 1262, 78, 1262, 86, 1258, 86, 1258, 73.32031, 1142, 86, 1142, 94, 1114, 94, 1114, 70, 1130, 130, 1142, 130, 1142, 154, 1174, 154, 1174, 166, 1147.8594, 166, 1178, 170, 1238, 170, 1270, 186, 1038, 266, 618, 422, 618, 406, 922, 122, 1038, 70, 610, 406, 610, 390, 502, 390, 502, 422, 438, 422, 470, 170, 438, 438, 398, 438, 554, 506, 554, 490, 618, 490, 618, 458, 30, 1183, 398, 506, 786, 138, 786, 122, 586, 170, 742, 138, 470, 78, 922, 42, 1109.9219, 207.78125, 1098, 201.82031, 1129.3203, 202, 1116.1406, 214, 1124.1406, 214, 1143.0703, 232.92969, 1154.3594, 202, 1163.7969, 253.64844, 1158.6797, 266, 1245.6484, 68.203125, 1232.9297, 80.92969, 1227.8594, 86)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8), PackedInt32Array(9, 10, 11, 12, 13), PackedInt32Array(8, 7, 14, 15), PackedInt32Array(16, 17, 18, 19, 20), PackedInt32Array(21, 22, 23, 24, 25), PackedInt32Array(19, 26, 27, 28), PackedInt32Array(29, 30, 31, 32), PackedInt32Array(33, 34, 35, 36), PackedInt32Array(14, 37, 38, 39), PackedInt32Array(39, 40, 41, 42), PackedInt32Array(14, 39, 42, 15), PackedInt32Array(13, 43, 44, 9), PackedInt32Array(9, 45, 10), PackedInt32Array(46, 4, 47, 48, 49, 50), PackedInt32Array(48, 51, 52, 49), PackedInt32Array(53, 54, 55, 56), PackedInt32Array(55, 57, 58), PackedInt32Array(59, 60, 61), PackedInt32Array(61, 62, 3, 2), PackedInt32Array(61, 2, 63, 59), PackedInt32Array(64, 59, 63), PackedInt32Array(64, 63, 21, 58), PackedInt32Array(65, 66, 49), PackedInt32Array(67, 65, 49, 52, 53), PackedInt32Array(68, 65, 67), PackedInt32Array(68, 67, 25, 24), PackedInt32Array(21, 25, 69), PackedInt32Array(58, 21, 69, 56, 55), PackedInt32Array(53, 56, 67), PackedInt32Array(49, 70, 20, 50), PackedInt32Array(71, 72, 8, 15, 73), PackedInt32Array(74, 71, 73, 75), PackedInt32Array(76, 75, 73, 77, 0, 78), PackedInt32Array(13, 12, 0, 77), PackedInt32Array(79, 78, 0), PackedInt32Array(79, 0, 4), PackedInt32Array(46, 79, 4), PackedInt32Array(36, 50, 20, 19, 80), PackedInt32Array(28, 29, 32, 19), PackedInt32Array(80, 81, 82, 33, 36), PackedInt32Array(80, 19, 32)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(20, 14, 20, 1193, 1358, 1194, 1359, 12)])
 source_geometry_mode = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3xx61"]
+size = Vector2(23, 1235)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q34ae"]
+size = Vector2(1362.5, 21)
 
 [node name="SceneRoot" type="Node2D" unique_id=249472695]
 
@@ -1821,8 +1827,6 @@ y_sort_enabled = true
 
 [node name="Player" parent="Level" unique_id=1029835329 instance=ExtResource("1_wd0a0")]
 position = Vector2(557, 292)
-speed = 200
-accelerate = 5
 
 [node name="TileMapLayer_Grass" type="TileMapLayer" parent="Level" unique_id=635380689]
 tile_map_data = PackedByteArray("AAAQAAUAAAAMAAoAAAAQAAYAAAAMAAoAAAAQAAcAAAAMAAoAAAARAAUAAAAMAAoAAAARAAYAAAAMAAoAAAARAAcAAAAMAAoAAAASAAUAAAAMAAoAAAASAAYAAAAMAAoAAAASAAcAAAAMAAoAAAATAAUAAAAMAAoAAAATAAYAAAAMAAoAAAATAAcAAAAMAAoAAAA=")
@@ -1830,6 +1834,7 @@ tile_set = SubResource("TileSet_f77hp")
 script = ExtResource("7_3xx61")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="Level" unique_id=480763900]
+visible = false
 navigation_polygon = SubResource("NavigationPolygon_haytw")
 
 [node name="EnemyLevel" type="Node2D" parent="Level" unique_id=1619276065]
@@ -1837,7 +1842,7 @@ y_sort_enabled = true
 
 [node name="Enemy" parent="Level/EnemyLevel" unique_id=1671108017 instance=ExtResource("7_haytw")]
 position = Vector2(344, 347)
-playerDetectionRadius = 200
+playerDetectionRadius = 150
 speed = 100
 
 [node name="Enemy2" parent="Level/EnemyLevel" unique_id=658004610 instance=ExtResource("7_haytw")]
@@ -1854,19 +1859,34 @@ speed = 100
 y_sort_enabled = true
 
 [node name="Tree" parent="Level/TreeLevel" unique_id=1679523850 instance=ExtResource("8_3xx61")]
-position = Vector2(565, 847)
+position = Vector2(576, 825)
 
-[node name="Tree2" parent="Level/TreeLevel" unique_id=901553863 instance=ExtResource("8_3xx61")]
-position = Vector2(644, 828)
+[node name="Tree2" parent="Level/TreeLevel" unique_id=1779887402 instance=ExtResource("8_3xx61")]
+position = Vector2(700, 841)
 
-[node name="Tree3" parent="Level/TreeLevel" unique_id=1943285360 instance=ExtResource("8_3xx61")]
-position = Vector2(699, 860)
+[node name="Tree3" parent="Level/TreeLevel" unique_id=903485468 instance=ExtResource("8_3xx61")]
+position = Vector2(631, 829)
 
-[node name="Tree4" parent="Level/TreeLevel" unique_id=728748260 instance=ExtResource("8_3xx61")]
-position = Vector2(614, 864)
+[node name="Tree4" parent="Level/TreeLevel" unique_id=758831741 instance=ExtResource("8_3xx61")]
+position = Vector2(773, 818)
 
-[node name="Tree5" parent="Level/TreeLevel" unique_id=1295020540 instance=ExtResource("8_3xx61")]
-position = Vector2(768, 854)
+[node name="Tree5" parent="Level/TreeLevel" unique_id=1131433305 instance=ExtResource("8_3xx61")]
+position = Vector2(835, 849)
 
-[node name="Tree6" parent="Level/TreeLevel" unique_id=428480085 instance=ExtResource("8_3xx61")]
-position = Vector2(829, 834)
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=785915560]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1691111176]
+position = Vector2(1.5, 607.5)
+shape = SubResource("RectangleShape2D_3xx61")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=987920013]
+position = Vector2(1376, 605)
+shape = SubResource("RectangleShape2D_3xx61")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=806460026]
+position = Vector2(689.75, -4.5)
+shape = SubResource("RectangleShape2D_q34ae")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=974603132]
+position = Vector2(689, 1210)
+shape = SubResource("RectangleShape2D_q34ae")

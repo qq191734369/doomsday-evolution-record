@@ -4,6 +4,7 @@ class_name StateMachine
 
 var currentState: State
 @onready var debug_label: Label = $"../DebugLabel"
+@onready var animated_sprite_2d: AnimatedSprite2D = $"../AnimatedSprite2D"
 
 func _ready() -> void:
 	for child in get_children():
