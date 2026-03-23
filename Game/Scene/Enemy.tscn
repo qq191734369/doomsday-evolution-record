@@ -228,3 +228,16 @@ default_color = Color(1, 0.38, 0.38, 1)
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=786928503]
 color = Color(1, 0.38, 0.38, 0.19215687)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1884767365]
+target_desired_distance = 40.0
+avoidance_enabled = true
+radius = 50.0
+max_speed = 20.0
+debug_enabled = true
+
+[node name="PlayerPosUpdateTimer" type="Timer" parent="." unique_id=1138118964]
+wait_time = 0.5
+
+[connection signal="velocity_computed" from="NavigationAgent2D" to="StateMachine/Move" method="_on_navigation_agent_2d_velocity_computed"]
+[connection signal="timeout" from="PlayerPosUpdateTimer" to="StateMachine/Move" method="_on_player_pos_update_timer_timeout"]

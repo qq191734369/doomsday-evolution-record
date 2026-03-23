@@ -8,6 +8,7 @@
 size = Vector2(45, 17)
 
 [node name="Grass" type="Area2D" unique_id=151577559]
+scale = Vector2(0.75, 0.75)
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_3jojj")

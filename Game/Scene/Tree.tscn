@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://qdbr1dt0vj7p"]
+
+[ext_resource type="Texture2D" uid="uid://sbf1caeyn1yy" path="res://Assets/Level/Road2-Items.png" id="1_uc12y"]
+[ext_resource type="Script" uid="uid://bopuny1e0e0mp" path="res://Game/Scripts/random_regoin.gd" id="2_6njyn"]
+
+[node name="Tree" type="Node2D" unique_id=1679523850]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1933866996]
+texture = ExtResource("1_uc12y")
+offset = Vector2(0, -60)
+region_enabled = true
+region_rect = Rect2(576, 128, 96, 160)
+script = ExtResource("2_6njyn")
+randomRegoins = Array[Rect2]([Rect2(576, 128, 96, 160), Rect2(864, 128, 96, 160)])

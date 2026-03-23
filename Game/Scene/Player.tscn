@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ba6tj4nvsql2e"]
 
 [ext_resource type="Script" uid="uid://b8spo04c78kno" path="res://Game/Scripts/player.gd" id="1_dikuv"]
-[ext_resource type="Texture2D" uid="uid://boek40d8i73em" path="res://Assets/Animation/Red.png" id="2_coiqp"]
+[ext_resource type="Texture2D" uid="uid://ca06exgyept2w" path="res://Assets/Animation/Shinobu.png" id="2_coiqp"]
 [ext_resource type="Texture2D" uid="uid://fmht73ygj24i" path="res://Assets/Animation/shadow.png" id="2_dikuv"]
 [ext_resource type="Script" uid="uid://cfxv8qect0vpa" path="res://Game/Scripts/StateMachine/state_machine.gd" id="4_0vtvt"]
 [ext_resource type="Script" uid="uid://761ddqlnrmhm" path="res://Game/Scripts/StateMachine/PlayerStates/player_idle.gd" id="5_coiqp"]
@@ -12,7 +12,7 @@ radius = 14.167776
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6lrsw"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(640, 0, 128, 128)
+region = Rect2(0, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_txpm5"]
 atlas = ExtResource("2_coiqp")
@@ -24,23 +24,23 @@ region = Rect2(0, 256, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t44g8"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(0, 0, 128, 128)
+region = Rect2(128, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ixmp6"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(128, 0, 128, 128)
+region = Rect2(256, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k3ghj"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(256, 0, 128, 128)
+region = Rect2(384, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tasat"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(384, 0, 128, 128)
+region = Rect2(512, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6bh3k"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(512, 0, 128, 128)
+region = Rect2(640, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d0xhb"]
 atlas = ExtResource("2_coiqp")
@@ -60,27 +60,43 @@ region = Rect2(512, 128, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xtxj0"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(768, 128, 128, 128)
+region = Rect2(640, 128, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3vevg"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(896, 128, 128, 128)
+region = Rect2(768, 128, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u36a4"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(128, 256, 128, 128)
+region = Rect2(896, 128, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3r5ex"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(256, 256, 128, 128)
+region = Rect2(128, 256, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wksne"]
 atlas = ExtResource("2_coiqp")
-region = Rect2(384, 256, 128, 128)
+region = Rect2(256, 256, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ogrmj"]
 atlas = ExtResource("2_coiqp")
+region = Rect2(384, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qepe2"]
+atlas = ExtResource("2_coiqp")
 region = Rect2(512, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7owk"]
+atlas = ExtResource("2_coiqp")
+region = Rect2(640, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0e5da"]
+atlas = ExtResource("2_coiqp")
+region = Rect2(768, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ueg2n"]
+atlas = ExtResource("2_coiqp")
+region = Rect2(896, 256, 128, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qepe2"]
 animations = [{
@@ -146,15 +162,15 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3vevg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u36a4")
 }],
 "loop": true,
 "name": &"run_right",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u36a4")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3r5ex")
 }, {
@@ -163,6 +179,18 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ogrmj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qepe2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k7owk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0e5da")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ueg2n")
 }],
 "loop": true,
 "name": &"run_up",
@@ -184,8 +212,7 @@ shape = SubResource("CircleShape2D_dikuv")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=684841681]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_qepe2")
-animation = &"idle_down"
-frame_progress = 0.5607535
+animation = &"run_up"
 offset = Vector2(0, -50)
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=266940423]
@@ -196,7 +223,7 @@ texture = ExtResource("2_dikuv")
 offset = Vector2(0, 1)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1860962432]
-zoom = Vector2(2, 2)
+zoom = Vector2(1.75, 1.75)
 
 [node name="StateMachine" type="Node" parent="." unique_id=748162336]
 script = ExtResource("4_0vtvt")

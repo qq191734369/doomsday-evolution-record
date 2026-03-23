@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://sbf1caeyn1yy" path="res://Assets/Level/Road2-Items.png" id="6_haytw"]
 [ext_resource type="Script" uid="uid://cwegkb3slqgal" path="res://Game/Scripts/grass_generato_tilemaplayer.gd" id="7_3xx61"]
 [ext_resource type="PackedScene" uid="uid://ok1x11fbcb48" path="res://Game/Scene/Enemy.tscn" id="7_haytw"]
+[ext_resource type="PackedScene" uid="uid://qdbr1dt0vj7p" path="res://Game/Scene/Tree.tscn" id="8_3xx61"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g5pn2"]
 texture = ExtResource("1_rchnd")
@@ -1799,13 +1800,19 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_q34ae")
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_haytw"]
+vertices = PackedVector2Array(1038, 266, 1158.6797, 266, 1222.8281, 687.0078, 642, 458, 642, 422, 189.90625, 688.97656, 185.09375, 153.14063, 470, 157.21094, 470, 170, 398, 438, 1098, 190, 1066, 190, 1066, 165.72656, 1079.7891, 165.92969, 1083.8594, 170, 1130, 170, 1124.2031, 189.64844, 586, 170, 586, 158.86719, 1038, 165.32813, 618, 406, 610, 390, 1130, 166.64844, 1146.9609, 166.89063, 618, 422, 610, 406, 502, 390, 502, 422, 438, 422, 438, 438, 554, 506, 554, 490, 618, 490, 618, 458, 1178, 190.17969, 1178, 170, 1214.1875, 170, 1109.9219, 207.78125, 1098, 201.82031, 1129.3203, 202, 1116.1406, 214, 1124.1406, 214, 1143.0703, 232.92969, 1154.3594, 202, 1163.7969, 253.64844, 398, 506)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8, 9), PackedInt32Array(10, 11, 12, 13, 14), PackedInt32Array(10, 14, 15, 16), PackedInt32Array(17, 18, 19, 0, 4, 20, 21), PackedInt32Array(15, 22, 23), PackedInt32Array(15, 23, 16), PackedInt32Array(4, 24, 20), PackedInt32Array(20, 25, 21), PackedInt32Array(17, 21, 26, 8), PackedInt32Array(26, 27, 28, 8), PackedInt32Array(28, 29, 9), PackedInt32Array(30, 31, 32), PackedInt32Array(32, 33, 3, 2), PackedInt32Array(34, 35, 36, 2), PackedInt32Array(37, 38, 10, 16, 39), PackedInt32Array(40, 37, 39, 41), PackedInt32Array(42, 41, 39, 43, 44), PackedInt32Array(44, 43, 34), PackedInt32Array(44, 34, 2), PackedInt32Array(1, 44, 2), PackedInt32Array(32, 2, 5, 30), PackedInt32Array(45, 30, 5), PackedInt32Array(8, 28, 9), PackedInt32Array(5, 9, 45)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(175, 143, 180, 699, 1233, 697, 1224, 158)])
+source_geometry_mode = 2
+
 [node name="SceneRoot" type="Node2D" unique_id=249472695]
 
 [node name="TileMapLayerBackgroud" type="TileMapLayer" parent="." unique_id=111949756]
 tile_map_data = PackedByteArray("AAAAAAAAAwAAAAAAAAAAAA4AAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_lv82p")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1472124132]
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1472124132 groups=["navigation_polygon_source_geometry_group"]]
 tile_map_data = PackedByteArray("AAAPAAIAAQAHAAEAAAAPAAMAAQAHAAIAAAAPAAQAAQAHAAMAAAAQAAIAAQAIAAEAAAAQAAMAAQAIAAIAAAAQAAQAAQAIAAMAAAARAAIAAQAJAAEAAAARAAMAAQAJAAIAAAARAAQAAQAJAAMAAAASAAIAAQAKAAEAAAASAAMAAQAKAAIAAAASAAQAAQAKAAMAAAAMAA0AAQAHAAgAAAAMAA4AAQAHAAkAAAAMAA8AAQAHAAoAAAANAA0AAQAIAAgAAAANAA4AAQAIAAkAAAANAA8AAQAIAAoAAAAOAA0AAQAJAAgAAAAOAA4AAQAJAAkAAAAOAA8AAQAJAAoAAAAPAA0AAQAKAAgAAAAPAA4AAQAKAAkAAAAPAA8AAQAKAAoAAAAQAAwAAQALAAcAAAAQAA0AAQALAAgAAAAQAA4AAQALAAkAAAAQAA8AAQALAAoAAAARAAwAAQAMAAcAAAARAA0AAQAMAAgAAAARAA4AAQAMAAkAAAASAAwAAQANAAcAAAASAA0AAQANAAgAAAASAA4AAQANAAkAAAASAA8AAQANAAoAAAATAAwAAQAOAAcAAAATAA0AAQAOAAgAAAATAA4AAQAOAAkAAAAXAAcAAQAOAAQAAAAXAAgAAQAOAAUAAAAYAAYAAQAPAAMAAAAYAAcAAQAPAAQAAAAYAAgAAQAPAAUAAAAZAAYAAQAQAAMAAAAZAAcAAQAQAAQAAAAZAAgAAQAQAAUAAAAZAAkAAQAQAAYAAAAaAAYAAQARAAMAAAAaAAcAAQARAAQAAAAaAAgAAQARAAUAAAAaAAkAAQARAAYAAAAbAAYAAQASAAMAAAAbAAcAAQASAAQAAAAbAAgAAQASAAUAAAAcAAYAAQATAAMAAAAcAAcAAQATAAQAAAAcAAgAAQATAAUAAAAdAAYAAQAUAAMAAAAeAAYAAQAVAAMAAAAgAAIAAQAfAAEAAAAgAAMAAQAfAAIAAAAgAAQAAQAfAAMAAAAgAAUAAQAfAAQAAAAgAAYAAQAfAAUAAAAgAAcAAQAfAAYAAAAhAAIAAQAgAAEAAAAhAAMAAQAgAAIAAAAhAAQAAQAgAAMAAAAhAAUAAQAgAAQAAAAhAAYAAQAgAAUAAAAhAAcAAQAgAAYAAAAiAAIAAQAhAAEAAAAiAAMAAQAhAAIAAAAiAAQAAQAhAAMAAAAiAAUAAQAhAAQAAAAiAAYAAQAhAAUAAAAiAAcAAQAhAAYAAAAjAAMAAQAiAAIAAAAjAAQAAQAiAAMAAAAjAAUAAQAiAAQAAAAjAAYAAQAiAAUAAAAjAAcAAQAiAAYAAAAkAAIAAQAjAAEAAAAkAAMAAQAjAAIAAAAkAAQAAQAjAAMAAAAkAAUAAQAjAAQAAAAkAAcAAQAjAAYAAAAlAAIAAQAkAAEAAAAlAAMAAQAkAAIAAAAlAAQAAQAkAAMAAAAlAAUAAQAkAAQAAAAlAAYAAQAkAAUAAAAmAAIAAQAlAAEAAAAmAAMAAQAlAAIAAAAmAAQAAQAlAAMAAAAmAAUAAQAlAAQAAAAmAAYAAQAlAAUAAAAmAAcAAQAlAAYAAAAnAAIAAQAmAAEAAAAnAAMAAQAmAAIAAAAnAAQAAQAmAAMAAAAnAAUAAQAmAAQAAAAnAAYAAQAmAAUAAAAnAAcAAQAmAAYAAAAoAAIAAQAnAAEAAAAoAAMAAQAnAAIAAAAoAAQAAQAnAAMAAAAoAAUAAQAnAAQAAAAoAAYAAQAnAAUAAAAoAAcAAQAnAAYAAAApAAIAAQAoAAEAAAApAAMAAQAoAAIAAAApAAQAAQAoAAMAAAApAAUAAQAoAAQAAAApAAYAAQAoAAUAAAApAAcAAQAoAAYAAAAqAAIAAQApAAEAAAAqAAMAAQApAAIAAAAqAAUAAQApAAQAAAAqAAYAAQApAAUAAAAqAAcAAQApAAYAAAAXAAIAAQAXAAIAAAAXAAMAAQAXAAMAAAAYAAAAAQAYAAAAAAAYAAEAAQAYAAEAAAAYAAIAAQAYAAIAAAAYAAMAAQAYAAMAAAAZAAAAAQAZAAAAAAAZAAEAAQAZAAEAAAAZAAIAAQAZAAIAAAAZAAMAAQAZAAMAAAAaAAAAAQAaAAAAAAAaAAEAAQAaAAEAAAAaAAIAAQAaAAIAAAAaAAMAAQAaAAMAAAAbAAAAAQAbAAAAAAAbAAEAAQAbAAEAAAAbAAIAAQAbAAIAAAAbAAMAAQAbAAMAAAAcAAAAAQAcAAAAAAAcAAEAAQAcAAEAAAAcAAIAAQAcAAIAAAAcAAMAAQAcAAMAAAA=")
 tile_set = SubResource("TileSet_rl4yr")
 
@@ -1817,10 +1824,49 @@ position = Vector2(557, 292)
 speed = 200
 accelerate = 5
 
-[node name="Enemy" parent="Level" unique_id=1671108017 instance=ExtResource("7_haytw")]
-position = Vector2(344, 347)
-
 [node name="TileMapLayer_Grass" type="TileMapLayer" parent="Level" unique_id=635380689]
 tile_map_data = PackedByteArray("AAAQAAUAAAAMAAoAAAAQAAYAAAAMAAoAAAAQAAcAAAAMAAoAAAARAAUAAAAMAAoAAAARAAYAAAAMAAoAAAARAAcAAAAMAAoAAAASAAUAAAAMAAoAAAASAAYAAAAMAAoAAAASAAcAAAAMAAoAAAATAAUAAAAMAAoAAAATAAYAAAAMAAoAAAATAAcAAAAMAAoAAAA=")
 tile_set = SubResource("TileSet_f77hp")
 script = ExtResource("7_3xx61")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="Level" unique_id=480763900]
+navigation_polygon = SubResource("NavigationPolygon_haytw")
+
+[node name="EnemyLevel" type="Node2D" parent="Level" unique_id=1619276065]
+y_sort_enabled = true
+
+[node name="Enemy" parent="Level/EnemyLevel" unique_id=1671108017 instance=ExtResource("7_haytw")]
+position = Vector2(344, 347)
+playerDetectionRadius = 200
+speed = 100
+
+[node name="Enemy2" parent="Level/EnemyLevel" unique_id=658004610 instance=ExtResource("7_haytw")]
+position = Vector2(303, 411)
+playerDetectionRadius = 200
+speed = 100
+
+[node name="Enemy3" parent="Level/EnemyLevel" unique_id=383538265 instance=ExtResource("7_haytw")]
+position = Vector2(457, 396)
+playerDetectionRadius = 200
+speed = 100
+
+[node name="TreeLevel" type="Node2D" parent="Level" unique_id=127305781]
+y_sort_enabled = true
+
+[node name="Tree" parent="Level/TreeLevel" unique_id=1679523850 instance=ExtResource("8_3xx61")]
+position = Vector2(565, 847)
+
+[node name="Tree2" parent="Level/TreeLevel" unique_id=901553863 instance=ExtResource("8_3xx61")]
+position = Vector2(644, 828)
+
+[node name="Tree3" parent="Level/TreeLevel" unique_id=1943285360 instance=ExtResource("8_3xx61")]
+position = Vector2(699, 860)
+
+[node name="Tree4" parent="Level/TreeLevel" unique_id=728748260 instance=ExtResource("8_3xx61")]
+position = Vector2(614, 864)
+
+[node name="Tree5" parent="Level/TreeLevel" unique_id=1295020540 instance=ExtResource("8_3xx61")]
+position = Vector2(768, 854)
+
+[node name="Tree6" parent="Level/TreeLevel" unique_id=428480085 instance=ExtResource("8_3xx61")]
+position = Vector2(829, 834)
