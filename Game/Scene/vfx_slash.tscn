@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://c4pol5idtjavi"]
+
+[ext_resource type="Texture2D" uid="uid://jix8mx7kaor2" path="res://Assets/Animation/Sword-Blink.png" id="1_ud252"]
+[ext_resource type="Script" uid="uid://copwgt2sldp04" path="res://Game/Scripts/vfx_slash_autoRemoval.gd" id="2_dues5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rb6is"]
+atlas = ExtResource("1_ud252")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sqjbm"]
+atlas = ExtResource("1_ud252")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqnhr"]
+atlas = ExtResource("1_ud252")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uwiyf"]
+atlas = ExtResource("1_ud252")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8k1q8"]
+atlas = ExtResource("1_ud252")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwikw"]
+atlas = ExtResource("1_ud252")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nrisj"]
+atlas = ExtResource("1_ud252")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ue7wo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rb6is")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sqjbm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vqnhr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uwiyf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8k1q8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwikw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nrisj")
+}],
+"loop": false,
+"name": &"default",
+"speed": 30.0
+}]
+
+[node name="VFX_Slash" type="AnimatedSprite2D" unique_id=683001278]
+scale = Vector2(0.35, 0.5)
+sprite_frames = SubResource("SpriteFrames_ue7wo")
+frame = 6
+frame_progress = 1.0
+script = ExtResource("2_dues5")

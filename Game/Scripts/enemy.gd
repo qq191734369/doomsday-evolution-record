@@ -1,5 +1,7 @@
 extends BaseCharacter
 
+class_name EnemyCharacter
+
 const SPEED = 200.0
 
 @onready var line_2d: Line2D = $Line2D

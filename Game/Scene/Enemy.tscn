@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://pbl8aajqtsw1" path="res://Game/Scripts/enemy.gd" id="1_2p41y"]
 [ext_resource type="Texture2D" uid="uid://bmnkuo0u6mmo5" path="res://Assets/Animation/Zombi.png" id="1_enxmf"]
+[ext_resource type="Shader" uid="uid://bco0qmit4gfe8" path="res://Game/Shader/character.tres" id="2_8dfna"]
 [ext_resource type="Texture2D" uid="uid://fmht73ygj24i" path="res://Assets/Animation/shadow.png" id="3_5g4l6"]
 [ext_resource type="Script" uid="uid://cfxv8qect0vpa" path="res://Game/Scripts/StateMachine/state_machine.gd" id="4_8dfna"]
 [ext_resource type="Script" uid="uid://cbt4dbadkb1de" path="res://Game/Scripts/StateMachine/EnemyStates/enemy_idle.gd" id="5_gl57g"]
@@ -11,6 +12,9 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dikuv"]
 radius = 19.206585
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kev36"]
+shader = ExtResource("2_8dfna")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_26xaq"]
 atlas = ExtResource("1_enxmf")
@@ -245,11 +249,11 @@ scale = Vector2(0.46858928, 0.23140787)
 shape = SubResource("CircleShape2D_dikuv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=684841681]
+material = SubResource("ShaderMaterial_kev36")
+instance_shader_parameters/Blink = 0.0
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_3ne2u")
-animation = &"die"
-frame = 4
-frame_progress = 1.0
+animation = &"hurt"
 offset = Vector2(2, -50)
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=266940423]

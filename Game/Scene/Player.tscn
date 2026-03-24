@@ -292,7 +292,7 @@ text = "state"
 
 [node name="AttacckHitBox" type="Area2D" parent="." unique_id=833487808]
 collision_layer = 0
-collision_mask = 4
+collision_mask = 12
 
 [node name="CollisionShape2D_left" type="CollisionShape2D" parent="AttacckHitBox" unique_id=156184486]
 position = Vector2(-22.713213, -22.000002)

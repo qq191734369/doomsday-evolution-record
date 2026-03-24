@@ -20,15 +20,17 @@ var isDead = false
 @export
 var attackDamage = 50
 
+@onready var animaitedSprite2D: AnimatedSprite2D = $AnimatedSprite2D
+@onready var state_machine: StateMachine = $StateMachine
 
 var inputDirection: Vector2 = Vector2.ZERO
-
 var facingDirection: String = "down"
 var attackDirection: String = "left"
-@onready var animaitedSprite2D = $AnimatedSprite2D
+
 var animationToPlay: String
 var flip: bool
-@onready var state_machine: StateMachine = $StateMachine
+
+var knockBackDirection: Vector2
 
 # 获取朝向
 func GetDirectionName() -> String:
@@ -65,12 +67,23 @@ func updateHurtAnimation():
 
 func updateDieAnimation():
 	animaitedSprite2D.play("die")
+	
+func updateBlink(newValue: float):
+	animaitedSprite2D.set_instance_shader_parameter("Blink", newValue)
 
-func getHit(damage: int):
+func startBlink():
+	var blinkTween = get_tree().create_tween()
+	blinkTween.tween_method(updateBlink, 1.0, 0.0, 0.3)
+
+func getHit(damage: int, from: BaseCharacter = null):
 	if isDead:
 		return
 	
+	startBlink()
 	currentHealth -= damage
+	
+	if from:
+		knockBackDirection = (global_position - from.global_position).normalized()
 	
 	if isDead:
 		state_machine.switchTo("Die")

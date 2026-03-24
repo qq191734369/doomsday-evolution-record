@@ -18,7 +18,7 @@ func updatePhysics(delta: float):
 	# 判断是否到达
 	if navigation_agent_2d.is_target_reached() == false:
 		#character.velocity = character.velocity.lerp(direction * character.speed, delta)
-		character.velocity = direction * character.speed
+		character.velocity = direction * character.speed * delta * 50
 		character.move_and_slide()
 
 func enter():
