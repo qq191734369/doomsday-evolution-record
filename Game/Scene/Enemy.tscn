@@ -235,7 +235,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2p41y"]
-radius = 19.0
+radius = 15.0
 height = 48.0
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1029835329]
@@ -253,7 +253,7 @@ material = SubResource("ShaderMaterial_kev36")
 instance_shader_parameters/Blink = 0.0
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_3ne2u")
-animation = &"hurt"
+animation = &"move_right"
 offset = Vector2(2, -50)
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=266940423]
@@ -300,7 +300,7 @@ default_color = Color(1, 0.38, 0.38, 1)
 color = Color(1, 0.38, 0.38, 0.19215687)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1884767365]
-target_desired_distance = 40.0
+target_desired_distance = 20.0
 avoidance_enabled = true
 radius = 50.0
 max_speed = 20.0
@@ -310,11 +310,12 @@ wait_time = 0.5
 
 [node name="Area2D_Body" type="Area2D" parent="." unique_id=1949774385]
 collision_layer = 4
-collision_mask = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_Body" unique_id=978197719]
-position = Vector2(2, -23)
+position = Vector2(0, -23)
 shape = SubResource("CapsuleShape2D_2p41y")
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="StateMachine/Move" method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="timeout" from="PlayerPosUpdateTimer" to="StateMachine/Move" method="_on_player_pos_update_timer_timeout"]
+[connection signal="area_entered" from="Area2D_Body" to="." method="_on_area_2d_body_area_entered"]

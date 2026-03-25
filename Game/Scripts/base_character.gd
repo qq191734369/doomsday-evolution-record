@@ -15,11 +15,15 @@ var maxHealth = 100
 		currentHealth = clamp(value, 0, maxHealth)
 		if currentHealth == 0:
 			isDead = true
-	
+			area_2d_body.set_deferred("monitorable", false)
+			area_2d_body.set_deferred("monitoring", false)
+			
+			
 var isDead = false
 @export
 var attackDamage = 50
 
+@onready var area_2d_body: Area2D = $Area2D_Body
 @onready var animaitedSprite2D: AnimatedSprite2D = $AnimatedSprite2D
 @onready var state_machine: StateMachine = $StateMachine
 

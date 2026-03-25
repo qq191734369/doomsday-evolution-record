@@ -1827,6 +1827,7 @@ y_sort_enabled = true
 
 [node name="Player" parent="Level" unique_id=1029835329 instance=ExtResource("1_wd0a0")]
 position = Vector2(557, 292)
+maxHealth = 400
 
 [node name="TileMapLayer_Grass" type="TileMapLayer" parent="Level" unique_id=635380689]
 tile_map_data = PackedByteArray("AAAQAAUAAAAMAAoAAAAQAAYAAAAMAAoAAAAQAAcAAAAMAAoAAAARAAUAAAAMAAoAAAARAAYAAAAMAAoAAAARAAcAAAAMAAoAAAASAAUAAAAMAAoAAAASAAYAAAAMAAoAAAASAAcAAAAMAAoAAAATAAUAAAAMAAoAAAATAAYAAAAMAAoAAAATAAcAAAAMAAoAAAA=")

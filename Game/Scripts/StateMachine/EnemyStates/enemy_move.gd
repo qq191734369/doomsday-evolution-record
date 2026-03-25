@@ -14,6 +14,12 @@ func update():
 
 func updatePhysics(delta: float):
 	super.updatePhysics(delta)
+	
+	var c = character as EnemyCharacter
+	# 玩家死亡停下
+	if c.player.isDead == true:
+		parentStateMachine.switchTo("Idle")
+	
 	direction = character.global_position.direction_to(navigation_agent_2d.get_next_path_position())
 	# 判断是否到达
 	if navigation_agent_2d.is_target_reached() == false:

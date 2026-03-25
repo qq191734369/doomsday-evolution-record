@@ -44,3 +44,10 @@ func GetDirectionName() -> String:
 		facingDirection = "right"
 		flip = false
 	return facingDirection
+
+
+func _on_area_2d_body_area_entered(area: Area2D) -> void:
+	var target = area.get_parent()
+	if target == player:
+		player.getHit(attackDamage, self)
+	

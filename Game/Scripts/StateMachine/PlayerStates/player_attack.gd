@@ -44,7 +44,7 @@ func exit():
 	super.exit()
 	
 	if attackCollisionShape:
-			attackCollisionShape.disabled = true
+		attackCollisionShape.set_deferred("disabled", true)
 			
 
 

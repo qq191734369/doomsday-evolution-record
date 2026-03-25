@@ -7,7 +7,7 @@ func enter():
 func update():
 	super.update()
 	
-	var animationSprite2D = character.animaitedSprite2D as AnimatedSprite2D
+	var animationSprite2D = character.animaitedSprite2D
 	if animationSprite2D.frame_progress == 1:
 		parentStateMachine.switchTo("Idle")
 		
