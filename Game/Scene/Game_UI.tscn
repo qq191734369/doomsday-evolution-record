@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://ba0ti45qjpolv"]
+
+[ext_resource type="Script" uid="uid://cmvlwtp0u00av" path="res://Game/Scripts/game_ui_manager.gd" id="1_8atus"]
+[ext_resource type="Theme" uid="uid://wgmbmuq0tq12" path="res://Game/Scene/UI_Theme/game_ui_theme.tres" id="1_qxqu8"]
+
+[node name="Game_UI" type="CanvasLayer" unique_id=1473725006]
+script = ExtResource("1_8atus")
+
+[node name="Control_HUD" type="Control" parent="." unique_id=1591106627]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="Control_HUD" unique_id=449515394]
+layout_mode = 1
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 450.0
+offset_bottom = 90.0
+theme = ExtResource("1_qxqu8")
+value = 100.0
+show_percentage = false
+
+[node name="Control_GameOver" type="Control" parent="." unique_id=124175415]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Control_GameOver" unique_id=1386082649]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label_GameOver" type="Label" parent="Control_GameOver" unique_id=26825402]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.0
+offset_top = -11.5
+offset_right = 46.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_qxqu8")
+text = "GAME OVER"
+
+[node name="Button_Restart" type="Button" parent="Control_GameOver" unique_id=2014906631]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 75.0
+offset_right = 100.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_qxqu8")
+text = "RESTART"
+
+[connection signal="pressed" from="Control_GameOver/Button_Restart" to="." method="_on_button_restart_pressed"]

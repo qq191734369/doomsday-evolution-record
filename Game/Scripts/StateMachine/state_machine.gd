@@ -34,3 +34,6 @@ func switchTo(targetState: String):
 	currentState.exit()
 	currentState = nextState
 	currentState.enter()
+	
+func getCurrentStateName() -> String:
+	return currentState.name

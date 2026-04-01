@@ -35,14 +35,14 @@ func _process(_delta: float) -> void:
 func GetDirectionName() -> String:
 	facingDirection = "up"
 	if playerAngle > 135 && playerAngle <= 225:
-		facingDirection = "right"
-		flip = true
+		facingDirection = "left"
+		flip = false
 	elif playerAngle > 225 && playerAngle <= 315:
 		facingDirection = "down"
 		flip = false
 	elif playerAngle > 315 || playerAngle <= 45:
-		facingDirection = "right"
-		flip = false
+		facingDirection = "left"
+		flip = true
 	return facingDirection
 
 

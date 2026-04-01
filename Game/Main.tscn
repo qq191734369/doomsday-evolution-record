@@ -4,10 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://ba6tj4nvsql2e" path="res://Game/Scene/Player.tscn" id="1_wd0a0"]
 [ext_resource type="Texture2D" uid="uid://c0iqoxnjx3aph" path="res://Assets/Level/Road1.png" id="2_rl4yr"]
 [ext_resource type="Texture2D" uid="uid://vr84865kn8xf" path="res://Assets/Level/Round1-Items.png" id="2_w1egk"]
+[ext_resource type="PackedScene" uid="uid://cdcmam8w3evcf" path="res://Game/Scene/NPC.tscn" id="5_x253o"]
 [ext_resource type="Texture2D" uid="uid://sbf1caeyn1yy" path="res://Assets/Level/Road2-Items.png" id="6_haytw"]
 [ext_resource type="Script" uid="uid://cwegkb3slqgal" path="res://Game/Scripts/grass_generato_tilemaplayer.gd" id="7_3xx61"]
+[ext_resource type="Script" uid="uid://dkk7uckslfv48" path="res://Game/Scripts/enemy_manager.gd" id="7_f77hp"]
 [ext_resource type="PackedScene" uid="uid://ok1x11fbcb48" path="res://Game/Scene/Enemy.tscn" id="7_haytw"]
 [ext_resource type="PackedScene" uid="uid://qdbr1dt0vj7p" path="res://Game/Scene/Tree.tscn" id="8_3xx61"]
+[ext_resource type="PackedScene" uid="uid://ba0ti45qjpolv" path="res://Game/Scene/Game_UI.tscn" id="9_q34ae"]
+[ext_resource type="PackedScene" uid="uid://dt1uniqjdtnp6" path="res://Game/Scene/Dialog_UI.tscn" id="12_x253o"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g5pn2"]
 texture = ExtResource("1_rchnd")
@@ -1826,11 +1830,15 @@ tile_set = SubResource("TileSet_rl4yr")
 y_sort_enabled = true
 
 [node name="Player" parent="Level" unique_id=1029835329 instance=ExtResource("1_wd0a0")]
-position = Vector2(557, 292)
+position = Vector2(689, 373)
+showDebuggVisual = false
 maxHealth = 400
 
+[node name="NPC" parent="Level" unique_id=652241976 instance=ExtResource("5_x253o")]
+position = Vector2(650, 207)
+
 [node name="TileMapLayer_Grass" type="TileMapLayer" parent="Level" unique_id=635380689]
-tile_map_data = PackedByteArray("AAAQAAUAAAAMAAoAAAAQAAYAAAAMAAoAAAAQAAcAAAAMAAoAAAARAAUAAAAMAAoAAAARAAYAAAAMAAoAAAARAAcAAAAMAAoAAAASAAUAAAAMAAoAAAASAAYAAAAMAAoAAAASAAcAAAAMAAoAAAATAAUAAAAMAAoAAAATAAYAAAAMAAoAAAATAAcAAAAMAAoAAAA=")
+tile_map_data = PackedByteArray("AAAQAAUAAAAMAAoAAAAQAAYAAAAMAAoAAAAQAAcAAAAMAAoAAAARAAUAAAAMAAoAAAARAAYAAAAMAAoAAAARAAcAAAAMAAoAAAASAAUAAAAMAAoAAAASAAYAAAAMAAoAAAASAAcAAAAMAAoAAAATAAUAAAAMAAoAAAATAAYAAAAMAAoAAAATAAcAAAAMAAoAAAAVAA0AAAAMAAoAAAASAAoAAAAMAAoAAAARAAsAAAAMAAoAAAA=")
 tile_set = SubResource("TileSet_f77hp")
 script = ExtResource("7_3xx61")
 
@@ -1840,6 +1848,7 @@ navigation_polygon = SubResource("NavigationPolygon_haytw")
 
 [node name="EnemyLevel" type="Node2D" parent="Level" unique_id=1619276065]
 y_sort_enabled = true
+script = ExtResource("7_f77hp")
 
 [node name="Enemy" parent="Level/EnemyLevel" unique_id=1671108017 instance=ExtResource("7_haytw")]
 position = Vector2(344, 347)
@@ -1912,3 +1921,7 @@ shape = SubResource("RectangleShape2D_q34ae")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=974603132]
 position = Vector2(689, 1210)
 shape = SubResource("RectangleShape2D_q34ae")
+
+[node name="Game_UI" parent="." unique_id=1473725006 instance=ExtResource("9_q34ae")]
+
+[node name="Dialog_UI" parent="." unique_id=923090159 instance=ExtResource("12_x253o")]

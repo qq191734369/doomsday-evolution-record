@@ -1,21 +1,21 @@
-[gd_scene format=3 uid="uid://ba6tj4nvsql2e"]
+[gd_scene format=3 uid="uid://cdcmam8w3evcf"]
 
-[ext_resource type="Script" uid="uid://b8spo04c78kno" path="res://Game/Scripts/player.gd" id="1_dikuv"]
-[ext_resource type="Texture2D" uid="uid://fmht73ygj24i" path="res://Assets/Animation/shadow.png" id="2_dikuv"]
-[ext_resource type="Shader" uid="uid://bco0qmit4gfe8" path="res://Game/Shader/character.tres" id="2_t44g8"]
-[ext_resource type="SpriteFrames" uid="uid://bklgpat71elh0" path="res://Assets/Animation/Characters/Lucy/lucy.tres" id="3_t44g8"]
-[ext_resource type="Script" uid="uid://cfxv8qect0vpa" path="res://Game/Scripts/StateMachine/state_machine.gd" id="4_0vtvt"]
-[ext_resource type="Script" uid="uid://761ddqlnrmhm" path="res://Game/Scripts/StateMachine/PlayerStates/player_idle.gd" id="5_coiqp"]
-[ext_resource type="Script" uid="uid://pw7innqg621d" path="res://Game/Scripts/StateMachine/PlayerStates/player_run.gd" id="6_6lrsw"]
-[ext_resource type="Script" uid="uid://ogf2yehu27ce" path="res://Game/Scripts/StateMachine/PlayerStates/player_attack.gd" id="7_6lrsw"]
-[ext_resource type="Script" uid="uid://c3n2poldwv3at" path="res://Game/Scripts/StateMachine/PlayerStates/player_hurt.gd" id="8_txpm5"]
-[ext_resource type="Script" uid="uid://b5uc25quifafm" path="res://Game/Scripts/StateMachine/PlayerStates/player_die.gd" id="9_46o5m"]
+[ext_resource type="Script" uid="uid://cbq6o7gptxl5q" path="res://Game/Scripts/NPC/npc.gd" id="1_2qhf0"]
+[ext_resource type="SpriteFrames" uid="uid://ddlf0aimbmic5" path="res://Assets/Animation/Characters/LiMei/li-mei.tres" id="2_4fgm8"]
+[ext_resource type="Shader" uid="uid://bco0qmit4gfe8" path="res://Game/Shader/character.tres" id="2_on8fm"]
+[ext_resource type="Texture2D" uid="uid://fmht73ygj24i" path="res://Assets/Animation/shadow.png" id="4_y1k1p"]
+[ext_resource type="Script" uid="uid://cfxv8qect0vpa" path="res://Game/Scripts/StateMachine/state_machine.gd" id="5_2ucft"]
+[ext_resource type="Script" uid="uid://b63rs5sdxmmie" path="res://Game/Scripts/StateMachine/NPC/npc_idle.gd" id="6_0a8vs"]
+[ext_resource type="Script" uid="uid://brcwyew0hgote" path="res://Game/Scripts/StateMachine/NPC/npc_run.gd" id="7_s2it7"]
+[ext_resource type="Script" uid="uid://bina35kcopo2x" path="res://Game/Scripts/StateMachine/NPC/npc_attack.gd" id="8_3nlok"]
+[ext_resource type="Script" uid="uid://bb6alcvbs4imu" path="res://Game/Scripts/StateMachine/NPC/npc_hurt.gd" id="9_ad78g"]
+[ext_resource type="Script" uid="uid://b058gy4geaby3" path="res://Game/Scripts/StateMachine/NPC/npc_die.gd" id="10_iyxbe"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dikuv"]
 radius = 14.167776
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ixmp6"]
-shader = ExtResource("2_t44g8")
+shader = ExtResource("2_on8fm")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_coiqp"]
 size = Vector2(56.701195, 28.170158)
@@ -24,10 +24,10 @@ size = Vector2(56.701195, 28.170158)
 radius = 12.676629
 height = 32.358547
 
-[node name="Player" type="CharacterBody2D" unique_id=1029835329]
+[node name="NPC" type="CharacterBody2D" unique_id=1029835329]
 y_sort_enabled = true
 collision_layer = 2
-script = ExtResource("1_dikuv")
+script = ExtResource("1_2qhf0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=651975218]
 position = Vector2(1, -2)
@@ -39,37 +39,37 @@ material = SubResource("ShaderMaterial_ixmp6")
 instance_shader_parameters/Blink = 0.0
 instance_shader_parameters/InvincibleEffect = false
 scale = Vector2(0.4, 0.4)
-sprite_frames = ExtResource("3_t44g8")
-animation = &"attack"
+sprite_frames = ExtResource("2_4fgm8")
+animation = &"run_up"
 offset = Vector2(0, -80)
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=266940423]
 visible = false
 position = Vector2(0, -1)
 scale = Vector2(2, 2)
-texture = ExtResource("2_dikuv")
+texture = ExtResource("4_y1k1p")
 offset = Vector2(0, 1)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1860962432]
 zoom = Vector2(1.75, 1.75)
 
 [node name="StateMachine" type="Node" parent="." unique_id=748162336]
-script = ExtResource("4_0vtvt")
+script = ExtResource("5_2ucft")
 
 [node name="Idle" type="Node" parent="StateMachine" unique_id=1056090385]
-script = ExtResource("5_coiqp")
+script = ExtResource("6_0a8vs")
 
 [node name="Run" type="Node" parent="StateMachine" unique_id=176724785]
-script = ExtResource("6_6lrsw")
+script = ExtResource("7_s2it7")
 
 [node name="Attack" type="Node" parent="StateMachine" unique_id=1469415007]
-script = ExtResource("7_6lrsw")
+script = ExtResource("8_3nlok")
 
 [node name="Hurt" type="Node" parent="StateMachine" unique_id=583566779]
-script = ExtResource("8_txpm5")
+script = ExtResource("9_ad78g")
 
 [node name="Die" type="Node" parent="StateMachine" unique_id=88164956]
-script = ExtResource("9_46o5m")
+script = ExtResource("10_iyxbe")
 
 [node name="DebugLabel" type="Label" parent="." unique_id=1345008191]
 z_index = 100
@@ -106,5 +106,3 @@ collision_mask = 0
 position = Vector2(4, -18)
 scale = Vector2(1.1043946, 1.1125345)
 shape = SubResource("CapsuleShape2D_46o5m")
-
-[connection signal="area_entered" from="AttacckHitBox" to="StateMachine/Attack" method="_on_attacck_hit_box_area_entered"]

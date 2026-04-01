@@ -2,12 +2,18 @@ extends State
 
 func enter():
 	super.enter()
-	if character.knockBackDirection.x < 0:
-		character.animaitedSprite2D.flip_h = true
-	else:
-		character.animaitedSprite2D.flip_h = false
+	#if character.knockBackDirection.x < 0:
+		#character.animaitedSprite2D.flip_h = true
+	#else:
+		#character.animaitedSprite2D.flip_h = false
 		
 	character.updateHurtAnimation()
+	# 无敌帧
+	character.isInvincible = true
+	character.updateInvincibleEffect(true)
+	await get_tree().create_timer(2).timeout
+	character.isInvincible = false
+	character.updateInvincibleEffect(false)
 
 func update():
 	if character.animaitedSprite2D.frame_progress == 1:

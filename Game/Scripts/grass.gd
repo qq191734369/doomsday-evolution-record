@@ -36,15 +36,23 @@ func createNewScaleTween(targetVal: Vector2, duration: float):
 	scaleTween = get_tree().create_tween()
 	scaleTween.tween_property(sprite_2d, "scale", targetVal, duration)
 	scaleTween.set_ease(Tween.EASE_OUT)
-
-func getCut():
+	
+	
+func killTween():
 	if skewTween:
 		skewTween.kill()
 	if scaleTween:
 		scaleTween.kill()
+
+func getCut():
+	killTween()
 	
 	var grassVFXnode = GRASS_CUT_VFX.instantiate() as Node2D
 	grassVFXnode.global_position = global_position
 	get_parent().add_child(grassVFXnode)
 	
 	queue_free()
+
+
+func _exit_tree() -> void:
+	killTween()

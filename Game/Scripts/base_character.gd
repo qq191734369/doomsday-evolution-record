@@ -11,12 +11,7 @@ var accelerate = 5
 @export
 var maxHealth = 100
 @onready var currentHealth = maxHealth:
-	set(value):
-		currentHealth = clamp(value, 0, maxHealth)
-		if currentHealth == 0:
-			isDead = true
-			area_2d_body.set_deferred("monitorable", false)
-			area_2d_body.set_deferred("monitoring", false)
+	set = setCurrentHealthValue
 			
 			
 var isDead = false
@@ -36,6 +31,15 @@ var flip: bool
 
 var knockBackDirection: Vector2
 
+var isInvincible: bool = false
+
+func setCurrentHealthValue(value: int):
+	currentHealth = clamp(value, 0, maxHealth)
+	if currentHealth == 0:
+		isDead = true
+		area_2d_body.set_deferred("monitorable", false)
+		area_2d_body.set_deferred("monitoring", false)
+
 # 获取朝向
 func GetDirectionName() -> String:
 	if inputDirection == Vector2.ZERO:
@@ -47,13 +51,13 @@ func GetDirectionName() -> String:
 		facingDirection = "up"
 	else:
 		if inputDirection.x > 0:
-			facingDirection = "right"
-			flip = false
+			facingDirection = "left"
+			flip = true
 			attackDirection = "right"
 		elif inputDirection.x < 0:
 			# 通过flip控制素材朝向
-			facingDirection = "right"
-			flip = true
+			facingDirection = "left"
+			flip = false
 			attackDirection = "left"
 	
 	return facingDirection
@@ -63,7 +67,7 @@ func updateAnimation():
 	animaitedSprite2D.flip_h = flip
 
 func updateAttackAnimation():
-	animaitedSprite2D.flip_h = !flip
+	#animaitedSprite2D.flip_h = !flip
 	animaitedSprite2D.play("attack")	
 	
 func updateHurtAnimation():
@@ -78,9 +82,13 @@ func updateBlink(newValue: float):
 func startBlink():
 	var blinkTween = get_tree().create_tween()
 	blinkTween.tween_method(updateBlink, 1.0, 0.0, 0.3)
+	
+func updateInvincibleEffect(newValue: bool):
+	animaitedSprite2D.set_instance_shader_parameter("InvincibleEffect", newValue)
+	
 
 func getHit(damage: int, from: BaseCharacter = null):
-	if isDead:
+	if isDead || isInvincible:
 		return
 	
 	startBlink()

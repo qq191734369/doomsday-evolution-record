@@ -1,0 +1,40 @@
+[
+	{
+		"id": "npc_join_start",
+		"text": "勇敢的冒险家，我想加入你的队伍，可以吗？",
+		"options": [
+			{
+				"text": "当然可以！欢迎加入！",
+				"next": "npc_join_accept",
+				"actions": ["join_party"]
+			},
+			{
+				"text": "抱歉，我更喜欢独自冒险。",
+				"next": "npc_join_refuse",
+				"actions": []
+			}
+		]
+	},
+	{
+		"id": "npc_join_accept",
+		"text": "太好了！从今以后我们并肩作战！",
+		"options": [
+			{
+				"text": "我们出发吧！",
+				"next": null,
+				"actions": []
+			}
+		]
+	},
+	{
+		"id": "npc_join_refuse",
+		"text": "那好吧...祝你旅途愉快。",
+		"options": [
+			{
+				"text": "再见。",
+				"next": null,
+				"actions": []
+			}
+		]
+}
+]
