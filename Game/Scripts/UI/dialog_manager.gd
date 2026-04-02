@@ -1,14 +1,15 @@
 extends Node
 
-# 对话数据字典 { id: node_data }
-var dialogue_data: Dictionary = {}
-
-# 当前对话节点ID
-var current_id: String = ""
-
 # 信号，当对话结束时发出
 signal dialogue_finished
 signal join_party
+
+# 对话数据字典 { id: node_data }
+var dialogue_data: Dictionary = {}
+# 当前对话节点ID
+var current_id: String = ""
+# 是否已经弹出
+var is_active: bool = false
 
 func _ready():
 	load_dialogue("res://data/dialogue_npc_join.json")
@@ -33,6 +34,7 @@ func start_dialogue(start_id: String, ui: CanvasLayer):
 	current_id = start_id
 	ui.option_selected.connect(_on_option_selected)
 	_show_current_node(ui)
+	is_active = true
 
 func _show_current_node(ui: CanvasLayer):
 	var node = dialogue_data.get(current_id)
@@ -56,6 +58,7 @@ func _on_option_selected(opt: Dictionary, ui: CanvasLayer):
 		# 对话结束
 		ui.option_selected.disconnect(_on_option_selected)
 		dialogue_finished.emit()
+		is_active = false
 
 func execute_action(action_name: String):
 	# 这里调用游戏逻辑，例如加入队伍

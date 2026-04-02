@@ -28,7 +28,7 @@ func _process(_delta: float) -> void:
 
 func _input(event):
 	# 非队伍员 可响应对话
-	if event.is_action_pressed("interact") && is_player_near() && !in_party:
+	if event.is_action_pressed("interact") and not DialogManager.is_active and is_player_near() and not in_party:
  		# 启动对话
 		print("启动对话")
 		DialogManager.start_dialogue(dialogue_id, dialogue_ui)
