@@ -37,3 +37,9 @@ func switchTo(targetState: String):
 	
 func getCurrentStateName() -> String:
 	return currentState.name
+
+func getState(stateName: String) -> State:
+	var state = get_node_or_null(stateName)
+	if state:
+		return state as State
+	return null

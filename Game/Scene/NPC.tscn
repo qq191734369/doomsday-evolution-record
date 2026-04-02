@@ -40,7 +40,7 @@ instance_shader_parameters/Blink = 0.0
 instance_shader_parameters/InvincibleEffect = false
 scale = Vector2(0.4, 0.4)
 sprite_frames = ExtResource("2_4fgm8")
-animation = &"run_up"
+animation = &"attack"
 offset = Vector2(0, -80)
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=266940423]
@@ -106,3 +106,5 @@ collision_mask = 0
 position = Vector2(4, -18)
 scale = Vector2(1.1043946, 1.1125345)
 shape = SubResource("CapsuleShape2D_46o5m")
+
+[connection signal="area_entered" from="AttacckHitBox" to="StateMachine/Attack" method="_on_attacck_hit_box_area_entered"]
