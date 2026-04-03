@@ -7,6 +7,7 @@ class_name NPC
 @export var follow_distance := 50.0
 @export var stop_distance := 10.0
 @export var player_max_distance := 200.0  # 与玩家最大距离s
+@export var attack_range := 50
 
 @export var follow_target: BaseCharacter
 @export var in_party: bool
@@ -15,11 +16,17 @@ var playerDirection: Vector2
 var playerAngle: float
 var current_attack_target: BaseCharacter = null
 var player: BaseCharacter
+var behavior_manager: BehaviorManager
+var target: BaseCharacter  # 当前移动目标角色
 
 func _ready() -> void:
 	player = get_tree().root.get_node("SceneRoot/Level/Player")
+	# 初始化行为管理器
+	behavior_manager = BehaviorManager.new(self)
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	# 更新行为管理器
+	behavior_manager.update(delta)
 	update_character_facing_deriction()
 
 func _input(event):
@@ -50,6 +57,7 @@ func is_player_near() -> bool:
 	
 func set_target(new_target: BaseCharacter):
 	follow_target = new_target
+	target = follow_target
 	in_party = true
 	
 func get_distance_to_follow_target() -> float:
@@ -74,10 +82,9 @@ func is_need_adjust_distance_to_target() -> bool:
 	return is_exceeds_following_distance() || is_less_than_min_following_distance()
 
 func update_character_facing_deriction():
-	if not in_party or not follow_target:
+	if not in_party or not target:
 		return
-		
-	var target = current_attack_target if current_attack_target else follow_target
+
 	playerDirection = target.global_position - global_position
 	playerDirection = playerDirection.normalized()
 	
@@ -139,7 +146,7 @@ func is_in_attack_range():
 		return false
 	# 检查与目标的距离
 	var distance = global_position.distance_to(current_attack_target.global_position)
-	if distance > 30:  # 攻击距离
+	if distance > attack_range:  # 攻击距离
 		return false
 	
 	return true
@@ -152,11 +159,17 @@ func should_attack() -> bool:
 	if not player:
 		return false
 	
+	# 玩家走远
 	var distance_to_player = global_position.distance_to(player.global_position)
 	if distance_to_player > player_max_distance:
+		current_attack_target = null
 		return false
 	
-	# 寻找附近的敌人
+	# 上次选择了攻击目标 玩家没有走远
+	if current_attack_target:
+		return true
+	
+	# 玩家附近有敌人
 	var nearest_enemy = find_nearest_enemy()
 	if nearest_enemy and player.global_position.distance_to(nearest_enemy.global_position) <= player.attack_distance:
 		current_attack_target = nearest_enemy
@@ -175,3 +188,9 @@ func check_return_to_player() -> bool:
 	
 	var distance_to_player = global_position.distance_to(player.global_position)
 	return distance_to_player > player_max_distance
+
+func set_move_target(target_character: BaseCharacter) -> void:
+	target = target_character
+
+func get_move_target() -> BaseCharacter:
+	return target

@@ -1834,6 +1834,7 @@ maxHealth = 400
 
 [node name="NPC" parent="Level" unique_id=652241976 instance=ExtResource("5_x253o")]
 position = Vector2(650, 207)
+attackDamage = 20
 
 [node name="NPC2" parent="Level" unique_id=506992105 instance=ExtResource("5_x253o")]
 position = Vector2(720, 209)

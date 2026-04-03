@@ -26,9 +26,9 @@ func update():
 			attackCollisionShape.disabled = false
 
 	# 攻击结束
-	if parentStateMachine.animated_sprite_2d.is_playing() == false:
+	if parentStateMachine.animated_sprite_2d.frame_progress == 1:
 		parentStateMachine.switchTo("Idle")
-		character.animaitedSprite2D.flip_h = !character.animaitedSprite2D.flip_h
+
 		if attackCollisionShape:
 			attackCollisionShape.disabled = true
 

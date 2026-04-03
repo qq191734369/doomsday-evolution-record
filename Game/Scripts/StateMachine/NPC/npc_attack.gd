@@ -50,7 +50,7 @@ func update():
 	else :
 		print("npm attacking frame done")
 		parentStateMachine.switchTo("Idle")
-		c.animaitedSprite2D.flip_h = !c.animaitedSprite2D.flip_h
+
 		if attackCollisionShape:
 			attackCollisionShape.disabled = true
 	

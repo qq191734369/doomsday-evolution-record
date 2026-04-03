@@ -1,5 +1,8 @@
 extends State
 
+func enter():
+	super.enter()
+
 func updatePhysics(delta: float):
 	super.updatePhysics(delta)
 

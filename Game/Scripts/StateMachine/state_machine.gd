@@ -26,6 +26,9 @@ func _process(_delta: float) -> void:
 	currentState.update()
 	
 func switchTo(targetState: String):
+	if getCurrentStateName() == targetState:
+		return
+	
 	var nextState = get_node(targetState)
 	if !nextState:
 		print("cant find " + targetState)

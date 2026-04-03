@@ -3,6 +3,7 @@ extends BaseCharacter
 @export var attack_distance := 150.0  # 攻击范围
 
 func _ready() -> void:
+	GameManager.playerHealthUpdated_signal.emit(currentHealth, maxHealth)
 	if !PartyManager.is_in_party(self):
 		PartyManager.add_member(self)
 
