@@ -17,4 +17,5 @@ func showGameOverUI():
 
 
 func _on_button_restart_pressed() -> void:
+	control_game_over.visible = false
 	get_tree().reload_current_scene()

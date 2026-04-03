@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cfwogl6ye8pb" path="res://Game/Scripts/UI/Dialog/dialog_ui.gd" id="1_csnok"]
 
 [node name="Dialog_UI" type="CanvasLayer" unique_id=923090159]
+layer = 2
 script = ExtResource("1_csnok")
 
 [node name="Control" type="Control" parent="." unique_id=1243524729]

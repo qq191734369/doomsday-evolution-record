@@ -1,11 +1,21 @@
 extends CanvasLayer
 
-@onready var label: Label = $Control/Panel/Label
-@onready var v_box_container: VBoxContainer = $Control/Panel/VBoxContainer
+var label: Label
+var v_box_container: VBoxContainer
 
 signal option_selected(option_data: Dictionary, ui: CanvasLayer)
 
+func _ready():
+	# 获取节点
+	label = get_node_or_null("Control/Panel/Label")
+	v_box_container = get_node_or_null("Control/Panel/VBoxContainer")
+
 func show_dialogue(text: String, options: Array):
+	# 检查节点是否存在
+	if not label or not v_box_container:
+		push_error("Dialog UI nodes not found")
+		return
+	
 	label.text = text
 	# 清空旧选项
 	for child in v_box_container.get_children():

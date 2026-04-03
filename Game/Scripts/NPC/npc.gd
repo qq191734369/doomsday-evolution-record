@@ -3,7 +3,6 @@ extends BaseCharacter
 class_name NPC
 
 @export var dialogue_id: String = "npc_join_start"
-var dialogue_ui: CanvasLayer  # 需要在场景中引用或动态加载
 
 @export var follow_distance := 50.0
 @export var stop_distance := 10.0
@@ -19,10 +18,6 @@ var player: BaseCharacter
 
 func _ready() -> void:
 	player = get_tree().root.get_node("SceneRoot/Level/Player")
-	# 获取对话UI（假设已存在场景中）
-	dialogue_ui = get_tree().current_scene.get_node("Dialog_UI")
-	if not dialogue_ui:
-		push_error("DialogueUI not found")
 
 func _process(_delta: float) -> void:
 	update_character_facing_deriction()
@@ -32,7 +27,7 @@ func _input(event):
 	if event.is_action_pressed("interact") and not DialogManager.is_active and is_player_near() and not in_party:
  		# 启动对话
 		print("启动对话")
-		DialogManager.start_dialogue(dialogue_id, dialogue_ui)
+		DialogManager.start_dialogue(dialogue_id)
 		DialogManager.join_party.connect(handle_npc_join_party)
 		DialogManager.dialogue_finished.connect(handle_dialog_finished)
 		# 可选：暂停玩家移动、显示对话UI等

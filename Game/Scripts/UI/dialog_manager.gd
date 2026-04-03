@@ -1,5 +1,7 @@
 extends Node
 
+const DIALOG_UI_SCENE = preload("uid://dt1uniqjdtnp6")
+
 # 信号，当对话结束时发出
 signal dialogue_finished
 signal join_party
@@ -10,9 +12,27 @@ var dialogue_data: Dictionary = {}
 var current_id: String = ""
 # 是否已经弹出
 var is_active: bool = false
+# Dialog_UI实例
+var dialog_ui_instance: CanvasLayer
 
 func _ready():
-	load_dialogue("res://data/dialogue_npc_join.json")
+	load_dialogue("res://Data/dialogue_npc_join.json")
+	# 动态创建Dialog_UI实例
+	create_dialog_ui()
+
+func create_dialog_ui():
+	# 检查是否已经存在实例
+	if dialog_ui_instance:
+		return
+	
+	# 实例化Dialog_UI场景
+	dialog_ui_instance = DIALOG_UI_SCENE.instantiate() as CanvasLayer
+	
+	# 添加到根节点
+	get_tree().root.add_child.call_deferred(dialog_ui_instance)
+	
+	# 初始隐藏
+	dialog_ui_instance.visible = false
 
 func load_dialogue(file_path: String):
 	var file = FileAccess.open(file_path, FileAccess.READ)
@@ -30,20 +50,25 @@ func load_dialogue(file_path: String):
 			push_error("Failed to parse JSON: ", json.get_error_message())
 		file.close()
 
-func start_dialogue(start_id: String, ui: CanvasLayer):
+func start_dialogue(start_id: String):
+	# 确保Dialog_UI实例存在
+	if not dialog_ui_instance:
+		create_dialog_ui()
+	
 	current_id = start_id
-	ui.option_selected.connect(_on_option_selected)
-	_show_current_node(ui)
+	dialog_ui_instance.option_selected.connect(_on_option_selected)
+	_show_current_node()
+	dialog_ui_instance.visible = true
 	is_active = true
 
-func _show_current_node(ui: CanvasLayer):
+func _show_current_node():
 	var node = dialogue_data.get(current_id)
 	if not node:
 		push_error("Dialogue node not found: ", current_id)
 		dialogue_finished.emit()
 		return
 	
-	ui.show_dialogue(node["text"], node["options"])
+	dialog_ui_instance.show_dialogue(node["text"], node["options"])
 
 func _on_option_selected(opt: Dictionary, ui: CanvasLayer):
 	# 执行选项附带动作
@@ -53,10 +78,11 @@ func _on_option_selected(opt: Dictionary, ui: CanvasLayer):
 	var next_id = opt.get("next")
 	if next_id != null and dialogue_data.has(next_id):
 		current_id = next_id
-		_show_current_node(ui)
+		_show_current_node()
 	else:
 		# 对话结束
-		ui.option_selected.disconnect(_on_option_selected)
+		dialog_ui_instance.option_selected.disconnect(_on_option_selected)
+		dialog_ui_instance.visible = false
 		dialogue_finished.emit()
 		is_active = false
 
@@ -73,3 +99,8 @@ func execute_action(action_name: String):
 			# 或者直接调用 PartyManager.add_member()
 		_:
 			push_warning("Unknown action: ", action_name)
+
+func _exit_tree():
+	# 清理Dialog_UI实例
+	if dialog_ui_instance and dialog_ui_instance.is_inside_tree():
+		dialog_ui_instance.queue_free()

@@ -10,8 +10,6 @@
 [ext_resource type="Script" uid="uid://dkk7uckslfv48" path="res://Game/Scripts/enemy_manager.gd" id="7_f77hp"]
 [ext_resource type="PackedScene" uid="uid://ok1x11fbcb48" path="res://Game/Scene/Enemy.tscn" id="7_haytw"]
 [ext_resource type="PackedScene" uid="uid://qdbr1dt0vj7p" path="res://Game/Scene/Tree.tscn" id="8_3xx61"]
-[ext_resource type="PackedScene" uid="uid://ba0ti45qjpolv" path="res://Game/Scene/Game_UI.tscn" id="9_q34ae"]
-[ext_resource type="PackedScene" uid="uid://dt1uniqjdtnp6" path="res://Game/Scene/Dialog_UI.tscn" id="12_x253o"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g5pn2"]
 texture = ExtResource("1_rchnd")
@@ -1924,7 +1922,3 @@ shape = SubResource("RectangleShape2D_q34ae")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=974603132]
 position = Vector2(689, 1210)
 shape = SubResource("RectangleShape2D_q34ae")
-
-[node name="Game_UI" parent="." unique_id=1473725006 instance=ExtResource("9_q34ae")]
-
-[node name="Dialog_UI" parent="." unique_id=923090159 instance=ExtResource("12_x253o")]
