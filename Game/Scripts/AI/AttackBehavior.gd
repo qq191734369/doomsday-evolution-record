@@ -11,7 +11,7 @@ func can_start() -> bool:
 
 func start() -> void:
 	print("开始攻击行为")
-	print("更新攻击目标")
+
 
 func update(delta: float) -> void:
 	# 只有当状态不是Attack或Run时才切换状态
@@ -24,7 +24,7 @@ func update(delta: float) -> void:
 	# 不在范围内
 	else:
 		# 无攻击目标
-		if not npc.current_attack_target:
+		if not npc.target:
 			npc.state_machine.switchTo("Idle")
 			return
 		# 还在攻击动画中

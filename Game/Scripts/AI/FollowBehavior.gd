@@ -19,7 +19,6 @@ func update(delta: float) -> void:
 	var current_state = npc.state_machine.getCurrentStateName()
 	if npc.is_need_adjust_distance_to_target():
 		if current_state != "Run":
-			# 设置目标为玩家角色
 			npc.state_machine.switchTo("Run")
 	else:
 		# 如果达到跟随距离内 且 玩家还在行走状态 则维持行走

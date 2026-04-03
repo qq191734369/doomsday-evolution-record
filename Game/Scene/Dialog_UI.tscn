@@ -2,6 +2,17 @@
 
 [ext_resource type="Script" uid="uid://cfwogl6ye8pb" path="res://Game/Scripts/UI/Dialog/dialog_ui.gd" id="1_csnok"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 20
+border_width_top = 20
+border_width_right = 20
+border_width_bottom = 20
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [node name="Dialog_UI" type="CanvasLayer" unique_id=923090159]
 layer = 2
 script = ExtResource("1_csnok")
@@ -16,23 +27,30 @@ grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="Control" unique_id=799422781]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_top = -380.0
-offset_bottom = -380.0
+offset_left = -400.0
+offset_top = 100.0
+offset_right = 400.0
+offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
 
 [node name="Label" type="Label" parent="Control/Panel" unique_id=678957572]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 27.0
+offset_top = 27.0
+offset_right = 772.0
+offset_bottom = 172.0
+autowrap_mode = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel" unique_id=1138542620]
+layout_direction = 2
 layout_mode = 0
-offset_top = 50.0
-offset_right = 40.0
-offset_bottom = 90.0
+offset_left = 787.0
+offset_top = 206.0
+offset_right = 787.0
+offset_bottom = 206.0
+alignment = 2

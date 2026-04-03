@@ -9,6 +9,7 @@ func _ready():
 	# 获取节点
 	label = get_node_or_null("Control/Panel/Label")
 	v_box_container = get_node_or_null("Control/Panel/VBoxContainer")
+	v_box_container.alignment = VBoxContainer.ALIGNMENT_END # 子节点从底部开始排列
 
 func show_dialogue(text: String, options: Array):
 	# 检查节点是否存在

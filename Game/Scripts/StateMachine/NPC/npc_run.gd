@@ -29,7 +29,7 @@ func run_to_target(delta):
 	# 检查是否有目标角色
 	if not c.target:
 		return
-	
+
 	# 计算到目标角色的方向和距离
 	var direction = c.global_position.direction_to(c.target.global_position)
 	
