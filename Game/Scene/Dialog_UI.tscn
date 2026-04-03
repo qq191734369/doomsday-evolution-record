@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dt1uniqjdtnp6"]
 
 [ext_resource type="Script" uid="uid://cfwogl6ye8pb" path="res://Game/Scripts/UI/Dialog/dialog_ui.gd" id="1_csnok"]
+[ext_resource type="Theme" uid="uid://gdvjaw4d474l" path="res://Game/Scene/UI_Theme/dialog_ui_theme.tres" id="2_xorov"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0, 0, 0, 1)
@@ -24,6 +25,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_xorov")
 
 [node name="Panel" type="Panel" parent="Control" unique_id=799422781]
 layout_mode = 1
@@ -44,13 +46,15 @@ offset_left = 27.0
 offset_top = 27.0
 offset_right = 772.0
 offset_bottom = 172.0
+theme = ExtResource("2_xorov")
 autowrap_mode = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel" unique_id=1138542620]
 layout_direction = 2
 layout_mode = 0
-offset_left = 787.0
-offset_top = 206.0
-offset_right = 787.0
-offset_bottom = 206.0
+offset_left = 195.0
+offset_top = 215.0
+offset_right = 795.0
+offset_bottom = 215.0
+theme = ExtResource("2_xorov")
 alignment = 2

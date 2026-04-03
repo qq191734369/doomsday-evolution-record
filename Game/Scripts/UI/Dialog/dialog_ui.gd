@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+const DIALOG_UI_THEME = preload("uid://gdvjaw4d474l")
+
 var label: Label
 var v_box_container: VBoxContainer
 
@@ -25,6 +27,10 @@ func show_dialogue(text: String, options: Array):
 	# 创建新选项按钮
 	for opt in options:
 		var btn = Button.new()
+	
+		btn.layout_direction = Control.LAYOUT_DIRECTION_RTL
+		btn.theme = DIALOG_UI_THEME
+	
 		btn.text = opt["text"]
 		btn.pressed.connect(_on_option_pressed.bind(opt, self))
 		v_box_container.add_child(btn)
