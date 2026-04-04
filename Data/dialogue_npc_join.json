@@ -18,6 +18,16 @@
 	{
 		"id": "npc_join_accept",
 		"text": "太好了！从今以后我们并肩作战！",
+		"next": "npc_join_accept_2"
+	},
+	{
+		"id": "npc_join_accept_2",
+		"text": "我会尽全力保护你的安全！",
+		"next": "npc_join_accept_3"
+	},
+	{
+		"id": "npc_join_accept_3",
+		"text": "让我们一起踏上冒险之旅吧！",
 		"options": [
 			{
 				"text": "我们出发吧！",
@@ -29,6 +39,11 @@
 	{
 		"id": "npc_join_refuse",
 		"text": "那好吧...祝你旅途愉快。",
+		"next": "npc_join_refuse_2"
+	},
+	{
+		"id": "npc_join_refuse_2",
+		"text": "如果改变主意了，随时可以来找我。",
 		"options": [
 			{
 				"text": "再见。",
@@ -36,5 +51,5 @@
 				"actions": []
 			}
 		]
-}
+	}
 ]

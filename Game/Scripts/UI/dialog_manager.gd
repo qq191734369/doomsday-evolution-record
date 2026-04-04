@@ -57,6 +57,7 @@ func start_dialogue(start_id: String):
 	
 	current_id = start_id
 	dialog_ui_instance.option_selected.connect(_on_option_selected)
+	dialog_ui_instance.dialogue_continue.connect(_on_dialogue_continue)
 	_show_current_node()
 	dialog_ui_instance.visible = true
 	is_active = true
@@ -68,7 +69,9 @@ func _show_current_node():
 		dialogue_finished.emit()
 		return
 	
-	dialog_ui_instance.show_dialogue(node["text"], node["options"])
+	# 获取选项，如果没有则使用空数组
+	var options = node.get("options", [])
+	dialog_ui_instance.show_dialogue(node["text"], options)
 
 func _on_option_selected(opt: Dictionary, ui: CanvasLayer):
 	# 执行选项附带动作
@@ -76,15 +79,31 @@ func _on_option_selected(opt: Dictionary, ui: CanvasLayer):
 		execute_action(action)
 	
 	var next_id = opt.get("next")
+	_go_to_next_node(next_id)
+
+func _on_dialogue_continue():
+	# 处理无选项节点的继续
+	var node = dialogue_data.get(current_id)
+	if node:
+		var next_id = node.get("next")
+		_go_to_next_node(next_id)
+
+func _go_to_next_node(next_id):
 	if next_id != null and dialogue_data.has(next_id):
 		current_id = next_id
 		_show_current_node()
 	else:
 		# 对话结束
+		_end_dialogue()
+
+func _end_dialogue():
+	if dialog_ui_instance.option_selected.is_connected(_on_option_selected):
 		dialog_ui_instance.option_selected.disconnect(_on_option_selected)
-		dialog_ui_instance.visible = false
-		dialogue_finished.emit()
-		is_active = false
+	if dialog_ui_instance.dialogue_continue.is_connected(_on_dialogue_continue):
+		dialog_ui_instance.dialogue_continue.disconnect(_on_dialogue_continue)
+	dialog_ui_instance.visible = false
+	dialogue_finished.emit()
+	is_active = false
 
 func execute_action(action_name: String):
 	# 这里调用游戏逻辑，例如加入队伍
