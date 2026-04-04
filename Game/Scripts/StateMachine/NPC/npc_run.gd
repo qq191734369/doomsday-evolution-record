@@ -2,7 +2,7 @@ extends State
 
 func enter():
 	super.enter()
-	print("NPC enter run")
+	#print("NPC enter run")
 
 func updatePhysics(delta: float):
 	super.updatePhysics(delta)

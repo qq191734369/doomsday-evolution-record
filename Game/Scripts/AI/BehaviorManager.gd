@@ -18,11 +18,11 @@ func update(delta: float) -> void:
 	var best_behavior = find_best_behavior()
 	if best_behavior != current_behavior:
 		if current_behavior:
-			print("切换行为: " + current_behavior.get_behavior_name() + " -> 结束")
+			#print("切换行为: " + current_behavior.get_behavior_name() + " -> 结束")
 			current_behavior.end()
 			
 		current_behavior = best_behavior
-		print("切换行为: " + current_behavior.get_behavior_name() + " -> 开始")
+		#print("切换行为: " + current_behavior.get_behavior_name() + " -> 开始")
 		current_behavior.start()
 
 	if current_behavior:

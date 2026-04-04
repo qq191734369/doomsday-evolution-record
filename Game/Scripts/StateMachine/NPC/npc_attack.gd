@@ -16,7 +16,7 @@ func ready():
 
 func enter():
 	super.enter()
-	print("NPC enter attack")
+	#print("NPC enter attack")
 	character.updateAttackAnimation()
 
 	facingDirection = character.attackDirection
@@ -48,7 +48,7 @@ func update():
 			attackCollisionShape.disabled = false
 	# 攻击结束
 	else :
-		print("npm attacking frame done")
+		#print("npm attacking frame done")
 		parentStateMachine.switchTo("Idle")
 
 		if attackCollisionShape:

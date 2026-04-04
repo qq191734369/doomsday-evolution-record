@@ -11,8 +11,7 @@ func updatePhysics(delta: float):
 func update():
 	if parentStateMachine.debug_label:
 		if character.showDebuggVisual:
-			parentStateMachine.debug_label.text = name + '/' + str(character.currentHealth)
-			parentStateMachine.debug_label.visible = true
+			_updateDebugText()
 		else:
 			parentStateMachine.debug_label.visible = false
 
@@ -24,3 +23,11 @@ func exit():
 	
 func ready():
 	pass
+	
+func _updateDebugText():
+	parentStateMachine.debug_label.visible = true
+	parentStateMachine.debug_label.text = name + '/' + str(character.currentHealth)
+	if character is NPC:
+		var behavior = character.behavior_manager.get_current_behavior()
+		if behavior:
+			parentStateMachine.debug_label.text = parentStateMachine.debug_label.text + '\n' + behavior.get_behavior_name()

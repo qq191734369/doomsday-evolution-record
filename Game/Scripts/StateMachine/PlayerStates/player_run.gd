@@ -13,7 +13,8 @@ func update():
 	super.update()
 	character.updateAnimation()
 	
-	if Input.is_action_just_pressed("attack"):
+	# 对话开启时不响应攻击
+	if not DialogManager.is_active and Input.is_action_just_pressed("attack"):
 		parentStateMachine.switchTo("Attack")
 		return
 	

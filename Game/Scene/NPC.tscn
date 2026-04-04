@@ -73,10 +73,10 @@ script = ExtResource("10_iyxbe")
 
 [node name="DebugLabel" type="Label" parent="." unique_id=1345008191]
 z_index = 100
-offset_left = 22.0
-offset_top = -7.0
-offset_right = 62.0
-offset_bottom = 16.0
+offset_left = 36.0
+offset_top = -57.0
+offset_right = 76.0
+offset_bottom = -34.0
 scale = Vector2(0.48715386, 0.5124827)
 text = "state"
 
