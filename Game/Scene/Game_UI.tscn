@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cmvlwtp0u00av" path="res://Game/Scripts/game_ui_manager.gd" id="1_8atus"]
 [ext_resource type="Theme" uid="uid://wgmbmuq0tq12" path="res://Game/Scene/UI_Theme/game_ui_theme.tres" id="1_qxqu8"]
-[ext_resource type="Texture2D" uid="uid://dej2yyjvbpmbp" path="res://Assets/Animation/Characters/Lucy/Avatar_Lucy.png" id="2_jeke4"]
+[ext_resource type="Texture2D" uid="uid://dej2yyjvbpmbp" path="res://Assets/Animation/Characters/Player/Avartar_Player.png" id="2_jeke4"]
 
 [node name="Game_UI" type="CanvasLayer" unique_id=1473725006]
 script = ExtResource("1_8atus")

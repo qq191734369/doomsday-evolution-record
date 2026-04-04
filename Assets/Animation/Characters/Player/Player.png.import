@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cvjki6y3sajdb"
-path="res://.godot/imported/Lucy.png-6f2260fe43401e62d1a3956c4bbb98de.ctex"
+path="res://.godot/imported/Player.png-8ea0305eb9a4bb05d6d62673df7b790a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Animation/Characters/Lucy/Lucy.png"
-dest_files=["res://.godot/imported/Lucy.png-6f2260fe43401e62d1a3956c4bbb98de.ctex"]
+source_file="res://Assets/Animation/Characters/Player/Player.png"
+dest_files=["res://.godot/imported/Player.png-8ea0305eb9a4bb05d6d62673df7b790a.ctex"]
 
 [params]
 

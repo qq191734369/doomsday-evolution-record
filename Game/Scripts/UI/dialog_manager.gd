@@ -71,7 +71,10 @@ func _show_current_node():
 	
 	# 获取选项，如果没有则使用空数组
 	var options = node.get("options", [])
-	dialog_ui_instance.show_dialogue(node["text"], options)
+	# 获取说话人和头像位置
+	var speaker = node.get("speaker", "")
+	var avatar_position = node.get("avatar_position", "left")
+	dialog_ui_instance.show_dialogue(node["text"], options, speaker, avatar_position)
 
 func _on_option_selected(opt: Dictionary, ui: CanvasLayer):
 	# 执行选项附带动作

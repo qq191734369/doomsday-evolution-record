@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dej2yyjvbpmbp"
-path="res://.godot/imported/Avatar_Lucy.png-3267e3ecb9e60a0b2a36f2f1bbdf7932.ctex"
+uid="uid://odesyiebcub6"
+path="res://.godot/imported/Player_1.png-e0052e9a08cc83570c40ac43f2762149.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Animation/Characters/Lucy/Avatar_Lucy.png"
-dest_files=["res://.godot/imported/Avatar_Lucy.png-3267e3ecb9e60a0b2a36f2f1bbdf7932.ctex"]
+source_file="res://Assets/Animation/Characters/Player/Player_1.png"
+dest_files=["res://.godot/imported/Player_1.png-e0052e9a08cc83570c40ac43f2762149.ctex"]
 
 [params]
 

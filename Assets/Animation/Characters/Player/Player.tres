@@ -1,7 +1,7 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://bklgpat71elh0"]
 
-[ext_resource type="Texture2D" uid="uid://cvjki6y3sajdb" path="res://Assets/Animation/Characters/Lucy/Lucy.png" id="1_b1ytr"]
-[ext_resource type="Texture2D" uid="uid://odesyiebcub6" path="res://Assets/Animation/Characters/Lucy/Lucy_1.png" id="2_vkeal"]
+[ext_resource type="Texture2D" uid="uid://cvjki6y3sajdb" path="res://Assets/Animation/Characters/Player/Player.png" id="1_b1ytr"]
+[ext_resource type="Texture2D" uid="uid://odesyiebcub6" path="res://Assets/Animation/Characters/Player/Player_1.png" id="2_vkeal"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b1ytr"]
 atlas = ExtResource("1_b1ytr")

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b8spo04c78kno" path="res://Game/Scripts/player.gd" id="1_dikuv"]
 [ext_resource type="Texture2D" uid="uid://fmht73ygj24i" path="res://Assets/Animation/shadow.png" id="2_dikuv"]
 [ext_resource type="Shader" uid="uid://bco0qmit4gfe8" path="res://Game/Shader/character.tres" id="2_t44g8"]
-[ext_resource type="SpriteFrames" uid="uid://bklgpat71elh0" path="res://Assets/Animation/Characters/Lucy/lucy.tres" id="3_t44g8"]
+[ext_resource type="SpriteFrames" uid="uid://bklgpat71elh0" path="res://Assets/Animation/Characters/Player/Player.tres" id="3_t44g8"]
 [ext_resource type="Script" uid="uid://cfxv8qect0vpa" path="res://Game/Scripts/StateMachine/state_machine.gd" id="4_0vtvt"]
 [ext_resource type="Script" uid="uid://761ddqlnrmhm" path="res://Game/Scripts/StateMachine/PlayerStates/player_idle.gd" id="5_coiqp"]
 [ext_resource type="Script" uid="uid://pw7innqg621d" path="res://Game/Scripts/StateMachine/PlayerStates/player_run.gd" id="6_6lrsw"]

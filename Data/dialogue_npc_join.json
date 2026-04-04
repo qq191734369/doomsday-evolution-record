@@ -1,33 +1,41 @@
 [
 	{
-		"id": "npc_join_start",
+		"id": "limei_join_start",
 		"text": "勇敢的冒险家，我想加入你的队伍，可以吗？",
+		"speaker": "LiMei",
+		"avatar_position": "left",
 		"options": [
 			{
 				"text": "当然可以！欢迎加入！",
-				"next": "npc_join_accept",
+				"next": "limei_join_accept",
 				"actions": ["join_party"]
 			},
 			{
 				"text": "抱歉，我更喜欢独自冒险。",
-				"next": "npc_join_refuse",
+				"next": "limei_join_refuse",
 				"actions": []
 			}
 		]
 	},
 	{
-		"id": "npc_join_accept",
+		"id": "limei_join_accept",
 		"text": "太好了！从今以后我们并肩作战！",
-		"next": "npc_join_accept_2"
+		"speaker": "LiMei",
+		"avatar_position": "left",
+		"next": "limei_join_accept_2"
 	},
 	{
-		"id": "npc_join_accept_2",
+		"id": "limei_join_accept_2",
 		"text": "我会尽全力保护你的安全！",
-		"next": "npc_join_accept_3"
+		"speaker": "Player",
+		"avatar_position": "right",
+		"next": "limei_join_accept_3"
 	},
 	{
-		"id": "npc_join_accept_3",
+		"id": "limei_join_accept_3",
 		"text": "让我们一起踏上冒险之旅吧！",
+		"speaker": "Player",
+		"avatar_position": "right",
 		"options": [
 			{
 				"text": "我们出发吧！",
@@ -37,13 +45,83 @@
 		]
 	},
 	{
-		"id": "npc_join_refuse",
+		"id": "limei_join_refuse",
 		"text": "那好吧...祝你旅途愉快。",
-		"next": "npc_join_refuse_2"
+		"speaker": "LiMei",
+		"avatar_position": "left",
+		"next": "limei_join_refuse_2"
 	},
 	{
-		"id": "npc_join_refuse_2",
+		"id": "limei_join_refuse_2",
 		"text": "如果改变主意了，随时可以来找我。",
+		"speaker": "LiMei",
+		"avatar_position": "left",
+		"options": [
+			{
+				"text": "再见。",
+				"next": null,
+				"actions": []
+			}
+		]
+	},
+	
+	{
+		"id": "zhaoxiner_join_start",
+		"text": "勇敢的冒险家，我想加入你的队伍，可以吗？",
+		"speaker": "ZhaoXinEr",
+		"avatar_position": "left",
+		"options": [
+			{
+				"text": "当然可以！欢迎加入！",
+				"next": "zhaoxiner_join_accept",
+				"actions": ["join_party"]
+			},
+			{
+				"text": "抱歉，我更喜欢独自冒险。",
+				"next": "zhaoxiner_join_refuse",
+				"actions": []
+			}
+		]
+	},
+	{
+		"id": "zhaoxiner_join_accept",
+		"text": "太好了！从今以后我们并肩作战！",
+		"speaker": "ZhaoXinEr",
+		"avatar_position": "left",
+		"next": "zhaoxiner_join_accept_2"
+	},
+	{
+		"id": "zhaoxiner_join_accept_2",
+		"text": "我会尽全力保护你的安全！",
+		"speaker": "Player",
+		"avatar_position": "right",
+		"next": "zhaoxiner_join_accept_3"
+	},
+	{
+		"id": "zhaoxiner_join_accept_3",
+		"text": "让我们一起踏上冒险之旅吧！",
+		"speaker": "Player",
+		"avatar_position": "right",
+		"options": [
+			{
+				"text": "我们出发吧！",
+				"next": null,
+				"actions": []
+			}
+		]
+	},
+	{
+		"id": "zhaoxiner_join_refuse",
+		"text": "那好吧...祝你旅途愉快。",
+		"speaker": "ZhaoXinEr",
+		"avatar_position": "left",
+		"next": "zhaoxiner_join_refuse_2"
+	},
+	{
+		"id": "zhaoxiner_join_refuse_2",
+		"text": "如果改变主意了，随时可以来找我。",
+		"speaker": "ZhaoXinEr",
+		"avatar_position": "left",
 		"options": [
 			{
 				"text": "再见。",

@@ -1843,11 +1843,13 @@ maxHealth = 400
 [node name="NPC_LiMei" parent="Level" unique_id=2009303826 instance=ExtResource("5_x253o")]
 position = Vector2(757, 416)
 npc_name = "LiMei"
+dialogue_id = "limei_join_start"
 sprite_frames = ExtResource("6_6o7ua")
 
 [node name="NPC_ZhaoXinEr" parent="Level" unique_id=1138572775 instance=ExtResource("5_x253o")]
 position = Vector2(710, 275)
 npc_name = "ZhaoXinEr"
+dialogue_id = "zhaoxiner_join_start"
 sprite_frames = ExtResource("7_x253o")
 
 [node name="TileMapLayer_Grass" type="TileMapLayer" parent="Level" unique_id=635380689]
