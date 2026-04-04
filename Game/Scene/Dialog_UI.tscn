@@ -40,6 +40,14 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_1")
 
+[node name="Avartar_left" type="Sprite2D" parent="Control/Panel" unique_id=844348301]
+position = Vector2(-80, 68)
+scale = Vector2(2, 2)
+
+[node name="Avartar_right" type="Sprite2D" parent="Control/Panel" unique_id=1560286500]
+position = Vector2(863, 71)
+scale = Vector2(2, 2)
+
 [node name="Label" type="Label" parent="Control/Panel" unique_id=678957572]
 layout_mode = 0
 offset_left = 27.0
