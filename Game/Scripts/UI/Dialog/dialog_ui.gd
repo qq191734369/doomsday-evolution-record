@@ -30,6 +30,7 @@ func show_dialogue(text: String, options: Array):
 	
 		btn.layout_direction = Control.LAYOUT_DIRECTION_RTL
 		btn.theme = DIALOG_UI_THEME
+		btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	
 		btn.text = opt["text"]
 		btn.pressed.connect(_on_option_pressed.bind(opt, self))

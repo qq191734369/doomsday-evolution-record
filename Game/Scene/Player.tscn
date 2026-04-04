@@ -24,6 +24,9 @@ size = Vector2(56.701195, 28.170158)
 radius = 12.676629
 height = 32.358547
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
+radius = 100.0
+
 [node name="Player" type="CharacterBody2D" unique_id=1029835329]
 y_sort_enabled = true
 collision_layer = 2
@@ -106,5 +109,12 @@ collision_mask = 0
 position = Vector2(4, -18)
 scale = Vector2(1.1043946, 1.1125345)
 shape = SubResource("CapsuleShape2D_46o5m")
+
+[node name="EnemyDetectionArea" type="Area2D" parent="." unique_id=999999999]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetectionArea" unique_id=999999998]
+shape = SubResource("CircleShape2D_detection")
 
 [connection signal="area_entered" from="AttacckHitBox" to="StateMachine/Attack" method="_on_attacck_hit_box_area_entered"]

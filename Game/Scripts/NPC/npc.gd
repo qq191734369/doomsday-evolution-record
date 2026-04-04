@@ -15,7 +15,7 @@ class_name NPC
 var playerDirection: Vector2
 var playerAngle: float
 var current_attack_target: BaseCharacter = null
-var player: BaseCharacter
+var player: Player
 var behavior_manager: BehaviorManager
 var target: BaseCharacter  # 当前移动目标角色
 
@@ -85,8 +85,7 @@ func update_character_facing_deriction():
 	if not in_party or not target:
 		return
 
-	playerDirection = target.global_position - global_position
-	playerDirection = playerDirection.normalized()
+	playerDirection = global_position.direction_to(target.global_position)
 	
 	# 更新攻击时面向
 	if playerDirection.x < 0:
@@ -119,25 +118,24 @@ func find_nearest_enemy() -> BaseCharacter:
 	if not player:
 		return
 	
-	var enemies = []
-	var enemy_level = get_tree().root.get_node("SceneRoot/Level/EnemyLevel")
+	# 使用玩家的EnemyDetectionArea获取范围内的敌人
+	var detection_area = player.enemy_detection_area
+	if not detection_area:
+		return
 	
-	if enemy_level:
-		for child in enemy_level.get_children():
-			if child is EnemyCharacter and not child.isDead:
-				enemies.append(child)
+	var nearest = null
+	var min_distance = INF
 	
-	if enemies.size() == 0:
-		return null
+	# 获取检测区域内的所有重叠区域（敌人的Area2D_Body）
+	var overlapping_areas = detection_area.get_overlapping_areas()
 	
-	var nearest = enemies[0]
-	var min_distance = player.global_position.distance_to(nearest.global_position)
-	
-	for enemy in enemies:
-		var distance = player.global_position.distance_to(enemy.global_position)
-		if distance < min_distance:
-			min_distance = distance
-			nearest = enemy
+	for area in overlapping_areas:
+		var enemy = area.get_parent()
+		if enemy is EnemyCharacter and not enemy.isDead:
+			var distance = player.global_position.distance_to(enemy.global_position)
+			if distance < min_distance:
+				min_distance = distance
+				nearest = enemy
 	
 	return nearest
 
@@ -171,7 +169,7 @@ func should_attack() -> bool:
 	
 	# 玩家附近有敌人
 	var nearest_enemy = find_nearest_enemy()
-	if nearest_enemy and player.global_position.distance_to(nearest_enemy.global_position) <= player.attack_distance:
+	if nearest_enemy:
 		current_attack_target = nearest_enemy
 		return true
 	
