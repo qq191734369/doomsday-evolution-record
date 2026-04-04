@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cmvlwtp0u00av" path="res://Game/Scripts/game_ui_manager.gd" id="1_8atus"]
 [ext_resource type="Theme" uid="uid://wgmbmuq0tq12" path="res://Game/Scene/UI_Theme/game_ui_theme.tres" id="1_qxqu8"]
+[ext_resource type="Texture2D" uid="uid://dej2yyjvbpmbp" path="res://Assets/Animation/Characters/Lucy/Avatar_Lucy.png" id="2_jeke4"]
 
 [node name="Game_UI" type="CanvasLayer" unique_id=1473725006]
 script = ExtResource("1_8atus")
@@ -13,6 +14,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Avatar" type="Sprite2D" parent="Control_HUD" unique_id=1900428957]
+position = Vector2(68, 123)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_jeke4")
 
 [node name="ProgressBar" type="ProgressBar" parent="Control_HUD" unique_id=449515394]
 layout_mode = 1
@@ -26,10 +32,10 @@ show_percentage = false
 
 [node name="NPCHealthContainer" type="VBoxContainer" parent="Control_HUD" unique_id=999999001]
 layout_mode = 0
-offset_left = 66.0
-offset_top = 159.0
-offset_right = 466.0
-offset_bottom = 159.0
+offset_left = 43.0
+offset_top = 192.0
+offset_right = 443.0
+offset_bottom = 192.0
 theme = ExtResource("1_qxqu8")
 
 [node name="Control_GameOver" type="Control" parent="." unique_id=124175415]

@@ -8,7 +8,7 @@
 font_size = 14
 
 [node name="NPCHealthBar" type="HBoxContainer" unique_id=277224860]
-custom_minimum_size = Vector2(0, 120)
+custom_minimum_size = Vector2(0, 100)
 offset_right = 404.0
 offset_bottom = 40.0
 script = ExtResource("2_script")
@@ -20,23 +20,30 @@ size_flags_horizontal = 3
 [node name="NPCName" type="Label" parent="Control" unique_id=1933258653]
 custom_minimum_size = Vector2(80, 30)
 layout_mode = 0
-offset_left = 159.0
-offset_top = 49.0
-offset_right = 239.0
-offset_bottom = 79.0
+offset_left = 121.0
+offset_top = 55.0
+offset_right = 201.0
+offset_bottom = 85.0
 theme = ExtResource("1_theme")
 text = "NPC"
 label_settings = SubResource("LabelSettings_63fxx")
 vertical_alignment = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="Control" unique_id=1688292315]
-position = Vector2(72, 55.000004)
-scale = Vector2(0.8, 0.8)
+[node name="NPCAvatar" type="Sprite2D" parent="Control" unique_id=1688292315]
+position = Vector2(51.000008, 50.999996)
+scale = Vector2(0.6, 0.6)
 texture = ExtResource("3_526os")
 
-[node name="HealthBar" type="ProgressBar" parent="." unique_id=1818176249]
-custom_minimum_size = Vector2(250, 30)
-layout_mode = 2
+[node name="Node2D" type="Node2D" parent="." unique_id=1820401790]
+position = Vector2(127, 20)
+
+[node name="HealthBar" type="ProgressBar" parent="Node2D" unique_id=1818176249]
+custom_minimum_size = Vector2(200, 20)
+offset_left = -16.0
+offset_top = -5.0
+offset_right = 184.0
+offset_bottom = 18.0
+scale = Vector2(1, 0.5)
 theme = ExtResource("1_theme")
 value = 100.0
 show_percentage = false

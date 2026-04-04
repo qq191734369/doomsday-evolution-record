@@ -16,6 +16,8 @@ func _init(npc_ref: NPC):
 func update(delta: float) -> void:
 	# 选择最高优先级的可执行行为
 	var best_behavior = find_best_behavior()
+	if not best_behavior:
+		return
 	if best_behavior != current_behavior:
 		if current_behavior:
 			#print("切换行为: " + current_behavior.get_behavior_name() + " -> 结束")
