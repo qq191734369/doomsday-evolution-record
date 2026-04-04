@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 GameManager="*uid://n2gtidukqddd"
 PartyManager="*uid://dbqjoc5rgcu5k"
 DialogManager="*uid://c23aaw7uctfvl"
+SceneManager="*uid://cueknapsypukl"
 
 [display]
 
