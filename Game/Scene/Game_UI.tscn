@@ -16,13 +16,21 @@ grow_vertical = 2
 
 [node name="ProgressBar" type="ProgressBar" parent="Control_HUD" unique_id=449515394]
 layout_mode = 1
-offset_left = 50.0
-offset_top = 50.0
-offset_right = 450.0
-offset_bottom = 90.0
+offset_left = 124.0
+offset_top = 71.0
+offset_right = 524.0
+offset_bottom = 111.0
 theme = ExtResource("1_qxqu8")
 value = 100.0
 show_percentage = false
+
+[node name="NPCHealthContainer" type="VBoxContainer" parent="Control_HUD" unique_id=999999001]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 159.0
+offset_right = 466.0
+offset_bottom = 159.0
+theme = ExtResource("1_qxqu8")
 
 [node name="Control_GameOver" type="Control" parent="." unique_id=124175415]
 layout_mode = 3

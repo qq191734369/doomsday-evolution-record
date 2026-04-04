@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 class_name BaseCharacter
 
+signal currentHealthChanged()
+
 @export
 var showDebuggVisual = true
 @export
@@ -35,6 +37,7 @@ var isInvincible: bool = false
 
 func setCurrentHealthValue(value: int):
 	currentHealth = clamp(value, 0, maxHealth)
+	currentHealthChanged.emit()
 	if currentHealth == 0:
 		isDead = true
 		area_2d_body.set_deferred("monitorable", false)

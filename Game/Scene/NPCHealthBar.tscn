@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://dffo7wemvvlpw"]
+
+[ext_resource type="Theme" uid="uid://wgmbmuq0tq12" path="res://Game/Scene/UI_Theme/game_ui_theme.tres" id="1_theme"]
+[ext_resource type="Script" uid="uid://d1w4evjmp3tu5" path="res://Game/Scripts/UI/npc_health_bar.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://ko4nrfs7khew" path="res://Assets/Animation/Characters/LiMei/Avartar_LiMei.png" id="3_526os"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_63fxx"]
+font_size = 14
+
+[node name="NPCHealthBar" type="HBoxContainer" unique_id=277224860]
+custom_minimum_size = Vector2(0, 120)
+offset_right = 404.0
+offset_bottom = 40.0
+script = ExtResource("2_script")
+
+[node name="Control" type="Control" parent="." unique_id=36333920]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NPCName" type="Label" parent="Control" unique_id=1933258653]
+custom_minimum_size = Vector2(80, 30)
+layout_mode = 0
+offset_left = 159.0
+offset_top = 49.0
+offset_right = 239.0
+offset_bottom = 79.0
+theme = ExtResource("1_theme")
+text = "NPC"
+label_settings = SubResource("LabelSettings_63fxx")
+vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Control" unique_id=1688292315]
+position = Vector2(72, 55.000004)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_526os")
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1818176249]
+custom_minimum_size = Vector2(250, 30)
+layout_mode = 2
+theme = ExtResource("1_theme")
+value = 100.0
+show_percentage = false

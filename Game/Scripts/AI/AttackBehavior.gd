@@ -17,10 +17,15 @@ func update(delta: float) -> void:
 	# 只有当状态不是Attack或Run时才切换状态
 	var current_state = npc.state_machine.getCurrentStateName()
 	npc.set_move_target(npc.current_attack_target)
+	
+	if current_state == "Hurt" or current_state == "Die":
+		return
+
 	# 在攻击范围内
 	if npc.is_in_attack_range():
-		if current_state != "Attack":
-			npc.state_machine.switchTo("Attack")
+		if current_state == "Attack":
+			return
+		npc.state_machine.switchTo("Attack")
 	# 不在范围内
 	else:
 		# 无攻击目标

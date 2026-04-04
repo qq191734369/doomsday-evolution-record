@@ -5,10 +5,12 @@
 [ext_resource type="Texture2D" uid="uid://c0iqoxnjx3aph" path="res://Assets/Level/Road1.png" id="2_rl4yr"]
 [ext_resource type="Texture2D" uid="uid://vr84865kn8xf" path="res://Assets/Level/Round1-Items.png" id="2_w1egk"]
 [ext_resource type="PackedScene" uid="uid://cdcmam8w3evcf" path="res://Game/Scene/NPC.tscn" id="5_x253o"]
+[ext_resource type="SpriteFrames" uid="uid://ddlf0aimbmic5" path="res://Assets/Animation/Characters/LiMei/li-mei.tres" id="6_6o7ua"]
 [ext_resource type="Texture2D" uid="uid://sbf1caeyn1yy" path="res://Assets/Level/Road2-Items.png" id="6_haytw"]
 [ext_resource type="Script" uid="uid://cwegkb3slqgal" path="res://Game/Scripts/grass_generato_tilemaplayer.gd" id="7_3xx61"]
 [ext_resource type="Script" uid="uid://dkk7uckslfv48" path="res://Game/Scripts/enemy_manager.gd" id="7_f77hp"]
 [ext_resource type="PackedScene" uid="uid://ok1x11fbcb48" path="res://Game/Scene/Enemy.tscn" id="7_haytw"]
+[ext_resource type="SpriteFrames" uid="uid://bip7dwb5ne35i" path="res://Assets/Animation/Characters/ZhaoXinEr/zhao-xin-er.tres" id="7_x253o"]
 [ext_resource type="PackedScene" uid="uid://qdbr1dt0vj7p" path="res://Game/Scene/Tree.tscn" id="8_3xx61"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g5pn2"]
@@ -1832,12 +1834,15 @@ position = Vector2(689, 373)
 showDebuggVisual = false
 maxHealth = 400
 
-[node name="NPC" parent="Level" unique_id=652241976 instance=ExtResource("5_x253o")]
-position = Vector2(650, 207)
-attackDamage = 20
+[node name="NPC_LiMei" parent="Level" unique_id=2009303826 instance=ExtResource("5_x253o")]
+position = Vector2(757, 416)
+npc_name = "LiMei"
+sprite_frames = ExtResource("6_6o7ua")
 
-[node name="NPC2" parent="Level" unique_id=506992105 instance=ExtResource("5_x253o")]
-position = Vector2(720, 209)
+[node name="NPC_ZhaoXinEr" parent="Level" unique_id=1138572775 instance=ExtResource("5_x253o")]
+position = Vector2(710, 275)
+npc_name = "ZhaoXinEr"
+sprite_frames = ExtResource("7_x253o")
 
 [node name="TileMapLayer_Grass" type="TileMapLayer" parent="Level" unique_id=635380689]
 tile_map_data = PackedByteArray("AAAQAAUAAAAMAAoAAAAQAAYAAAAMAAoAAAAQAAcAAAAMAAoAAAARAAUAAAAMAAoAAAARAAYAAAAMAAoAAAARAAcAAAAMAAoAAAASAAUAAAAMAAoAAAASAAYAAAAMAAoAAAASAAcAAAAMAAoAAAATAAUAAAAMAAoAAAATAAYAAAAMAAoAAAATAAcAAAAMAAoAAAAVAA0AAAAMAAoAAAASAAoAAAAMAAoAAAARAAsAAAAMAAoAAAA=")

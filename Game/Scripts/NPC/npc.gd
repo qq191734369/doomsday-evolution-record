@@ -2,7 +2,9 @@ extends BaseCharacter
 
 class_name NPC
 
+@export var npc_name: String = "NPC"
 @export var dialogue_id: String = "npc_join_start"
+@export var sprite_frames: SpriteFrames
 
 @export var follow_distance := 50.0
 @export var stop_distance := 10.0
@@ -20,6 +22,12 @@ var behavior_manager: BehaviorManager
 var target: BaseCharacter  # 当前移动目标角色
 
 func _ready() -> void:
+	# 设置节点名称
+	name = npc_name
+	# 设置动画
+	var animated_sprite = get_node_or_null("AnimatedSprite2D")
+	if animated_sprite and sprite_frames:
+		animated_sprite.sprite_frames = sprite_frames
 	player = get_tree().root.get_node("SceneRoot/Level/Player")
 	# 初始化行为管理器
 	behavior_manager = BehaviorManager.new(self)
@@ -32,7 +40,7 @@ func _process(delta: float) -> void:
 func _input(event):
 	# 非队伍员 可响应对话
 	if event.is_action_pressed("interact") and not DialogManager.is_active and is_player_near() and not in_party:
- 		# 启动对话
+		# 启动对话
 		print("启动对话")
 		DialogManager.start_dialogue(dialogue_id)
 		DialogManager.join_party.connect(handle_npc_join_party)
@@ -192,3 +200,6 @@ func set_move_target(target_character: BaseCharacter) -> void:
 
 func get_move_target() -> BaseCharacter:
 	return target
+
+func get_npc_name() -> String:
+	return npc_name

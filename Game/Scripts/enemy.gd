@@ -50,4 +50,6 @@ func _on_area_2d_body_area_entered(area: Area2D) -> void:
 	var target = area.get_parent()
 	if target == player:
 		player.getHit(attackDamage, self)
+	elif target is NPC:
+		target.getHit(attackDamage, self)
 	
