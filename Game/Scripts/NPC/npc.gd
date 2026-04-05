@@ -10,6 +10,9 @@ class_name NPC
 @export var stop_distance := 10.0
 @export var player_max_distance := 200.0  # 与玩家最大距离s
 @export var attack_range := 50
+# 检测敌人范围
+@export var enemy_detection_range := 150.0  # 检测敌人的范围
+@onready var enemy_detection_area: Area2D = $EnemyDetectionArea
 
 @export var follow_target: BaseCharacter
 @export var in_party: bool
@@ -20,6 +23,7 @@ var current_attack_target: BaseCharacter = null
 var player: Player
 var behavior_manager: BehaviorManager
 var target: BaseCharacter  # 当前移动目标角色
+
 
 func _ready() -> void:
 	# 设置节点名称
@@ -36,6 +40,7 @@ func _process(delta: float) -> void:
 	# 更新行为管理器
 	behavior_manager.update(delta)
 	update_character_facing_deriction()
+	setEnemyDetectionRadius()
 
 func _input(event):
 	# 非队伍员 可响应对话
@@ -46,6 +51,12 @@ func _input(event):
 		DialogManager.join_party.connect(handle_npc_join_party)
 		DialogManager.dialogue_finished.connect(handle_dialog_finished)
 		# 可选：暂停玩家移动、显示对话UI等
+	
+# 设置敌人检测区域的半径
+func setEnemyDetectionRadius():
+	var collision_shape = enemy_detection_area.get_node("CollisionShape2D")
+	if collision_shape and collision_shape.shape is CircleShape2D:
+		collision_shape.shape.radius = enemy_detection_range
 
 func handle_npc_join_party():
 	print("加入队伍" + self.name)
@@ -122,25 +133,21 @@ func GetDirectionName() -> String:
 		flip = true
 	return facingDirection
 
-func find_nearest_enemy() -> BaseCharacter:
-	if not player:
-		return
-	
-	# 使用玩家的EnemyDetectionArea获取范围内的敌人
-	var detection_area = player.enemy_detection_area
-	if not detection_area:
+func find_nearest_enemy() -> BaseCharacter:	
+	# 使用EnemyDetectionArea获取范围内的敌人
+	if not enemy_detection_area:
 		return
 	
 	var nearest = null
 	var min_distance = INF
 	
 	# 获取检测区域内的所有重叠区域（敌人的Area2D_Body）
-	var overlapping_areas = detection_area.get_overlapping_areas()
+	var overlapping_areas = enemy_detection_area.get_overlapping_areas()
 	
 	for area in overlapping_areas:
 		var enemy = area.get_parent()
 		if enemy is EnemyCharacter and not enemy.isDead:
-			var distance = player.global_position.distance_to(enemy.global_position)
+			var distance = global_position.distance_to(enemy.global_position)
 			if distance < min_distance:
 				min_distance = distance
 				nearest = enemy
