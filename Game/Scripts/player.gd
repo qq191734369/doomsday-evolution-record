@@ -12,6 +12,12 @@ func _ready() -> void:
 		PartyManager.add_member(self)
 	# 队伍初始化和血条初始化
 	GameManager.playerHealthUpdated_signal.emit(data.currentHealth, data.maxHealth)
+	# 渲染队伍成员
+	call_deferred("_render_party_members")
+
+func _render_party_members():
+	# 渲染队伍成员
+	PartyManager.render_party_members()
 
 
 # 设置敌人检测区域的半径

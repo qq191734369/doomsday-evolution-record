@@ -56,36 +56,6 @@ func init_player_in_scene(scene_root: Node2D) -> void:
 	else:
 		print("Warning: Player scene not provided, using existing player if available")
 
-# 更新玩家数据
-func _update_player_data(player: Node2D, player_data: GameData.CharacterInfo):
-	# 更新位置
-	if player.has_method("set_global_position"):
-		player.set_global_position(player_data.position)
-	
-	# 更新健康值
-	if "maxHealth" in player:
-		player.maxHealth = player_data.maxHealth
-	if "currentHealth" in player:
-		player.currentHealth = player_data.currentHealth
-	
-	# 更新攻击力
-	if "attackDamage" in player:
-		player.attackDamage = player_data.attackDamage
-	
-	# 更新速度
-	if "speed" in player:
-		player.speed = player_data.speed
-	
-	# 更新名称
-	if "name" in player:
-		player.name = player_data.name
-	
-	# 更新等级和经验
-	if "level" in player:
-		player.level = player_data.level
-	if "experience" in player:
-		player.experience = player_data.experience
-
 # 初始化场景中的NPC
 func init_npcs_in_scene(scene_root: BaseScene) -> void:
 	# 延迟一帧，确保场景完全加载
@@ -134,33 +104,6 @@ func init_npcs_in_scene(scene_root: BaseScene) -> void:
 			else:
 				print("Warning: NPC scene not provided, skipping NPC instantiation")
 
-# 更新NPC数据
-func _update_npc_data(npc: Node2D, npc_data: GameData.CharacterInfo):
-	# 更新位置
-	if npc.has_method("set_global_position"):
-		npc.set_global_position(npc_data.position)
-	
-	# 更新健康值
-	if "maxHealth" in npc:
-		npc.maxHealth = npc_data.maxHealth
-	if "currentHealth" in npc:
-		npc.currentHealth = npc_data.currentHealth
-	
-	# 更新攻击力
-	if "attackDamage" in npc:
-		npc.attackDamage = npc_data.attackDamage
-	
-	# 更新速度
-	if "speed" in npc:
-		npc.speed = npc_data.speed
-	
-	# 更新名称
-	if "name" in npc:
-		npc.name = npc_data.name
-	
-	# 更新对话ID
-	if "dialogueId" in npc:
-		npc.dialogueId = npc_data.dialogueId
 
 # 初始化场景中的敌人
 func init_enemies_in_scene(scene_root: Node2D, enemy_scene: PackedScene = null) -> void:
