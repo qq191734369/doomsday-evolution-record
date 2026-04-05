@@ -9,7 +9,7 @@ static func get_instance() -> SceneInitializer:
 		SceneInitializer.singleton = SceneInitializer.new()
 	return SceneInitializer.singleton
 
-func init(scene_root: Node2D, player_scene: PackedScene = null, npc_scene: PackedScene = null, enemy_scene: PackedScene = null):
+func init(scene_root: Node2D):
 	# 初始化玩家
 	init_player_in_scene(scene_root)
 	## 初始化NPC

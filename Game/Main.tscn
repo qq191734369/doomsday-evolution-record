@@ -6,8 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://c0iqoxnjx3aph" path="res://Assets/Level/Road1.png" id="2_rl4yr"]
 [ext_resource type="Texture2D" uid="uid://vr84865kn8xf" path="res://Assets/Level/Round1-Items.png" id="2_w1egk"]
 [ext_resource type="PackedScene" uid="uid://cnrctjfmjtcci" path="res://Game/Scene/SceneTeleportPoint.tscn" id="4_krex0"]
-[ext_resource type="PackedScene" uid="uid://bd3v2dacrsn4a" path="res://Game/Scene/Test.tscn" id="5_3tq7c"]
-[ext_resource type="PackedScene" uid="uid://cdcmam8w3evcf" path="res://Game/Scene/NPC.tscn" id="5_x253o"]
 [ext_resource type="Texture2D" uid="uid://sbf1caeyn1yy" path="res://Assets/Level/Road2-Items.png" id="6_haytw"]
 [ext_resource type="Script" uid="uid://cwegkb3slqgal" path="res://Game/Scripts/grass_generato_tilemaplayer.gd" id="7_3xx61"]
 [ext_resource type="Script" uid="uid://dkk7uckslfv48" path="res://Game/Scripts/enemy_manager.gd" id="7_f77hp"]
@@ -1819,9 +1817,6 @@ size = Vector2(1362.5, 21)
 
 [node name="SceneRoot" type="Node2D" unique_id=1693781938]
 script = ExtResource("1_eg2md")
-player_scene = ExtResource("1_wd0a0")
-npc_scene = ExtResource("5_x253o")
-enemy_scene = ExtResource("7_haytw")
 
 [node name="TileMapLayerBackgroud" type="TileMapLayer" parent="." unique_id=111949756]
 tile_map_data = PackedByteArray("AAAAAAAAAwAAAAAAAAAAAA4AAAAAAAAAAAA=")
@@ -1833,7 +1828,7 @@ tile_set = SubResource("TileSet_rl4yr")
 
 [node name="TeleportPoint" parent="." unique_id=249778909 instance=ExtResource("4_krex0")]
 position = Vector2(1350, 382)
-target_scene = ExtResource("5_3tq7c")
+target_scene = 1
 
 [node name="Level" type="Node2D" parent="." unique_id=2465842]
 y_sort_enabled = true
