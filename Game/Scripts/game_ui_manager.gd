@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+class_name GameUI
+
 const NPC_HEALTH_BAR_SCENE = preload("res://Game/Scene/NPCHealthBar.tscn")
 
 @onready var progress_bar: ProgressBar = $Control_HUD/ProgressBar

@@ -10,6 +10,7 @@ func render_party_members():
 	
 	# 清空当前列表
 	_clearNpcMembersInstanceList()
+	GameManager.game_ui_manager.clearNPCBars()
 	
 	# 获取队伍列表
 	var party_list = game_data.partyList

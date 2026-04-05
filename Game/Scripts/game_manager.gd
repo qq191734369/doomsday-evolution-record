@@ -7,7 +7,7 @@ signal gameover_signal()
 
 # UI相关
 var game_ui_instance: CanvasLayer
-var game_ui_manager: Node
+var game_ui_manager: GameUI
 
 func _ready() -> void:
 	# 动态创建Game_UI实例
