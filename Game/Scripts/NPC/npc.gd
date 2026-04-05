@@ -165,7 +165,7 @@ func is_in_attack_range():
 	return true
 
 # 是否超出最大跟随距离
-func isOutOfMaxFollowRange() -> bool:
+func is_outof_max_follow_range() -> bool:
 	if not player:
 		return false
 	var distance_to_player = global_position.distance_to(player.global_position)
@@ -183,7 +183,11 @@ func should_attack() -> bool:
 		return false
 	
 	# 玩家走远
-	if isOutOfMaxFollowRange():
+	if is_outof_max_follow_range():
+		current_attack_target = null
+		return false
+	
+	if behavior_manager and behavior_manager.the_most_important_behavior is FollowBehavior:
 		current_attack_target = null
 		return false
 	

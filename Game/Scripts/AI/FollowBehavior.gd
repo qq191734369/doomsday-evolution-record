@@ -10,7 +10,7 @@ func can_start() -> bool:
 	return npc.in_party and npc.follow_target
 	
 func is_most_important():
-	return npc.isOutOfMaxFollowRange()
+	return npc.is_outof_max_follow_range()
 	
 func is_most_important_done():
 	return not npc.is_need_adjust_distance_to_target()
