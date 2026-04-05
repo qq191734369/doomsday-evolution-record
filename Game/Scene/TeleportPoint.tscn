@@ -1,17 +1,17 @@
-[gd_scene format=3 uid="uid://cnrctjfmjtcci"]
+[gd_scene format=3 uid="uid://v7pe8y7k60gx"]
 
 [ext_resource type="Script" uid="uid://c0aqbblqcr6ey" path="res://Game/Scripts/scene_teleport_point.gd" id="1_keopq"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_4lnoh"]
-radius = 20.45
+[sub_resource type="CircleShape2D" id="CircleShape2D_2hkls"]
+radius = 25.0
 
-[node name="TeleportPoint" type="Area2D" unique_id=249778909]
+[node name="TeleportPoint" type="Area2D" unique_id=1340096450]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_keopq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1007676765]
-shape = SubResource("CircleShape2D_4lnoh")
-debug_color = Color(0.6593005, 0.3315389, 0.98218554, 0.41960785)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2008197793]
+shape = SubResource("CircleShape2D_2hkls")
+debug_color = Color(0.88702095, 0.00028916955, 0.80472094, 0.41960785)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

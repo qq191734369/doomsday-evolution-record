@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bpq6o60di5j0v" path="res://Game/Scripts/Scene/test_scene.gd" id="1_ekxq8"]
 [ext_resource type="Texture2D" uid="uid://h8e7saq806ll" path="res://Assets/Level/Factory-Road.png" id="6_0wwsu"]
-[ext_resource type="PackedScene" uid="uid://cnrctjfmjtcci" path="res://Game/Scene/TeleportPoint.tscn" id="8_rdsbb"]
+[ext_resource type="PackedScene" uid="uid://v7pe8y7k60gx" path="res://Game/Scene/TeleportPoint.tscn" id="8_rdsbb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ekxq8"]
 texture = ExtResource("6_0wwsu")
@@ -21,8 +21,8 @@ script = ExtResource("1_ekxq8")
 tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_hqi78")
 
-[node name="TeleportPoint" parent="." unique_id=249778909 instance=ExtResource("8_rdsbb")]
-position = Vector2(36, 504)
+[node name="TeleportPoint" parent="." unique_id=1340096450 instance=ExtResource("8_rdsbb")]
+position = Vector2(39, 504)
 
 [node name="Level" type="Node2D" parent="." unique_id=1207379172]
 
