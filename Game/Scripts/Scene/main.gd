@@ -1,8 +1,11 @@
-extends Node2D
+extends BaseScene
 
 @export var player_scene: PackedScene
 @export var npc_scene: PackedScene
 @export var enemy_scene: PackedScene
+
+func _init() -> void:
+	scene_name = "main"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

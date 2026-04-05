@@ -1,8 +1,11 @@
-extends Node2D
+extends BaseScene
 
 @export var player_scene: PackedScene
 @export var npc_scene: PackedScene
 @export var enemy_scene: PackedScene
+
+func _init() -> void:
+	scene_name = "text_scene"
 
 func _ready():
 	# 获取SceneInitializer实例

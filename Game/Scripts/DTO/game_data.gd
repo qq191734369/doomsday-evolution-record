@@ -17,6 +17,12 @@ class CharacterInfo:
 	var currentState: String = "Idle"
 	var	inParty: bool = false
 	var	dialogueId
+	var follow_distance = 50.0 # 跟随间距
+	var stop_distance = 10.0
+	var player_max_distance =  200.0  # 与玩家最大距离s
+	var attack_range = 50 # 攻击范围
+	var enemy_detection_range = 150.0 # 检测一定范围内的敌人
+	var scene: String # 当前所在场景
 
 	func _init(data: Dictionary) -> void:
 		maxHealth = data.get("maxHealth", 200)
@@ -25,6 +31,9 @@ class CharacterInfo:
 		speed = data.get("speed", 200)
 		position = data.get("position", Vector2.ZERO)
 		name = data.get("name", "Player")
+		scene = data.get("scene", "")
+		dialogueId = data.get("dialogueId", "")
+		position = data.get("position", position)
 
 class EnemyInfo:
 	var maxHealth: int = 80
@@ -53,9 +62,25 @@ class GameStateInfo:
 var player: CharacterInfo = CharacterInfo.new({})
 
 # npc信息
-var npcDictionary: Dictionary[String, CharacterInfo] = {}
+var npcDictionary: Dictionary[String, CharacterInfo] = {
+	"LiMei": CharacterInfo.new({
+		"name": "LiMei",
+		"speed": 200,
+		"dialogueId": "limei_join_start",
+		"scene": "main",
+		"position": Vector2(689.0, 373.0)
+	}),
+	"ZhaoXinEr": CharacterInfo.new({
+		"name": "ZhaoXinEr",
+		"speed": 200,
+		"dialogueId": "zhaoxiner_join_start",
+		"scene": "main",
+		"position": Vector2(720.0, 373.0)
+	})
+}
+
 # 第一个为玩家
-var partyList: Array = []
+var partyList: Array[String] = []
 
 # 敌人信息
 var enemyDictionary: Dictionary[String, EnemyInfo] = {}
@@ -77,6 +102,9 @@ static func get_instance() -> GameData:
 func _initialize():
 	player = CharacterInfo.new({})
 	gameState = GameStateInfo.new()
+
+func isInParty(name: String) -> bool:
+	return partyList.has(name)
 
 # 玩家数据管理
 func update_player_data(data: Dictionary):

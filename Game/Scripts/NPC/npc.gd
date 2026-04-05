@@ -2,38 +2,78 @@ extends BaseCharacter
 
 class_name NPC
 
-@export var npc_name: String = "NPC"
-@export var dialogue_id: String = "npc_join_start"
-@export var sprite_frames: SpriteFrames
+var npc_name:
+	get:
+		return data.name
+	set(value):
+		data.name = value
+var dialogue_id:
+	get:
+		return data.dialogueId
+	set(value):
+		data.dialogueId = value
 
-@export var follow_distance := 50.0
-@export var stop_distance := 10.0
-@export var player_max_distance := 200.0  # 与玩家最大距离s
-@export var attack_range := 50
+var follow_distance:
+	get:
+		return data.follow_distance
+	set(value):
+		data.follow_distance = value
+var stop_distance:
+	get:
+		return data.stop_distance
+	set(value):
+		data.stop_distance = value
+var player_max_distance:  # 与玩家最大距离s
+	get:
+		return data.player_max_distance
+	set(value):
+		data.player_max_distance = value
+var attack_range:
+	get:
+		return data.attack_range
+	set(value):
+		data.attack_range = value
 # 检测敌人范围
-@export var enemy_detection_range := 150.0  # 检测敌人的范围
-@onready var enemy_detection_area: Area2D = $EnemyDetectionArea
+var enemy_detection_range:  # 检测敌人的范围
+	get:
+		return data.enemy_detection_range
+	set(value):
+		data.enemy_detection_range = value
 
-@export var follow_target: BaseCharacter
-@export var in_party: bool
+var in_party:
+	get:
+		return data.inParty
+	set(value):
+		data.inParty = value
+
+@onready var enemy_detection_area: Area2D = $EnemyDetectionArea
 
 var playerDirection: Vector2
 var playerAngle: float
-var current_attack_target: BaseCharacter = null
+var current_attack_target: BaseCharacter = null # 攻击目标
 var player: Player
 var behavior_manager: BehaviorManager
 var target: BaseCharacter  # 当前移动目标角色
+var follow_target: BaseCharacter
 
+func setData(d: GameData.CharacterInfo):
+	super.setData(d)
+	# 设置节点各种属性
+	name = data.name
+	global_position = data.position
+
+func _init() -> void:
+	data = GameData.CharacterInfo.new({
+		"speed": 200
+	})
 
 func _ready() -> void:
-	# 设置节点名称
-	name = npc_name
-	# 设置动画
-	var animated_sprite = get_node_or_null("AnimatedSprite2D")
-	if animated_sprite and sprite_frames:
-		animated_sprite.sprite_frames = sprite_frames
 	# 延迟获取玩家，因为玩家可能是动态创建的
 	call_deferred("_try_get_player")
+	# 设置动画
+	var sprite_frames = load("res://Assets/Animation/Characters/" + data.name + "/" + data.name + ".tres")
+	if animaitedSprite2D and sprite_frames:
+		animaitedSprite2D.sprite_frames = sprite_frames
 	# 初始化行为管理器
 	behavior_manager = BehaviorManager.new(self)
 
@@ -54,6 +94,8 @@ func _input(event):
 	if event.is_action_pressed("interact") and not DialogManager.is_active and is_player_near() and not in_party:
 		# 启动对话
 		print("启动对话")
+		if !dialogue_id or dialogue_id == "":
+			return
 		DialogManager.start_dialogue(dialogue_id)
 		DialogManager.join_party.connect(handle_npc_join_party)
 		DialogManager.dialogue_finished.connect(handle_dialog_finished)
@@ -67,6 +109,7 @@ func setEnemyDetectionRadius():
 
 func handle_npc_join_party():
 	print("加入队伍" + self.name)
+	in_party = true
 	PartyManager.add_member(self)
 
 func handle_dialog_finished():
@@ -84,7 +127,6 @@ func is_player_near() -> bool:
 func set_target(new_target: BaseCharacter):
 	follow_target = new_target
 	target = follow_target
-	in_party = true
 	
 func get_distance_to_follow_target() -> float:
 	if in_party == false || !follow_target:

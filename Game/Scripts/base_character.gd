@@ -7,22 +7,34 @@ signal currentHealthChanged()
 @export
 var showDebuggVisual = true
 @export
-var speed = 200
-@export
 var accelerate = 5
-@export
-var maxHealth = 100
-@onready var currentHealth = maxHealth:
-	set = setCurrentHealthValue
+
+
+var currentHealth:
+	get:
+		if not _data:
+			return 0
+		return _data.currentHealth
+		
+	set(value):
+		setCurrentHealthValue(value)
 			
 			
 var isDead = false
-@export
-var attackDamage = 50
 
 @onready var area_2d_body: Area2D = $Area2D_Body
 @onready var animaitedSprite2D: AnimatedSprite2D = $AnimatedSprite2D
 @onready var state_machine: StateMachine = $StateMachine
+
+var _data: GameData.CharacterInfo = GameData.CharacterInfo.new({
+	"speed": 200
+})
+
+var data: GameData.CharacterInfo:
+	get:
+		return _data
+	set(value):
+		setData(value)
 
 var inputDirection: Vector2 = Vector2.ZERO
 var facingDirection: String = "down"
@@ -35,10 +47,17 @@ var knockBackDirection: Vector2
 
 var isInvincible: bool = false
 
+func setData(d: GameData.CharacterInfo):
+	if d == _data:
+		return
+	_data = d
+
 func setCurrentHealthValue(value: int):
-	currentHealth = clamp(value, 0, maxHealth)
+	if not _data:
+		return
+	_data.currentHealth = clamp(value, 0, _data.maxHealth)
 	currentHealthChanged.emit()
-	if currentHealth == 0:
+	if _data.currentHealth == 0:
 		isDead = true
 		area_2d_body.set_deferred("monitorable", false)
 		area_2d_body.set_deferred("monitoring", false)

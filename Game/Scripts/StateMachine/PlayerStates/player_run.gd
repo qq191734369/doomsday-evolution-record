@@ -6,7 +6,7 @@ func enter():
 func updatePhysics(delta: float):
 	super.updatePhysics(delta)
 
-	character.velocity = character.inputDirection * character.speed * delta * 50
+	character.velocity = character.inputDirection * character.data.speed * delta * 50
 	character.move_and_slide()
 
 func update():

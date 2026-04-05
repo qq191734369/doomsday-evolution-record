@@ -11,16 +11,18 @@ static func get_instance() -> SceneInitializer:
 
 func init(scene_root: Node2D, player_scene: PackedScene = null, npc_scene: PackedScene = null, enemy_scene: PackedScene = null):
 	# 初始化玩家
-	init_player_in_scene(scene_root, player_scene)
-	# 初始化NPC
-	init_npcs_in_scene(scene_root, npc_scene)
-	# 初始化敌人
-	init_enemies_in_scene(scene_root, enemy_scene)
+	init_player_in_scene(scene_root)
+	## 初始化NPC
+	init_npcs_in_scene(scene_root)
+	## 初始化敌人
+	#init_enemies_in_scene(scene_root, enemy_scene)
 
 # 初始化场景中的玩家
-func init_player_in_scene(scene_root: Node2D, player_scene: PackedScene = null) -> void:
+func init_player_in_scene(scene_root: Node2D) -> void:
 	# 延迟一帧，确保场景完全加载
 	await scene_root.get_tree().process_frame
+	
+	var player_scene = load("uid://ba6tj4nvsql2e")
 	
 	# 获取DataManager实例
 	var data_manager = DataManager.get_instance()
@@ -38,17 +40,16 @@ func init_player_in_scene(scene_root: Node2D, player_scene: PackedScene = null) 
 	var existing_player = level.get_node_or_null("Player")
 	if existing_player:
 		print("Player already exists, updating data")
-		# 更新现有玩家数据
-		_update_player_data(existing_player, player_data)
+		# 设置玩家数据
+		existing_player.data = player_data
 		return
 	
 	# 如果提供了玩家场景，则实例化新玩家
 	if player_scene:
-		var player_instance = player_scene.instantiate()
+		var player_instance = player_scene.instantiate() as Player
 		
-		# 设置玩家数据
-		_update_player_data(player_instance, player_data)
-		
+		# 设置玩家数据		
+		player_instance.data = player_data
 		# 添加到Level节点
 		level.add_child(player_instance)
 		print("Player instantiated and added to Level")
@@ -86,9 +87,11 @@ func _update_player_data(player: Node2D, player_data: GameData.CharacterInfo):
 		player.experience = player_data.experience
 
 # 初始化场景中的NPC
-func init_npcs_in_scene(scene_root: Node2D, npc_scene: PackedScene = null) -> void:
+func init_npcs_in_scene(scene_root: BaseScene) -> void:
 	# 延迟一帧，确保场景完全加载
 	await scene_root.get_tree().process_frame
+	
+	var npc_scene = load("uid://cdcmam8w3evcf")
 	
 	# 获取DataManager实例
 	var data_manager = DataManager.get_instance()
@@ -103,27 +106,27 @@ func init_npcs_in_scene(scene_root: Node2D, npc_scene: PackedScene = null) -> vo
 		return
 	
 	# 检查当前场景名称
-	var current_scene = scene_root.name
+	var current_scene = scene_root.scene_name
 	
 	# 遍历NPC数据，实例化在当前场景的NPC
 	for npc_id in npc_data.keys():
-		var npc_info = npc_data[npc_id]
-		
-		# 检查NPC是否在当前场景
-		if npc_info.scene == current_scene:
+		var npc_info = npc_data[npc_id] as GameData.CharacterInfo
+		print("npcscene:" + npc_info.scene, "scene" + current_scene)
+		# 检查NPC是否在当前场景, 组队中的npc忽略 有单独方法进行渲染
+		if not npc_info.inParty and npc_info.scene == current_scene:
 			# 检查是否已有该NPC实例
-			var existing_npc = level.get_node_or_null(npc_info.name)
+			var existing_npc = level.get_node_or_null(npc_info.name) as NPC
 			if existing_npc:
 				print("NPC " + npc_info.name + " already exists, updating data")
-				_update_npc_data(existing_npc, npc_info)
+				existing_npc.data = npc_info
 				continue
 			
 			# 如果提供了NPC场景，则实例化新NPC
 			if npc_scene:
-				var npc_instance = npc_scene.instantiate()
+				var npc_instance = npc_scene.instantiate() as NPC
 				
 				# 设置NPC数据
-				_update_npc_data(npc_instance, npc_info)
+				npc_instance.data = npc_info
 				
 				# 添加到Level节点
 				level.add_child(npc_instance)

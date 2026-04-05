@@ -8,11 +8,11 @@ class_name Player
 func _ready() -> void:
 	# 设置敌人检测区域的半径
 	setEnemyDetectionRadius()
-	
-	# 队伍初始化和血条初始化
-	GameManager.playerHealthUpdated_signal.emit(currentHealth, maxHealth)
 	if !PartyManager.is_in_party(self):
 		PartyManager.add_member(self)
+	# 队伍初始化和血条初始化
+	GameManager.playerHealthUpdated_signal.emit(data.currentHealth, data.maxHealth)
+
 
 # 设置敌人检测区域的半径
 func setEnemyDetectionRadius():
@@ -23,7 +23,7 @@ func setEnemyDetectionRadius():
 func setCurrentHealthValue(value: int):
 	super.setCurrentHealthValue(value)
 	
-	GameManager.playerHealthUpdate(currentHealth, maxHealth)
+	GameManager.playerHealthUpdate(data.currentHealth, data.maxHealth)
 	
 	if isDead == true:
 		GameManager.playerIsDead()

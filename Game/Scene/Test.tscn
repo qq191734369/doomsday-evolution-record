@@ -2,10 +2,14 @@
 
 [ext_resource type="Script" uid="uid://bpq6o60di5j0v" path="res://Game/Scripts/Scene/test_scene.gd" id="1_ekxq8"]
 [ext_resource type="PackedScene" uid="uid://ba6tj4nvsql2e" path="res://Game/Scene/Player.tscn" id="2_3k3k7"]
+[ext_resource type="PackedScene" uid="uid://cdcmam8w3evcf" path="res://Game/Scene/NPC.tscn" id="3_oilp5"]
+[ext_resource type="PackedScene" uid="uid://ok1x11fbcb48" path="res://Game/Scene/Enemy.tscn" id="4_4v8g0"]
 
 [node name="SceneRoot" type="Node2D" unique_id=1576063908]
 script = ExtResource("1_ekxq8")
 player_scene = ExtResource("2_3k3k7")
+npc_scene = ExtResource("3_oilp5")
+enemy_scene = ExtResource("4_4v8g0")
 
 [node name="Level" type="Node2D" parent="." unique_id=1636977798]
 
