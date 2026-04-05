@@ -21,7 +21,10 @@ func _ready() -> void:
 	call_deferred("_try_get_player")
 	
 func _try_get_player():
-	player = get_tree().root.get_node("SceneRoot/Level/Player")
+	const path = "SceneRoot/Level/Player"
+	var root = get_tree().root
+	if root.has_node(path):
+		player = get_tree().root.get_node(path)
 	
 func _process(_delta: float) -> void:
 	# 如果还没有获取到玩家，尝试获取

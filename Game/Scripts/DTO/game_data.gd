@@ -9,7 +9,7 @@ class CharacterInfo:
 	var attackDamage: int = 50
 	var speed: int = 200
 	var position: Vector2 = Vector2.ZERO
-	var name: String = "Player"
+	var name: String = ""
 	var level: int = 1
 	var experience: int = 0
 	var inventory: Array = []
@@ -59,7 +59,11 @@ class GameStateInfo:
 	var currentScene: String = ""
 
 # 玩家信息
-var player: CharacterInfo = CharacterInfo.new({})
+var player: CharacterInfo = CharacterInfo.new({
+	"name": "Player",
+	"position": Vector2(689.0, 373.0),
+	"attackDamage": 50
+})
 
 # npc信息
 var npcDictionary: Dictionary[String, CharacterInfo] = {
@@ -68,7 +72,9 @@ var npcDictionary: Dictionary[String, CharacterInfo] = {
 		"speed": 200,
 		"dialogueId": "limei_join_start",
 		"scene": "main",
-		"position": Vector2(689.0, 373.0)
+		"position": Vector2(689.0, 373.0),
+		"maxHealth": 500,
+		"attackDamage": 30
 	}),
 	"ZhaoXinEr": CharacterInfo.new({
 		"name": "ZhaoXinEr",
@@ -100,7 +106,7 @@ static func get_instance() -> GameData:
 
 # 初始化
 func _initialize():
-	player = CharacterInfo.new({})
+	#player = CharacterInfo.new({})
 	gameState = GameStateInfo.new()
 
 func isInParty(name: String) -> bool:

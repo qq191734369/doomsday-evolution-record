@@ -4,8 +4,17 @@ class_name Player
 
 @export var enemy_detection_range := 150.0  # 检测敌人的范围
 @onready var enemy_detection_area: Area2D = $EnemyDetectionArea
+@onready var camera_2d: Camera2D = $Camera2D
+
+var debug_data = GameData.get_instance()
+
+func setData(d: GameData.CharacterInfo):
+	super.setData(d)
+	# 设置节点各种属性
+	global_position = data.position
 
 func _ready() -> void:
+	camera_2d.make_current()
 	# 设置敌人检测区域的半径
 	setEnemyDetectionRadius()
 	if !PartyManager.is_in_party(self):

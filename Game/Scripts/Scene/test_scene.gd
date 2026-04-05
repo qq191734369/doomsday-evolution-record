@@ -1,7 +1,7 @@
 extends BaseScene
 
 func _init() -> void:
-	scene_name = "text_scene"
+	scene_name = "test_scene"
 
 func _ready():
 	# 获取SceneInitializer实例

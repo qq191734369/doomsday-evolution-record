@@ -2,10 +2,9 @@
 
 [ext_resource type="Script" uid="uid://c6h5d61g6uh8r" path="res://Game/Scripts/Scene/main.gd" id="1_eg2md"]
 [ext_resource type="Texture2D" uid="uid://ca1c6wiynlyy8" path="res://Assets/Level/Road2.png" id="1_rchnd"]
-[ext_resource type="PackedScene" uid="uid://ba6tj4nvsql2e" path="res://Game/Scene/Player.tscn" id="1_wd0a0"]
 [ext_resource type="Texture2D" uid="uid://c0iqoxnjx3aph" path="res://Assets/Level/Road1.png" id="2_rl4yr"]
 [ext_resource type="Texture2D" uid="uid://vr84865kn8xf" path="res://Assets/Level/Round1-Items.png" id="2_w1egk"]
-[ext_resource type="PackedScene" uid="uid://cnrctjfmjtcci" path="res://Game/Scene/SceneTeleportPoint.tscn" id="4_krex0"]
+[ext_resource type="PackedScene" uid="uid://cnrctjfmjtcci" path="res://Game/Scene/TeleportPoint.tscn" id="4_krex0"]
 [ext_resource type="Texture2D" uid="uid://sbf1caeyn1yy" path="res://Assets/Level/Road2-Items.png" id="6_haytw"]
 [ext_resource type="Script" uid="uid://cwegkb3slqgal" path="res://Game/Scripts/grass_generato_tilemaplayer.gd" id="7_3xx61"]
 [ext_resource type="Script" uid="uid://dkk7uckslfv48" path="res://Game/Scripts/enemy_manager.gd" id="7_f77hp"]
@@ -1827,15 +1826,11 @@ tile_map_data = PackedByteArray("AAAPAAIAAQAHAAEAAAAPAAMAAQAHAAIAAAAPAAQAAQAHAAM
 tile_set = SubResource("TileSet_rl4yr")
 
 [node name="TeleportPoint" parent="." unique_id=249778909 instance=ExtResource("4_krex0")]
-position = Vector2(1350, 382)
+position = Vector2(1346, 388)
 target_scene = 1
 
 [node name="Level" type="Node2D" parent="." unique_id=2465842]
 y_sort_enabled = true
-
-[node name="Player" parent="Level" unique_id=1029835329 instance=ExtResource("1_wd0a0")]
-position = Vector2(689, 373)
-showDebuggVisual = false
 
 [node name="TileMapLayer_Grass" type="TileMapLayer" parent="Level" unique_id=635380689]
 tile_map_data = PackedByteArray("AAAQAAUAAAAMAAoAAAAQAAYAAAAMAAoAAAAQAAcAAAAMAAoAAAARAAUAAAAMAAoAAAARAAYAAAAMAAoAAAARAAcAAAAMAAoAAAASAAUAAAAMAAoAAAASAAYAAAAMAAoAAAASAAcAAAAMAAoAAAATAAUAAAAMAAoAAAATAAYAAAAMAAoAAAATAAcAAAAMAAoAAAAVAA0AAAAMAAoAAAASAAoAAAAMAAoAAAARAAsAAAAMAAoAAAA=")
