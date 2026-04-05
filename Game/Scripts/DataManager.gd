@@ -23,7 +23,7 @@ func get_game_data() -> GameData:
 	return game_data
 
 # 获取玩家数据
-func get_player_data() -> GameData.PlayerInfo:
+func get_player_data() -> GameData.CharacterInfo:
 	return game_data.player
 
 # 更新玩家数据

@@ -56,7 +56,7 @@ func init_player_in_scene(scene_root: Node2D, player_scene: PackedScene = null) 
 		print("Warning: Player scene not provided, using existing player if available")
 
 # 更新玩家数据
-func _update_player_data(player: Node2D, player_data: GameData.PlayerInfo):
+func _update_player_data(player: Node2D, player_data: GameData.CharacterInfo):
 	# 更新位置
 	if player.has_method("set_global_position"):
 		player.set_global_position(player_data.position)
@@ -132,7 +132,7 @@ func init_npcs_in_scene(scene_root: Node2D, npc_scene: PackedScene = null) -> vo
 				print("Warning: NPC scene not provided, skipping NPC instantiation")
 
 # 更新NPC数据
-func _update_npc_data(npc: Node2D, npc_data: GameData.NPCInfo):
+func _update_npc_data(npc: Node2D, npc_data: GameData.CharacterInfo):
 	# 更新位置
 	if npc.has_method("set_global_position"):
 		npc.set_global_position(npc_data.position)

@@ -3,7 +3,7 @@ class_name GameData
 # 单例实例
 static var singleton: GameData
 
-class PlayerInfo:
+class CharacterInfo:
 	var maxHealth: int = 100
 	var currentHealth: int = 100
 	var attackDamage: int = 50
@@ -15,6 +15,8 @@ class PlayerInfo:
 	var inventory: Array = []
 	var equipment: Dictionary = {}
 	var currentState: String = "Idle"
+	var	inParty: bool = false
+	var	dialogueId
 
 	func _init(data: Dictionary) -> void:
 		maxHealth = data.get("maxHealth", 200)
@@ -23,17 +25,6 @@ class PlayerInfo:
 		speed = data.get("speed", 200)
 		position = data.get("position", Vector2.ZERO)
 		name = data.get("name", "Player")
-
-class NPCInfo:
-	var maxHealth: int = 100
-	var currentHealth: int = 100
-	var attackDamage: int = 30
-	var speed: int = 180
-	var position: Vector2 = Vector2.ZERO
-	var name: String = "NPC"
-	var scene: String = ""
-	var inParty: bool = false
-	var dialogueId: String = ""
 
 class EnemyInfo:
 	var maxHealth: int = 80
@@ -59,10 +50,10 @@ class GameStateInfo:
 	var currentScene: String = ""
 
 # 玩家信息
-var player: PlayerInfo = PlayerInfo.new({})
+var player: CharacterInfo = CharacterInfo.new({})
 
 # npc信息
-var npcDictionary: Dictionary[String, NPCInfo] = {}
+var npcDictionary: Dictionary[String, CharacterInfo] = {}
 # 第一个为玩家
 var partyList: Array = []
 
@@ -84,7 +75,7 @@ static func get_instance() -> GameData:
 
 # 初始化
 func _initialize():
-	player = PlayerInfo.new({})
+	player = CharacterInfo.new({})
 	gameState = GameStateInfo.new()
 
 # 玩家数据管理
@@ -94,12 +85,12 @@ func update_player_data(data: Dictionary):
 			if player.has(key):
 				player[key] = data[key]
 
-func get_player_data() -> PlayerInfo:
+func get_player_data() -> CharacterInfo:
 	return player
 
 # NPC数据管理
 func add_npc_data(npc_id: String, data: Dictionary):
-	var npc_info = NPCInfo.new()
+	var npc_info = CharacterInfo.new({})
 	for key in data.keys():
 		if npc_info.has(key):
 			npc_info[key] = data[key]
@@ -116,7 +107,7 @@ func remove_npc_data(npc_id: String):
 	if npc_id in npcDictionary:
 		npcDictionary.erase(npc_id)
 
-func get_npc_data(npc_id: String) -> NPCInfo:
+func get_npc_data(npc_id: String) -> CharacterInfo:
 	return npcDictionary.get(npc_id, null)
 
 func get_all_npc_data() -> Dictionary:
@@ -305,7 +296,7 @@ func _deserialize_npcs(data: Dictionary):
 	npcDictionary.clear()
 	for npc_id in data.keys():
 		var npc_data = data[npc_id]
-		var npc_info = NPCInfo.new()
+		var npc_info = CharacterInfo.new({})
 		npc_info.maxHealth = npc_data.get("maxHealth", 100)
 		npc_info.currentHealth = npc_data.get("currentHealth", 100)
 		npc_info.attackDamage = npc_data.get("attackDamage", 30)
