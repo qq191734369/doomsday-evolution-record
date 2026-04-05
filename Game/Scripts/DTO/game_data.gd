@@ -88,6 +88,9 @@ var npcDictionary: Dictionary[String, CharacterInfo] = {
 # 第一个为玩家
 var partyList: Array[String] = []
 
+func getNpcPartyMember():
+	return partyList.filter(func(n): return n != "Player")
+
 # 敌人信息
 var enemyDictionary: Dictionary[String, EnemyInfo] = {}
 

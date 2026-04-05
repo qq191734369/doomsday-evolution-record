@@ -1826,8 +1826,9 @@ tile_map_data = PackedByteArray("AAAPAAIAAQAHAAEAAAAPAAMAAQAHAAIAAAAPAAQAAQAHAAM
 tile_set = SubResource("TileSet_rl4yr")
 
 [node name="TeleportPoint" parent="." unique_id=1340096450 instance=ExtResource("4_krex0")]
-position = Vector2(1342, 401)
+position = Vector2(1356, 389)
 target_scene = 1
+to_coordinate = Vector2(80, 504)
 
 [node name="Level" type="Node2D" parent="." unique_id=2465842]
 y_sort_enabled = true

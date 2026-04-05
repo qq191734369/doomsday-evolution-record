@@ -22,7 +22,8 @@ tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_hqi78")
 
 [node name="TeleportPoint" parent="." unique_id=1340096450 instance=ExtResource("8_rdsbb")]
-position = Vector2(39, 504)
+position = Vector2(14, 503)
+to_coordinate = Vector2(1300, 401)
 
 [node name="Level" type="Node2D" parent="." unique_id=1207379172]
 
