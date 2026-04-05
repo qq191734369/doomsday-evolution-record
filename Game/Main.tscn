@@ -14,13 +14,13 @@
 [ext_resource type="PackedScene" uid="uid://ok1x11fbcb48" path="res://Game/Scene/Enemy.tscn" id="7_haytw"]
 [ext_resource type="PackedScene" uid="uid://qdbr1dt0vj7p" path="res://Game/Scene/Tree.tscn" id="8_3xx61"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g5pn2"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_krex0"]
 texture = ExtResource("1_rchnd")
 texture_region_size = Vector2i(1374, 768)
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(-671, -371)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w1egk"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3tq7c"]
 texture = ExtResource("2_rl4yr")
 texture_region_size = Vector2i(1374, 768)
 0:0/0 = 0
@@ -28,8 +28,8 @@ texture_region_size = Vector2i(1374, 768)
 
 [sub_resource type="TileSet" id="TileSet_lv82p"]
 tile_size = Vector2i(32, 32)
-sources/3 = SubResource("TileSetAtlasSource_w1egk")
-sources/0 = SubResource("TileSetAtlasSource_g5pn2")
+sources/3 = SubResource("TileSetAtlasSource_3tq7c")
+sources/0 = SubResource("TileSetAtlasSource_krex0")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rchnd"]
 texture = ExtResource("2_w1egk")

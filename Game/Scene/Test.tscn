@@ -4,6 +4,35 @@
 [ext_resource type="PackedScene" uid="uid://ba6tj4nvsql2e" path="res://Game/Scene/Player.tscn" id="2_3k3k7"]
 [ext_resource type="PackedScene" uid="uid://cdcmam8w3evcf" path="res://Game/Scene/NPC.tscn" id="3_oilp5"]
 [ext_resource type="PackedScene" uid="uid://ok1x11fbcb48" path="res://Game/Scene/Enemy.tscn" id="4_4v8g0"]
+[ext_resource type="Texture2D" uid="uid://ca1c6wiynlyy8" path="res://Assets/Level/Road2.png" id="5_yjk83"]
+[ext_resource type="Texture2D" uid="uid://h8e7saq806ll" path="res://Assets/Level/Factory-Road.png" id="6_0wwsu"]
+[ext_resource type="Texture2D" uid="uid://c0iqoxnjx3aph" path="res://Assets/Level/Road1.png" id="7_rdsbb"]
+[ext_resource type="PackedScene" uid="uid://cnrctjfmjtcci" path="res://Game/Scene/SceneTeleportPoint.tscn" id="8_rdsbb"]
+[ext_resource type="PackedScene" uid="uid://bcoovsux82udu" path="res://Game/Main.tscn" id="9_37h06"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_37h06"]
+texture = ExtResource("5_yjk83")
+texture_region_size = Vector2i(1374, 768)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(-671, -371)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_21my4"]
+texture = ExtResource("6_0wwsu")
+texture_region_size = Vector2i(1200, 895)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(-584, -431)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0cl7h"]
+texture = ExtResource("7_rdsbb")
+texture_region_size = Vector2i(1374, 768)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(-671, -368)
+
+[sub_resource type="TileSet" id="TileSet_s54an"]
+tile_size = Vector2i(32, 32)
+sources/3 = SubResource("TileSetAtlasSource_0cl7h")
+sources/0 = SubResource("TileSetAtlasSource_37h06")
+sources/1 = SubResource("TileSetAtlasSource_21my4")
 
 [node name="SceneRoot" type="Node2D" unique_id=1576063908]
 script = ExtResource("1_ekxq8")
@@ -11,6 +40,14 @@ player_scene = ExtResource("2_3k3k7")
 npc_scene = ExtResource("3_oilp5")
 enemy_scene = ExtResource("4_4v8g0")
 
+[node name="TileMapLayerBackgroud" type="TileMapLayer" parent="." unique_id=1833762898]
+tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_s54an")
+
 [node name="Level" type="Node2D" parent="." unique_id=1636977798]
 
 [node name="EnemyLevel" type="Node2D" parent="Level" unique_id=578941800]
+
+[node name="TeleportPoint" parent="." unique_id=249778909 instance=ExtResource("8_rdsbb")]
+position = Vector2(29, 502)
+target_scene = ExtResource("9_37h06")
