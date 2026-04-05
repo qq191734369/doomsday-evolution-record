@@ -8,6 +8,12 @@ func _init(npc_ref: NPC):
 
 func can_start() -> bool:
 	return npc.in_party and npc.follow_target
+	
+func is_most_important():
+	return npc.isOutOfMaxFollowRange()
+	
+func is_most_important_done():
+	return not npc.is_need_adjust_distance_to_target()
 
 func start() -> void:
 	print("开始跟随行为")

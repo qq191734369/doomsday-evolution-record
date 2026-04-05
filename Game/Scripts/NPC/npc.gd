@@ -164,6 +164,16 @@ func is_in_attack_range():
 	
 	return true
 
+# 是否超出最大跟随距离
+func isOutOfMaxFollowRange() -> bool:
+	if not player:
+		return false
+	var distance_to_player = global_position.distance_to(player.global_position)
+	if distance_to_player > player_max_distance:
+		return true
+	else :
+		return false
+
 func should_attack() -> bool:
 	if not in_party:
 		return false
@@ -173,8 +183,7 @@ func should_attack() -> bool:
 		return false
 	
 	# 玩家走远
-	var distance_to_player = global_position.distance_to(player.global_position)
-	if distance_to_player > player_max_distance:
+	if isOutOfMaxFollowRange():
 		current_attack_target = null
 		return false
 	
