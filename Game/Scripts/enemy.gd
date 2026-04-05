@@ -14,9 +14,21 @@ var playerDirection: Vector2
 var playerAngle: float
 
 func _ready() -> void:
+	# 延迟获取玩家，因为玩家可能是动态创建的
+	call_deferred("_try_get_player")
+	
+func _try_get_player():
 	player = get_tree().root.get_node("SceneRoot/Level/Player")
 	
 func _process(_delta: float) -> void:
+	# 如果还没有获取到玩家，尝试获取
+	if not player:
+		_try_get_player()
+	update_direction()
+
+func update_direction():
+	if not player:
+		return
 	playerDirection = player.global_position - global_position
 	playerDirection = playerDirection.normalized()
 	

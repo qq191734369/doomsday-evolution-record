@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://bcoovsux82udu"]
 
+[ext_resource type="Script" uid="uid://c6h5d61g6uh8r" path="res://Game/Scripts/Scene/main.gd" id="1_eg2md"]
 [ext_resource type="Texture2D" uid="uid://ca1c6wiynlyy8" path="res://Assets/Level/Road2.png" id="1_rchnd"]
 [ext_resource type="PackedScene" uid="uid://ba6tj4nvsql2e" path="res://Game/Scene/Player.tscn" id="1_wd0a0"]
 [ext_resource type="Texture2D" uid="uid://c0iqoxnjx3aph" path="res://Assets/Level/Road1.png" id="2_rl4yr"]
@@ -1818,7 +1819,11 @@ size = Vector2(23, 1235)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q34ae"]
 size = Vector2(1362.5, 21)
 
-[node name="SceneRoot" type="Node2D" unique_id=249472695]
+[node name="SceneRoot" type="Node2D" unique_id=1693781938]
+script = ExtResource("1_eg2md")
+player_scene = ExtResource("1_wd0a0")
+npc_scene = ExtResource("5_x253o")
+enemy_scene = ExtResource("7_haytw")
 
 [node name="TileMapLayerBackgroud" type="TileMapLayer" parent="." unique_id=111949756]
 tile_map_data = PackedByteArray("AAAAAAAAAwAAAAAAAAAAAA4AAAAAAAAAAAA=")
@@ -1928,15 +1933,19 @@ position = Vector2(835, 849)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1691111176]
 position = Vector2(1.5, 607.5)
 shape = SubResource("RectangleShape2D_3xx61")
+disabled = true
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=987920013]
 position = Vector2(1376, 605)
 shape = SubResource("RectangleShape2D_3xx61")
+disabled = true
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=806460026]
 position = Vector2(689.75, -4.5)
 shape = SubResource("RectangleShape2D_q34ae")
+disabled = true
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=974603132]
 position = Vector2(689, 1210)
 shape = SubResource("RectangleShape2D_q34ae")
+disabled = true

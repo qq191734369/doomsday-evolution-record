@@ -32,11 +32,18 @@ func _ready() -> void:
 	var animated_sprite = get_node_or_null("AnimatedSprite2D")
 	if animated_sprite and sprite_frames:
 		animated_sprite.sprite_frames = sprite_frames
-	player = get_tree().root.get_node("SceneRoot/Level/Player")
+	# 延迟获取玩家，因为玩家可能是动态创建的
+	call_deferred("_try_get_player")
 	# 初始化行为管理器
 	behavior_manager = BehaviorManager.new(self)
 
+func _try_get_player():
+	player = get_tree().root.get_node("SceneRoot/Level/Player")
+
 func _process(delta: float) -> void:
+	# 如果还没有获取到玩家，尝试获取
+	if not player:
+		_try_get_player()
 	# 更新行为管理器
 	behavior_manager.update(delta)
 	update_character_facing_deriction()

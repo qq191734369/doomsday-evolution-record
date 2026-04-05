@@ -16,6 +16,14 @@ class PlayerInfo:
 	var equipment: Dictionary = {}
 	var currentState: String = "Idle"
 
+	func _init(data: Dictionary) -> void:
+		maxHealth = data.get("maxHealth", 200)
+		currentHealth = data.get("currentHealth", 200)
+		attackDamage = data.get("attackDamage", 20)
+		speed = data.get("speed", 200)
+		position = data.get("position", Vector2.ZERO)
+		name = data.get("name", "Player")
+
 class NPCInfo:
 	var maxHealth: int = 100
 	var currentHealth: int = 100
@@ -51,7 +59,7 @@ class GameStateInfo:
 	var currentScene: String = ""
 
 # 玩家信息
-var player: PlayerInfo = PlayerInfo.new()
+var player: PlayerInfo = PlayerInfo.new({})
 
 # npc信息
 var npcDictionary: Dictionary[String, NPCInfo] = {}
@@ -76,7 +84,7 @@ static func get_instance() -> GameData:
 
 # 初始化
 func _initialize():
-	player = PlayerInfo.new()
+	player = PlayerInfo.new({})
 	gameState = GameStateInfo.new()
 
 # 玩家数据管理

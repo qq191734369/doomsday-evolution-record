@@ -1,11 +1,9 @@
 [gd_scene format=3 uid="uid://bd3v2dacrsn4a"]
 
 [ext_resource type="Script" uid="uid://bpq6o60di5j0v" path="res://Game/Scripts/Scene/test_scene.gd" id="1_ekxq8"]
-[ext_resource type="PackedScene" uid="uid://ba6tj4nvsql2e" path="res://Game/Scene/Player.tscn" id="2_3k3k7"]
 
 [node name="SceneRoot" type="Node2D" unique_id=1576063908]
 script = ExtResource("1_ekxq8")
-player_scene = ExtResource("2_3k3k7")
 
 [node name="Level" type="Node2D" parent="." unique_id=1636977798]
 
