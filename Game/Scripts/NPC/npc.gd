@@ -107,7 +107,11 @@ func _input(event):
 func setEnemyDetectionRadius():
 	var collision_shape = enemy_detection_area.get_node("CollisionShape2D")
 	if collision_shape and collision_shape.shape is CircleShape2D:
-		collision_shape.shape.radius = enemy_detection_range
+		# 计算检测半径，考虑武器的攻击范围
+		var effective_detection_range = enemy_detection_range
+		# 使用有效攻击范围的1.5倍作为检测范围
+		effective_detection_range = max(effective_detection_range, get_effective_attack_range())
+		collision_shape.shape.radius = effective_detection_range
 
 func handle_npc_join_party():
 	print("加入队伍" + self.name)
@@ -210,16 +214,19 @@ func find_nearest_enemy() -> BaseCharacter:
 	
 	return nearest
 
+func get_effective_attack_range() -> float:
+	# 计算有效攻击范围，取NPC默认攻击范围和武器攻击范围的最大值
+	var effective_range = attack_range
+	if hasWeapon() and weapon and weapon.data:
+		effective_range = max(effective_range, weapon.data.range)
+	return effective_range
+
 func is_in_attack_range():
 	if not current_attack_target:
 		return false
 	# 检查与目标的距离
 	var distance = global_position.distance_to(current_attack_target.global_position)
-	# 计算攻击范围，取NPC默认攻击范围和武器攻击范围的最大值
-	var effective_range = attack_range
-	if hasWeapon() and weapon and weapon.data:
-		effective_range = max(effective_range, weapon.data.range)
-	if distance > effective_range:  # 攻击距离
+	if distance > get_effective_attack_range():  # 攻击距离
 		return false
 
 	return true

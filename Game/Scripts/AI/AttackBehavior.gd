@@ -27,9 +27,11 @@ func update(_delta: float) -> void:
 			return
 		# 检查是否有武器
 		if npc.hasWeapon() and npc.weapon:
+			npc.state_machine.switchTo("Idle")
 			# 使用武器攻击
 			npc.attack()
 			return
+			
 		npc.state_machine.switchTo("Attack")
 	# 不在范围内
 	else:
