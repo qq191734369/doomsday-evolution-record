@@ -17,6 +17,7 @@ var start_position: Vector2
 func _ready() -> void:
 	start_position = global_position
 
+
 func _physics_process(delta: float) -> void:
 	# 更新位置
 	velocity = direction * speed

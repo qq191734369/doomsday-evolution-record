@@ -9,6 +9,15 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_3an6i"]
 radius = 20.0
 
+[sub_resource type="Gradient" id="Gradient_3an6i"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xuekq"]
+gradient = SubResource("Gradient_3an6i")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.52136755, 0.41025642)
+
 [node name="Bullet" type="CharacterBody2D" unique_id=123456789]
 collision_layer = 0
 collision_mask = 0
@@ -28,5 +37,10 @@ debug_color = Color(0.9335514, 0.24817151, 0.19335732, 0.41960785)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=567890123]
 position = Vector2(8, 2)
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1662734245]
+color = Color(0.9764706, 0.46666667, 0.1764706, 1)
+energy = 8.28
+texture = SubResource("GradientTexture2D_xuekq")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
