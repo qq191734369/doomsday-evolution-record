@@ -112,11 +112,14 @@ func setEnemyDetectionRadius():
 		return
 	var collision_shape = enemy_detection_area.get_node("CollisionShape2D")
 	if collision_shape and collision_shape.shape is CircleShape2D:
+		# 创建一个新的CircleShape2D实例，确保每个NPC都有独立的形状
+		var new_shape = CircleShape2D.new()
 		# 计算检测半径，考虑武器的攻击范围
 		var effective_detection_range = enemy_detection_range
 		# 使用有效攻击范围 和 检测范围 的最大值 作为检测范围
 		effective_detection_range = max(effective_detection_range, get_effective_attack_range() * 0.75)
-		collision_shape.shape.radius = effective_detection_range
+		new_shape.radius = effective_detection_range
+		collision_shape.shape = new_shape
 		print("{0} detect range: {1}".format([data.name, collision_shape.shape.radius]))
 
 func handle_npc_join_party():

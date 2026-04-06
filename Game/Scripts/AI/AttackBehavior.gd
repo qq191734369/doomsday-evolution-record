@@ -81,9 +81,8 @@ func update(_delta: float) -> void:
 		if current_state == "Attack":
 			return
 		# 走到攻击范围内
-		if current_state != "Run":
-			npc.set_move_target(npc.current_attack_target)
-			npc.state_machine.switchTo("Run")
+		npc.set_move_target(npc.current_attack_target.global_position)
+		npc.state_machine.switchTo("Run")
 
 func end() -> void:
 	print("结束攻击行为")
