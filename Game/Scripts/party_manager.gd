@@ -78,27 +78,34 @@ func _add_member_to_gamedata(id: String):
 func _add_member_to_instance_list(member: BaseCharacter):
 	if member == null or party_members.has(member):
 		return
-	
+
 	for i in party_members.size():
 		var d = party_members[i]
 		if d.data.name == member.data.name:
 			d.queue_free()
 			party_members.append(member)
-	
+
 	party_members.append(member)
 	# 为NPC添加血条（假设Player是BaseCharacter但不是NPC）
 	if member is NPC and GameManager.game_ui_manager:
 		GameManager.game_ui_manager.addNPCHealthBar(member)
-	
-	# 如果是第一个加入的非主角成员，跟随主角；否则跟随前一个成员
-	if party_members.size() == 1:
-		# 假设主角已在队伍中，此处需要先手动添加主角到数组
-		pass
-	else:
-		var previous = party_members[party_members.size() - 2]
-		# 让新成员跟随 previous
-		if member.has_method("set_target"):
-			member.set_target(previous)
+
+	# 让所有NPC都跟随玩家
+	if member is NPC:
+		# 查找玩家实例
+		var player = get_tree().root.get_node("SceneRoot/Level/Player")
+		if player:
+			# 让NPC跟随玩家
+			if member.has_method("set_target"):
+				member.set_target(player)
+			# 根据NPC在队伍中的位置设置不同的跟随距离
+			var npc_index = 0
+			for i in range(party_members.size()):
+				if party_members[i] is NPC:
+					npc_index += 1
+			# 基础跟随距离为100，每个NPC递增30
+			member.follow_distance = 50 + (npc_index - 1) * 50
+			member.stop_distance = 20 + (npc_index - 1) * 20
 	# 同时可以广播信号等
 
 func add_member(member: BaseCharacter):
@@ -117,19 +124,26 @@ func _remove_from_instance_list(member: BaseCharacter):
 	var idx = party_members.find(member)
 	if idx == -1:
 		return
-	
+
 	# 移除NPC血条
 	if member is NPC and GameManager.game_ui_manager:
 		GameManager.game_ui_manager.removeNPCHealthBar(member)
-	
+
 	party_members.remove_at(idx)
-	# 更新后面成员的 target
-	for i in range(idx, party_members.size()):
+	# 更新所有NPC的跟随目标和跟随距离
+	var npc_index = 0
+	for i in range(party_members.size()):
 		var m = party_members[i]
-		if i == 0:
-			m.set_target(party_members[0])  # 跟随主角
-		else:
-			m.set_target(party_members[i-1])
+		if m is NPC:
+			# 让所有NPC都跟随玩家
+			var player = get_tree().root.get_node("SceneRoot/Level/Player")
+			if player and m.has_method("set_target"):
+				m.set_target(player)
+			# 根据NPC在队伍中的位置设置不同的跟随距离
+			npc_index += 1
+			# 基础跟随距离为100，每个NPC递增30
+			m.follow_distance = 100 + (npc_index - 1) * 30
+			m.stop_distance = 50 + (npc_index - 1) * 20
 
 func _clearInvalidMembers():
 	var list: Array[BaseCharacter] = []
