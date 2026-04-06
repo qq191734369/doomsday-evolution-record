@@ -34,7 +34,7 @@ class CharacterInfo:
 		scene = data.get("scene", "")
 		dialogueId = data.get("dialogueId", "")
 		position = data.get("position", position)
-		equipment = data.get("equipment")
+		equipment = data.get("equipment", Equipment.new({}))
 		
 class Equipment:
 	var weapon: WeaponData.WeaponInfo
@@ -125,7 +125,8 @@ static func get_instance() -> GameData:
 # 初始化
 func _initialize():
 	#player = CharacterInfo.new({})
-	gameState = GameStateInfo.new()
+	#gameState = GameStateInfo.new()
+	pass
 
 func isInParty(name: String) -> bool:
 	return partyList.has(name)

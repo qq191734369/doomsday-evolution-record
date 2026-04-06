@@ -26,6 +26,7 @@ var isDead = false
 @onready var animaitedSprite2D: AnimatedSprite2D = $AnimatedSprite2D
 @onready var state_machine: StateMachine = $StateMachine
 @onready var slot_weapon: Node2D = $Equipment_Level/Slot_Weapon
+@onready var weapon: Weapon = $Equipment_Level/Slot_Weapon/Weapon
 
 
 var _data: GameData.CharacterInfo = GameData.CharacterInfo.new({
@@ -59,7 +60,9 @@ func initEquipment():
 	if not data.equipment:
 		return
 	if data.equipment.weapon:
+		print("初始化武器:character:{0}, weapon: {1}, type: {2}".format([data.name, data.equipment.weapon.name, data.equipment.weapon.type]))
 		slot_weapon.visible = true
+		weapon.data = data.equipment.weapon
 	
 
 func setData(d: GameData.CharacterInfo):
@@ -79,6 +82,13 @@ func setCurrentHealthValue(value: int):
 
 func hasWeapon() -> bool:
 	return data and data.equipment and data.equipment.weapon
+
+func attack():
+	if hasWeapon() and weapon:
+		print("attack with " + data.equipment.weapon.name)
+		weapon.attack()
+	else :
+		state_machine.switchTo("Attack")
 
 # 获取朝向
 func GetDirectionName() -> String:
@@ -127,7 +137,7 @@ func updateInvincibleEffect(newValue: bool):
 	animaitedSprite2D.set_instance_shader_parameter("InvincibleEffect", newValue)
 	
 
-func getHit(damage: int, from: BaseCharacter = null):
+func getHit(damage: int, from: Node2D = null):
 	if isDead || isInvincible:
 		return
 	
