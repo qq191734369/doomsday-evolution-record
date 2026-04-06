@@ -54,7 +54,7 @@ func set_max_distance(d: float) -> void:
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	# 检测碰撞
 	var target = area.get_parent()
-	print(target)
+	
 	if target is BaseCharacter:
 		# 造成伤害
 		target.getHit(damage, self)

@@ -127,5 +127,6 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetectionArea" unique_id=1856284119]
 shape = SubResource("CircleShape2D_iyxbe")
+debug_color = Color(0.6188174, 0.53189486, 0.17230779, 0.41960785)
 
 [connection signal="area_entered" from="AttacckHitBox" to="StateMachine/Attack" method="_on_attacck_hit_box_area_entered"]

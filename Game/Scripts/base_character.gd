@@ -84,6 +84,15 @@ func setCurrentHealthValue(value: int):
 func hasWeapon() -> bool:
 	return data and data.equipment and data.equipment.weapon
 
+func get_effective_attack_range() -> float:
+	# 计算有效攻击范围，取NPC默认攻击范围和武器攻击范围的最大值
+	if not data:
+		return 50.0
+	var effective_range = data.attack_range
+	if hasWeapon() and data.equipment.weapon:
+		effective_range = max(effective_range, data.equipment.weapon.range, data.equipment.weapon.projectile_range)
+	return effective_range
+
 func attack():
 	if hasWeapon() and weapon:
 		weapon.attack()

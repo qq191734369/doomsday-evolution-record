@@ -2,8 +2,6 @@ extends BaseCharacter
 
 class_name EnemyCharacter
 
-const SPEED = 200.0
-
 @onready var line_2d: Line2D = $Line2D
 var player: BaseCharacter
 
@@ -14,7 +12,8 @@ var playerDirection: Vector2
 var playerAngle: float
 
 func _init() -> void:
-	data.speed = 100
+	#data.speed = 100
+	pass
 
 func _ready() -> void:
 	super()

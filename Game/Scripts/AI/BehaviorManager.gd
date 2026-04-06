@@ -7,6 +7,9 @@ var behaviors: Array[Behavior] = []
 var current_behavior: Behavior = null
 # 当前最优先行为，如果有则先执行这一行为
 var the_most_important_behavior: Behavior
+# 行为检测频率控制
+var behavior_check_timer: float = 0.0
+var behavior_check_interval: float = 0.1  # 每0.1秒检查一次行为
 
 
 func _init(npc_ref: NPC):
@@ -17,25 +20,34 @@ func _init(npc_ref: NPC):
 	# 后续可以添加采集、做饭等行为
 
 func update(delta: float) -> void:
-	# 选择最高优先级的可执行行为
-	var behaviorRes = find_behavior()
-	var normal = behaviorRes["best_behavior"] as Behavior
-	var important = behaviorRes["most_important_behavior"] as Behavior
+	# 更新行为检测定时器
+	behavior_check_timer += delta
 	
-	_update_the_most_important_behavior(important)
+	# 只有当定时器达到间隔时间时才进行行为检测
+	if behavior_check_timer >= behavior_check_interval:
+		# 重置定时器
+		behavior_check_timer = 0.0
+		
+		# 选择最高优先级的可执行行为
+		var behaviorRes = find_behavior()
+		var normal = behaviorRes["best_behavior"] as Behavior
+		var important = behaviorRes["most_important_behavior"] as Behavior
+		
+		_update_the_most_important_behavior(important)
 
-	var best_behavior = the_most_important_behavior if the_most_important_behavior else normal
-	if not best_behavior:
-		return
-	if best_behavior != current_behavior:
-		if current_behavior:
-			#print("切换行为: " + current_behavior.get_behavior_name() + " -> 结束")
-			current_behavior.end()
-			
-		current_behavior = best_behavior
-		#print("切换行为: " + current_behavior.get_behavior_name() + " -> 开始")
-		current_behavior.start()
-
+		var best_behavior = the_most_important_behavior if the_most_important_behavior else normal
+		if not best_behavior:
+			return
+		if best_behavior != current_behavior:
+			if current_behavior:
+				#print("切换行为: " + current_behavior.get_behavior_name() + " -> 结束")
+				current_behavior.end()
+				
+			current_behavior = best_behavior
+			#print("切换行为: " + current_behavior.get_behavior_name() + " -> 开始")
+			current_behavior.start()
+	
+	# 无论是否检测行为，都更新当前行为
 	if current_behavior:
 		current_behavior.update(delta)
 		

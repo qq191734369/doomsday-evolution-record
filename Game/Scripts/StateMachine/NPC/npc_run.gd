@@ -26,16 +26,32 @@ func run_to_target(delta):
 	if not c:
 		return
 	
-	# 检查是否有目标角色
+	# 检查是否有目标
 	if not c.target:
 		return
 
-	# 计算到目标角色的方向和距离
-	var direction = c.global_position.direction_to(c.target.global_position)
+	# 计算目标位置
+	var target_position = Vector2.ZERO
+	if c.target is BaseCharacter:
+		target_position = c.target.global_position
+	elif c.target is Vector2:
+		target_position = c.target
+	else:
+		return
+
+	# 计算到目标的方向
+	var direction = c.global_position.direction_to(target_position)
 	
-	# 移动到目标角色
+	# 移动到目标
 	c.velocity = direction * c.data.speed
 	c.move_and_slide()
+	
+	# 如果目标是坐标，当接近目标时停止移动
+	if c.target is Vector2:
+		var distance = c.global_position.distance_to(c.target)
+		if distance < 10:
+			c.velocity = Vector2.ZERO
+			c.state_machine.switchTo("Idle")
 
 	
 func update_follow_state(delta: float):

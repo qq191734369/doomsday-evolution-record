@@ -53,7 +53,7 @@ var playerAngle: float
 var current_attack_target: BaseCharacter = null # 攻击目标
 var player: Player
 var behavior_manager: BehaviorManager
-var target: BaseCharacter  # 当前移动目标角色
+var target: Variant  # 当前移动目标角色或坐标
 var follow_target: BaseCharacter
 
 func setData(d: GameData.CharacterInfo):
@@ -61,6 +61,7 @@ func setData(d: GameData.CharacterInfo):
 	# 设置节点各种属性
 	name = data.name
 	global_position = data.position
+	setEnemyDetectionRadius()
 
 func _init() -> void:
 	data = GameData.CharacterInfo.new({
@@ -77,6 +78,7 @@ func _ready() -> void:
 		animaitedSprite2D.sprite_frames = sprite_frames
 	# 初始化行为管理器
 	behavior_manager = BehaviorManager.new(self)
+	setEnemyDetectionRadius()
 
 func _try_get_player():
 	if get_tree().root.has_node("SceneRoot/Level/Player"):
@@ -89,7 +91,6 @@ func _process(delta: float) -> void:
 	# 更新行为管理器
 	behavior_manager.update(delta)
 	update_character_facing_deriction()
-	setEnemyDetectionRadius()
 
 func _input(event):
 	# 非队伍员 可响应对话
@@ -105,13 +106,18 @@ func _input(event):
 	
 # 设置敌人检测区域的半径
 func setEnemyDetectionRadius():
+	if not data:
+		return
+	if not enemy_detection_area:
+		return
 	var collision_shape = enemy_detection_area.get_node("CollisionShape2D")
 	if collision_shape and collision_shape.shape is CircleShape2D:
 		# 计算检测半径，考虑武器的攻击范围
 		var effective_detection_range = enemy_detection_range
-		# 使用有效攻击范围的1.5倍作为检测范围
-		effective_detection_range = max(effective_detection_range, get_effective_attack_range())
+		# 使用有效攻击范围 和 检测范围 的最大值 作为检测范围
+		effective_detection_range = max(effective_detection_range, get_effective_attack_range() * 0.75)
 		collision_shape.shape.radius = effective_detection_range
+		print("{0} detect range: {1}".format([data.name, collision_shape.shape.radius]))
 
 func handle_npc_join_party():
 	print("加入队伍" + self.name)
@@ -130,9 +136,10 @@ func is_player_near() -> bool:
 		return global_position.distance_to(playerNode.global_position) < 50.0
 	return false
 	
-func set_target(new_target: BaseCharacter):
-	follow_target = new_target
-	target = follow_target
+func set_target(new_target: Variant):
+	if new_target is BaseCharacter:
+		follow_target = new_target
+	target = new_target
 	
 func get_distance_to_follow_target() -> float:
 	if in_party == false || !follow_target:
@@ -160,7 +167,15 @@ func update_character_facing_deriction():
 		return
 
 	# 计算朝向目标的方向
-	var target_direction = global_position.direction_to(target.global_position)
+	var target_position = Vector2.ZERO
+	if target is BaseCharacter:
+		target_position = target.global_position
+	elif target is Vector2:
+		target_position = target
+	else:
+		return
+
+	var target_direction = global_position.direction_to(target_position)
 
 	# 更新攻击时面向
 	if target_direction.x < 0:
@@ -214,13 +229,6 @@ func find_nearest_enemy() -> BaseCharacter:
 	
 	return nearest
 
-func get_effective_attack_range() -> float:
-	# 计算有效攻击范围，取NPC默认攻击范围和武器攻击范围的最大值
-	var effective_range = attack_range
-	if hasWeapon() and weapon and weapon.data:
-		effective_range = max(effective_range, weapon.data.range)
-	return effective_range
-
 func is_in_attack_range():
 	if not current_attack_target:
 		return false
@@ -241,6 +249,9 @@ func is_outof_max_follow_range() -> bool:
 	else :
 		return false
 
+func is_following():
+	return follow_target.state_machine.getCurrentStateName() == "Run"
+
 func should_attack() -> bool:
 	if not in_party:
 		return false
@@ -258,9 +269,9 @@ func should_attack() -> bool:
 		current_attack_target = null
 		return false
 	
-	# 上次选择了攻击目标 玩家没有走远
-	if current_attack_target:
-		return true
+	## 上次选择了攻击目标 玩家没有走远
+	#if current_attack_target:
+		#return true
 	
 	# 玩家附近有敌人
 	var nearest_enemy = find_nearest_enemy()
@@ -282,10 +293,10 @@ func check_return_to_player() -> bool:
 	var distance_to_player = global_position.distance_to(player.global_position)
 	return distance_to_player > player_max_distance
 
-func set_move_target(target_character: BaseCharacter) -> void:
-	target = target_character
+func set_move_target(target_object: Variant) -> void:
+	target = target_object
 
-func get_move_target() -> BaseCharacter:
+func get_move_target() -> Variant:
 	return target
 
 func get_npc_name() -> String:

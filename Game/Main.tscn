@@ -1850,31 +1850,37 @@ script = ExtResource("7_f77hp")
 position = Vector2(344, 347)
 playerDetectionRadius = 150
 showDebuggVisual = false
+accelerate = 5
 
 [node name="Enemy2" parent="Level/EnemyLevel" unique_id=658004610 instance=ExtResource("7_haytw")]
 position = Vector2(303, 411)
 playerDetectionRadius = 200
 showDebuggVisual = false
+accelerate = 5
 
 [node name="Enemy3" parent="Level/EnemyLevel" unique_id=383538265 instance=ExtResource("7_haytw")]
 position = Vector2(411, 427)
 playerDetectionRadius = 200
 showDebuggVisual = false
+accelerate = 5
 
 [node name="Enemy4" parent="Level/EnemyLevel" unique_id=775871536 instance=ExtResource("7_haytw")]
 position = Vector2(1110, 352)
 playerDetectionRadius = 200
 showDebuggVisual = false
+accelerate = 5
 
 [node name="Enemy5" parent="Level/EnemyLevel" unique_id=2057576478 instance=ExtResource("7_haytw")]
 position = Vector2(946, 241)
 playerDetectionRadius = 200
 showDebuggVisual = false
+accelerate = 5
 
 [node name="Enemy6" parent="Level/EnemyLevel" unique_id=2050614683 instance=ExtResource("7_haytw")]
 position = Vector2(1032, 583)
 playerDetectionRadius = 200
 showDebuggVisual = false
+accelerate = 5
 
 [node name="TreeLevel" type="Node2D" parent="Level" unique_id=127305781]
 y_sort_enabled = true

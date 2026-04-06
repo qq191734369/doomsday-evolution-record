@@ -33,6 +33,9 @@ class WeaponInfo:
 	var effects: Array[Dictionary] = []
 	var sprite_path: String = ""
 	var animation_path: String = ""
+	# 近战武器也有可能有弹道
+	var projectile_speed: float = 500.0
+	var projectile_range: float = 300
 
 	# 构造函数
 	func _init(data: Dictionary = {}) -> void:
@@ -50,6 +53,8 @@ class WeaponInfo:
 		effects = data.get("effects", effects)
 		sprite_path = data.get("sprite_path", sprite_path)
 		animation_path = data.get("animation_path", animation_path)
+		projectile_speed = data.get("projectile_speed", projectile_speed)
+		projectile_range = data.get("projectile_range", projectile_range)
 
 	# 检查武器是否可用
 	func is_usable() -> bool:
@@ -90,8 +95,6 @@ class MeleeWeaponInfo extends WeaponInfo:
 
 # 远程武器类
 class RangedWeaponInfo extends WeaponInfo:
-	var projectile_speed: float = 500.0
-	var projectile_range: float = 300
 	var ammo_type: String = ""
 	var ammo_capacity: int = 10
 	var current_ammo: int = 10
@@ -99,8 +102,6 @@ class RangedWeaponInfo extends WeaponInfo:
 	func _init(data: Dictionary = {}) -> void:
 		super(data)
 		type = WeaponType.RANGED
-		projectile_speed = data.get("projectile_speed", projectile_speed)
-		projectile_range = data.get("projectile_range", projectile_range)
 		ammo_type = data.get("ammo_type", ammo_type)
 		ammo_capacity = data.get("ammo_capacity", ammo_capacity)
 		current_ammo = data.get("current_ammo", current_ammo)

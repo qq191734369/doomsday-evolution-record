@@ -28,7 +28,7 @@ func update(_delta: float) -> void:
 			npc.state_machine.switchTo("Run")
 	else:
 		# 如果达到跟随距离内 且 玩家还在行走状态 则维持行走
-		if npc.follow_target.state_machine.getCurrentStateName() == "Run":
+		if npc.is_following():
 			return
 		if current_state != "Idle":
 			npc.state_machine.switchTo("Idle")

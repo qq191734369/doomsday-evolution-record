@@ -20,7 +20,7 @@ class CharacterInfo:
 	var follow_distance = 50.0 # 跟随间距
 	var stop_distance = 10.0
 	var player_max_distance =  200.0  # 与玩家最大距离s
-	var attack_range = 50 # 攻击范围
+	var attack_range = 50.0 # 攻击范围
 	var enemy_detection_range = 150.0 # 检测一定范围内的敌人
 	var scene: String # 当前所在场景
 
@@ -101,8 +101,9 @@ var npcDictionary: Dictionary[String, CharacterInfo] = {
 		"weapon": WeaponData.RangedWeaponInfo.new({
 			"name": "Gun",
 			"type": WeaponData.WeaponType.RANGED,
-			"damage": 50,
-			"range": 200.0
+			"damage": 10,
+			"range": 200.0,
+			"attack_speed": 1
 		})
 	})
 	})
