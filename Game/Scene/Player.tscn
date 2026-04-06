@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://ogf2yehu27ce" path="res://Game/Scripts/StateMachine/PlayerStates/player_attack.gd" id="7_6lrsw"]
 [ext_resource type="Script" uid="uid://c3n2poldwv3at" path="res://Game/Scripts/StateMachine/PlayerStates/player_hurt.gd" id="8_txpm5"]
 [ext_resource type="Script" uid="uid://b5uc25quifafm" path="res://Game/Scripts/StateMachine/PlayerStates/player_die.gd" id="9_46o5m"]
+[ext_resource type="PackedScene" uid="uid://bv0bvm46gcguh" path="res://Game/Scene/Weapon.tscn" id="11_ixmp6"]
+[ext_resource type="Script" uid="uid://bh28yqevc8sm" path="res://Game/Scripts/slot_weapon.gd" id="11_k3ghj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dikuv"]
 radius = 14.167776
@@ -82,6 +84,15 @@ offset_right = 62.0
 offset_bottom = 16.0
 scale = Vector2(0.48715386, 0.5124827)
 text = "state"
+
+[node name="Equipment_Level" type="Node2D" parent="." unique_id=1315691324]
+
+[node name="Slot_Weapon" type="Node2D" parent="Equipment_Level" unique_id=1711246313]
+position = Vector2(0, -24)
+script = ExtResource("11_k3ghj")
+radius = 32.0
+
+[node name="Weapon" parent="Equipment_Level/Slot_Weapon" unique_id=396455914 instance=ExtResource("11_ixmp6")]
 
 [node name="AttacckHitBox" type="Area2D" parent="." unique_id=833487808]
 collision_layer = 0

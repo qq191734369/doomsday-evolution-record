@@ -5,7 +5,7 @@ class_name State
 var parentStateMachine: StateMachine
 var character: BaseCharacter
 
-func updatePhysics(delta: float):
+func updatePhysics(_delta: float):
 	pass
 	
 func update():

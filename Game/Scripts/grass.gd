@@ -22,11 +22,11 @@ func _ready() -> void:
 	skewTween.set_speed_scale(randf_range(0.5, 1.5))
 
 
-func _on_body_entered(body: Node2D) -> void:
+func _on_body_entered(_body: Node2D) -> void:
 	createNewScaleTween(endScale, 0.1)
 
 
-func _on_body_exited(body: Node2D) -> void:
+func _on_body_exited(_body: Node2D) -> void:
 	createNewScaleTween(startScale, 0.5)
 	
 	

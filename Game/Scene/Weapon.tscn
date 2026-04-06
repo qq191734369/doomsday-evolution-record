@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bv0bvm46gcguh"]
+
+[ext_resource type="Script" uid="uid://bop6727ic877e" path="res://Game/Scripts/weapon.gd" id="1_p20so"]
+[ext_resource type="Texture2D" uid="uid://bcds3s3he6afv" path="res://Assets/Animation/Weapon/Gun.png" id="2_5w1k5"]
+
+[node name="Weapon" type="Node2D" unique_id=396455914]
+script = ExtResource("1_p20so")
+
+[node name="Sprite2D_Weapon" type="Sprite2D" parent="." unique_id=272114601]
+texture = ExtResource("2_5w1k5")
+offset = Vector2(7, -2)

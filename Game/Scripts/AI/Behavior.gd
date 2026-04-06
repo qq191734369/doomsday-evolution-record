@@ -24,7 +24,7 @@ func is_most_important_done():
 func start() -> void:
 	pass
 
-func update(delta: float) -> void:
+func update(_delta: float) -> void:
 	pass
 
 func end() -> void:

@@ -13,7 +13,7 @@ func start() -> void:
 	print("开始攻击行为")
 
 
-func update(delta: float) -> void:
+func update(_delta: float) -> void:
 	# 只有当状态不是Attack或Run时才切换状态
 	var current_state = npc.state_machine.getCurrentStateName()
 	npc.set_move_target(npc.current_attack_target)

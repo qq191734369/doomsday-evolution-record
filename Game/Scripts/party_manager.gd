@@ -18,11 +18,11 @@ func render_party_members():
 		return
 	
 	# 检查Level节点
-	var level = get_tree().root.get_node("SceneRoot/Level")
-	if not level:
+	if not get_tree().root.has_node("SceneRoot/Level"):
 		print("Error: Level node not found")
 		return
-	
+
+	var level = get_tree().root.get_node("SceneRoot/Level")
 	# 遍历队伍列表，渲染NPC
 	for npc_id in party_list:
 		# 跳过玩家自己
