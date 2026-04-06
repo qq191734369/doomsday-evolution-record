@@ -2,6 +2,9 @@ extends Behavior
 
 class_name AttackBehavior
 
+# 后退目标点位
+var retreat_position: Vector2
+
 func _init(npc_ref: NPC):
 	super(npc_ref)
 	priority = 20  # 高优先级，攻击优先于跟随
@@ -14,7 +17,7 @@ func start() -> void:
 
 func _run_to_follow_target():
 	if npc.is_need_adjust_distance_to_target() or npc.is_following():
-		npc.set_move_target(npc.follow_target.global_position - npc.global_position.direction_to(npc.follow_target.global_position) * npc.follow_distance)
+		npc.set_move_target(npc.follow_target)
 		npc.state_machine.switchTo("Run")
 	else :
 		npc.state_machine.switchTo("Idle")
@@ -38,30 +41,34 @@ func update(_delta: float) -> void:
 		
 		# 检查是否有武器
 		if npc.hasWeapon() and npc.weapon:
-			# 一边攻击一边移动
-			_run_to_follow_target()
 			# 使用武器攻击
 			npc.attack()
-			# 计算与目标的距离
-			var distance = npc.global_position.distance_to(npc.current_attack_target.global_position)
-			# 计算攻击范围的一半
-			var half_range = npc.get_effective_attack_range() / 2
 			
-			# 如果距离小于攻击范围的一半，执行放风筝操作
-			if distance < half_range and not npc.is_following():
-				# 计算后退方向（与目标相反的方向）
-				var retreat_direction = (npc.global_position - npc.current_attack_target.global_position).normalized()
-				# 设置移动目标为后退位置
-				var retreat_position = npc.global_position + retreat_direction * half_range
-				# 直接使用坐标作为移动目标
-				npc.set_move_target(retreat_position)
-				# 切换到奔跑状态
-				if current_state != "Run":
-					npc.state_machine.switchTo("Run")
-			else:
-				# 正常攻击
+			# 玩家在移动时 只跟玩家走
+			if npc.is_following():
+				# 一边攻击一边移动
 				_run_to_follow_target()
-			return
+			else :
+				# 计算与目标的距离
+				var distance = npc.global_position.distance_to(npc.current_attack_target.global_position)
+				# 计算攻击范围的一半
+				var half_range = npc.get_effective_attack_range() / 2
+				
+				# 如果距离小于攻击范围的一半，执行放风筝操作
+				if distance < half_range and not npc.is_following():
+					# 计算后退方向（与目标相反的方向）
+					var retreat_direction = (npc.global_position - npc.current_attack_target.global_position).normalized()
+					# 设置移动目标为后退位置
+					retreat_position = npc.global_position + retreat_direction * 50
+					# 直接使用坐标作为移动目标
+					npc.set_move_target(retreat_position)
+					# 切换到奔跑状态
+					npc.state_machine.switchTo("Run")
+				else:
+					if npc.velocity == Vector2.ZERO:
+						# 正常攻击
+						npc.state_machine.switchTo("Idle")
+				return
 		else :	
 			npc.state_machine.switchTo("Attack")
 	# 不在范围内

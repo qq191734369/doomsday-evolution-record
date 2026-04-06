@@ -2,7 +2,6 @@ extends State
 
 func enter():
 	super.enter()
-	#print("NPC enter run")
 
 func updatePhysics(delta: float):
 	super.updatePhysics(delta)
@@ -34,7 +33,19 @@ func run_to_target(delta):
 	var target_position = Vector2.ZERO
 	if c.target is BaseCharacter:
 		target_position = c.target.global_position
-	elif c.target is Vector2:
+		var dir = c.global_position.direction_to(target_position)
+		var distance = c.global_position.distance_to(target_position)
+		if c.follow_distance < distance:
+			c.velocity = dir * c.data.speed
+		elif c.stop_distance > distance:
+			c.velocity = -dir * c.data.speed * 0.5
+		else:
+			c.velocity = c.velocity.lerp(Vector2.ZERO, 0.2)
+	
+		c.move_and_slide()
+		return
+
+	if c.target is Vector2:
 		target_position = c.target
 	else:
 		return
@@ -51,7 +62,6 @@ func run_to_target(delta):
 		var distance = c.global_position.distance_to(c.target)
 		if distance < 10:
 			c.velocity = Vector2.ZERO
-			c.state_machine.switchTo("Idle")
 
 	
 func update_follow_state(delta: float):
