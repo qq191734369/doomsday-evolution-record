@@ -155,14 +155,19 @@ func update_character_facing_deriction():
 	if not in_party or not target:
 		return
 
-	playerDirection = global_position.direction_to(target.global_position)
-	
+	# 计算朝向目标的方向
+	var target_direction = global_position.direction_to(target.global_position)
+
 	# 更新攻击时面向
-	if playerDirection.x < 0:
+	if target_direction.x < 0:
 		attackDirection = "left"
 	else :
 		attackDirection = "right"
-	
+
+
+
+	# 更新NPC自身朝向
+	playerDirection = target_direction
 	playerDirection.y = -playerDirection.y
 	playerAngle = rad_to_deg(playerDirection.angle())
 	if playerAngle < 0:
@@ -210,9 +215,13 @@ func is_in_attack_range():
 		return false
 	# 检查与目标的距离
 	var distance = global_position.distance_to(current_attack_target.global_position)
-	if distance > attack_range:  # 攻击距离
+	# 计算攻击范围，取NPC默认攻击范围和武器攻击范围的最大值
+	var effective_range = attack_range
+	if hasWeapon() and weapon and weapon.data:
+		effective_range = max(effective_range, weapon.data.range)
+	if distance > effective_range:  # 攻击距离
 		return false
-	
+
 	return true
 
 # 是否超出最大跟随距离

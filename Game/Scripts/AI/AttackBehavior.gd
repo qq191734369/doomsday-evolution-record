@@ -25,6 +25,11 @@ func update(_delta: float) -> void:
 	if npc.is_in_attack_range():
 		if current_state == "Attack":
 			return
+		# 检查是否有武器
+		if npc.hasWeapon() and npc.weapon:
+			# 使用武器攻击
+			npc.attack()
+			return
 		npc.state_machine.switchTo("Attack")
 	# 不在范围内
 	else:

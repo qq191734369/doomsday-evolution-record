@@ -15,6 +15,9 @@ var data: WeaponData.WeaponInfo = WeaponData.WeaponInfo.new({
 	get:
 		return _data
 
+# 持武器的对象
+var holder: BaseCharacter
+
 # 子弹场景
 var bullet_scene: PackedScene
 
@@ -92,10 +95,25 @@ func _fire_projectile():
 		## 消耗弹药
 		#ranged_data.current_ammo -= 1
 	
-	# 计算鼠标方向
-	var mouse_position = get_global_mouse_position()
+	# 计算方向
 	var weapon_position = global_position
-	var direction = (mouse_position - weapon_position).normalized()
+	var direction = Vector2.ZERO
+	
+	# 检测持有者类型
+	if holder is Player:
+		# 玩家的武器跟随鼠标
+		var mouse_position = get_global_mouse_position()
+		direction = weapon_position.direction_to(mouse_position)
+	elif holder is NPC:
+		# NPC的武器指向攻击目标
+		if holder.current_attack_target:
+			direction = weapon_position.direction_to(holder.current_attack_target.global_position)
+		else:
+			# 默认方向：向右
+			direction = Vector2(1, 0)
+	else:
+		# 默认行为：向右
+		direction = Vector2(1, 0)
 	
 	# 创建子弹
 	var bullet = bullet_scene.instantiate()

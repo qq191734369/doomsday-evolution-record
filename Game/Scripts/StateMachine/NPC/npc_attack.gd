@@ -17,13 +17,15 @@ func ready():
 func enter():
 	super.enter()
 	#print("NPC enter attack")
+	
+	# 没有武器时使用默认攻击
 	character.updateAttackAnimation()
 
 	facingDirection = character.attackDirection
 	var collisionNode = attacck_hit_box.get_node("CollisionShape2D_" + facingDirection)
 	if collisionNode:
 		attackCollisionShape = collisionNode
-	
+
 	# 召唤剑气
 	spawnSlashVFX()
 

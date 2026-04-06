@@ -63,6 +63,7 @@ func initEquipment():
 		print("初始化武器:character:{0}, weapon: {1}, type: {2}".format([data.name, data.equipment.weapon.name, data.equipment.weapon.type]))
 		slot_weapon.visible = true
 		weapon.data = data.equipment.weapon
+		weapon.holder = self
 	
 
 func setData(d: GameData.CharacterInfo):
@@ -85,7 +86,6 @@ func hasWeapon() -> bool:
 
 func attack():
 	if hasWeapon() and weapon:
-		print("attack with " + data.equipment.weapon.name)
 		weapon.attack()
 	else :
 		state_machine.switchTo("Attack")

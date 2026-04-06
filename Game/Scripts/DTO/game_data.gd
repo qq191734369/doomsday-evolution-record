@@ -96,7 +96,15 @@ var npcDictionary: Dictionary[String, CharacterInfo] = {
 		"speed": 200,
 		"dialogueId": "zhaoxiner_join_start",
 		"scene": "main",
-		"position": Vector2(720.0, 373.0)
+		"position": Vector2(720.0, 373.0),
+		"equipment": Equipment.new({
+		"weapon": WeaponData.RangedWeaponInfo.new({
+			"name": "Gun",
+			"type": WeaponData.WeaponType.RANGED,
+			"damage": 50,
+			"range": 200.0
+		})
+	})
 	})
 }
 
