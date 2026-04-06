@@ -14,6 +14,8 @@ func setData(d: GameData.CharacterInfo):
 	global_position = data.position
 
 func _ready() -> void:
+	super()
+	
 	camera_2d.make_current()
 	# 设置敌人检测区域的半径
 	setEnemyDetectionRadius()

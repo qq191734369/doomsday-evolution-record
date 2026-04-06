@@ -17,6 +17,7 @@ func _init() -> void:
 	data.speed = 100
 
 func _ready() -> void:
+	super()
 	# 延迟获取玩家，因为玩家可能是动态创建的
 	call_deferred("_try_get_player")
 	

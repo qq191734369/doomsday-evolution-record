@@ -68,6 +68,7 @@ func _init() -> void:
 	})
 
 func _ready() -> void:
+	super()
 	# 延迟获取玩家，因为玩家可能是动态创建的
 	call_deferred("_try_get_player")
 	# 设置动画
@@ -78,11 +79,12 @@ func _ready() -> void:
 	behavior_manager = BehaviorManager.new(self)
 
 func _try_get_player():
-	player = get_tree().root.get_node("SceneRoot/Level/Player")
+	if get_tree().root.has_node("SceneRoot/Level/Player"):
+		player = get_tree().root.get_node("SceneRoot/Level/Player")
 
 func _process(delta: float) -> void:
 	# 如果还没有获取到玩家，尝试获取
-	if not player:
+	if PartyManager.is_in_party(self) and not player:
 		_try_get_player()
 	# 更新行为管理器
 	behavior_manager.update(delta)

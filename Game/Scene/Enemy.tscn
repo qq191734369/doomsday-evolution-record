@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://dhart3coylrcw" path="res://Game/Scripts/StateMachine/EnemyStates/enemy_move.gd" id="6_5g4l6"]
 [ext_resource type="Script" uid="uid://bdqhqakp8v0qu" path="res://Game/Scripts/StateMachine/EnemyStates/enemy_hurt.gd" id="7_gl57g"]
 [ext_resource type="Script" uid="uid://c5fn0h1252rb5" path="res://Game/Scripts/StateMachine/EnemyStates/enemy_die.gd" id="8_5g4l6"]
+[ext_resource type="Script" uid="uid://bh28yqevc8sm" path="res://Game/Scripts/slot_weapon.gd" id="10_s7lld"]
+[ext_resource type="PackedScene" uid="uid://bv0bvm46gcguh" path="res://Game/Scene/Weapon.tscn" id="11_cs8a6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dikuv"]
 radius = 19.206585
@@ -91,6 +93,15 @@ max_speed = 20.0
 
 [node name="PlayerPosUpdateTimer" type="Timer" parent="." unique_id=1138118964]
 wait_time = 0.5
+
+[node name="Equipment_Level" type="Node2D" parent="." unique_id=1802328959]
+
+[node name="Slot_Weapon" type="Node2D" parent="Equipment_Level" unique_id=1520085199]
+position = Vector2(0, -24)
+script = ExtResource("10_s7lld")
+radius = 32.0
+
+[node name="Weapon" parent="Equipment_Level/Slot_Weapon" unique_id=396455914 instance=ExtResource("11_cs8a6")]
 
 [node name="Area2D_Body" type="Area2D" parent="." unique_id=1949774385]
 scale = Vector2(0.81940484, 0.92427284)

@@ -13,7 +13,7 @@ class CharacterInfo:
 	var level: int = 1
 	var experience: int = 0
 	var inventory: Array = []
-	var equipment: Dictionary = {}
+	var equipment: Equipment
 	var currentState: String = "Idle"
 	var	inParty: bool = false
 	var	dialogueId
@@ -34,6 +34,13 @@ class CharacterInfo:
 		scene = data.get("scene", "")
 		dialogueId = data.get("dialogueId", "")
 		position = data.get("position", position)
+		equipment = data.get("equipment")
+		
+class Equipment:
+	var weapon: WeaponData.WeaponInfo
+	
+	func _init(data: Dictionary) -> void:
+		weapon = data.get("weapon")
 
 class EnemyInfo:
 	var maxHealth: int = 80
@@ -62,7 +69,15 @@ class GameStateInfo:
 var player: CharacterInfo = CharacterInfo.new({
 	"name": "Player",
 	"position": Vector2(689.0, 373.0),
-	"attackDamage": 50
+	"attackDamage": 50,
+	"equipment": Equipment.new({
+		"weapon": WeaponData.WeaponInfo.new({
+			"name": "Gun",
+			"type": WeaponData.WeaponType.RANGED,
+			"damage": 50,
+			"range": 200.0
+		})
+	})
 })
 
 # npc信息

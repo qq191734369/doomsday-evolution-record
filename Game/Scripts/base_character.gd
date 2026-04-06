@@ -25,6 +25,8 @@ var isDead = false
 @onready var area_2d_body: Area2D = $Area2D_Body
 @onready var animaitedSprite2D: AnimatedSprite2D = $AnimatedSprite2D
 @onready var state_machine: StateMachine = $StateMachine
+@onready var slot_weapon: Node2D = $Equipment_Level/Slot_Weapon
+
 
 var _data: GameData.CharacterInfo = GameData.CharacterInfo.new({
 	"speed": 200
@@ -46,6 +48,20 @@ var flip: bool
 var knockBackDirection: Vector2
 
 var isInvincible: bool = false
+
+func _ready() -> void:
+	initEquipment()
+	
+func initEquipment():
+	slot_weapon.visible = false
+	if not data:
+		return
+	if not data.equipment:
+		return
+	if data.equipment.weapon:
+		slot_weapon.visible = true
+	
+
 
 func setData(d: GameData.CharacterInfo):
 	if d == _data:

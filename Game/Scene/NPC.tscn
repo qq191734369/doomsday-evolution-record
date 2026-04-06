@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://bina35kcopo2x" path="res://Game/Scripts/StateMachine/NPC/npc_attack.gd" id="8_3nlok"]
 [ext_resource type="Script" uid="uid://bb6alcvbs4imu" path="res://Game/Scripts/StateMachine/NPC/npc_hurt.gd" id="9_ad78g"]
 [ext_resource type="Script" uid="uid://b058gy4geaby3" path="res://Game/Scripts/StateMachine/NPC/npc_die.gd" id="10_iyxbe"]
+[ext_resource type="Script" uid="uid://bh28yqevc8sm" path="res://Game/Scripts/slot_weapon.gd" id="11_i2hp8"]
+[ext_resource type="PackedScene" uid="uid://bv0bvm46gcguh" path="res://Game/Scene/Weapon.tscn" id="12_y1k1p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dikuv"]
 radius = 14.167776
@@ -98,6 +100,15 @@ position = Vector2(22, -22)
 rotation = -3.1415925
 scale = Vector2(0.6953366, -2.1299136)
 shape = SubResource("RectangleShape2D_coiqp")
+
+[node name="Equipment_Level" type="Node2D" parent="." unique_id=1137989167]
+
+[node name="Slot_Weapon" type="Node2D" parent="Equipment_Level" unique_id=2095755004]
+position = Vector2(0, -24)
+script = ExtResource("11_i2hp8")
+radius = 32.0
+
+[node name="Weapon" parent="Equipment_Level/Slot_Weapon" unique_id=396455914 instance=ExtResource("12_y1k1p")]
 
 [node name="Area2D_Body" type="Area2D" parent="." unique_id=1367508037]
 position = Vector2(-2, 0)
