@@ -17,5 +17,7 @@ func update():
 	
 	# 对话开启时不响应攻击
 	if not DialogManager.is_active and Input.is_action_just_pressed("attack"):
-		parentStateMachine.switchTo("Attack")
-		return
+		if character.hasWeapon():
+			pass
+		else :
+			parentStateMachine.switchTo("Attack")

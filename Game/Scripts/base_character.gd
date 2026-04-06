@@ -62,7 +62,6 @@ func initEquipment():
 		slot_weapon.visible = true
 	
 
-
 func setData(d: GameData.CharacterInfo):
 	if d == _data:
 		return
@@ -77,6 +76,9 @@ func setCurrentHealthValue(value: int):
 		isDead = true
 		area_2d_body.set_deferred("monitorable", false)
 		area_2d_body.set_deferred("monitoring", false)
+
+func hasWeapon() -> bool:
+	return data and data.equipment and data.equipment.weapon
 
 # 获取朝向
 func GetDirectionName() -> String:
