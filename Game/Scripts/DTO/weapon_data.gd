@@ -24,7 +24,7 @@ class WeaponInfo:
 	var type: WeaponType = WeaponType.MELEE
 	var rarity: WeaponRarity = WeaponRarity.COMMON
 	var damage: int = 10
-	var attack_speed: float = 1.0
+	var attack_speed: float = 2.0
 	var durability: int = 100
 	var max_durability: int = 100
 	var range: float = 1.0

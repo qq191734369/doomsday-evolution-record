@@ -18,6 +18,10 @@ var data: WeaponData.WeaponInfo = WeaponData.WeaponInfo.new({
 # 子弹场景
 var bullet_scene: PackedScene
 
+# 攻击速度相关
+var last_attack_time: float = 0.0
+var attack_cooldown: float = 0.0
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	updateWeaponTexture()
@@ -39,22 +43,33 @@ func updateWeaponTexture():
 	if sprite_2d_weapon:
 		sprite_2d_weapon.texture = res
 
-# 攻击方法
+# # 攻击方法
 func attack() -> void:
-	print("data", data, _data)
 	if not data:
-		print("no weapon data")
 		return
 	
 	# 检查武器是否可用
 	if not data.is_usable():
 		print("武器损坏，无法使用")
 		return
-	print(data.type)
+	
+	# 检查攻击冷却
+	var current_timestamp = Time.get_unix_time_from_system()
+	
+	# 计算冷却时间（attack_speed越大，冷却时间越短）
+	attack_cooldown = 1.0 / max(data.attack_speed, 0.1)
+	
+	# 检查是否在冷却期内
+	if current_timestamp - last_attack_time < attack_cooldown:
+		return
+	
 	# 远程武器处理
 	if data.type == WeaponData.WeaponType.RANGED:
 		_fire_projectile()
 	# 其他武器类型可以在这里添加处理
+	
+	# 更新最后攻击时间
+	last_attack_time = current_timestamp
 
 # 发射子弹
 func _fire_projectile():
