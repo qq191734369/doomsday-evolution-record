@@ -22,6 +22,9 @@ var bullet_scene: PackedScene
 var last_attack_time: float = 0.0
 var attack_cooldown: float = 0.0
 
+# 自动攻击相关
+var is_attacking: bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	updateWeaponTexture()
@@ -30,7 +33,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	# 自动攻击逻辑
+	if is_attacking:
+		attack()
 
 func updateWeaponTexture():
 	if not data:
@@ -108,6 +113,13 @@ func _fire_projectile():
 	if bullet.has_method("set_damage"):
 		bullet.set_damage(data.damage)
 	
+	# 设置子弹最大距离
+	if bullet.has_method("set_max_distance"):
+		if data is WeaponData.RangedWeaponInfo:
+			bullet.set_max_distance((data as WeaponData.RangedWeaponInfo).projectile_range)
+		else:
+			bullet.set_max_distance(300.0)  # 默认距离
+	
 	# 设置子弹位置
 	bullet.global_position = weapon_position + direction * 20  # 从武器前端发射
 	
@@ -116,3 +128,11 @@ func _fire_projectile():
 	
 	# 使用武器（减少耐久度）
 	#data.use()
+
+# 开始攻击（用于自动攻击）
+func start_attack() -> void:
+	is_attacking = true
+
+# 停止攻击（用于自动攻击）
+func stop_attack() -> void:
+	is_attacking = false

@@ -90,6 +90,14 @@ func attack():
 	else :
 		state_machine.switchTo("Attack")
 
+func start_attack():
+	if hasWeapon() and weapon and weapon.has_method("start_attack"):
+		weapon.start_attack()
+
+func stop_attack():
+	if hasWeapon() and weapon and weapon.has_method("stop_attack"):
+		weapon.stop_attack()
+
 # 获取朝向
 func GetDirectionName() -> String:
 	if inputDirection == Vector2.ZERO:

@@ -91,7 +91,7 @@ class MeleeWeaponInfo extends WeaponInfo:
 # 远程武器类
 class RangedWeaponInfo extends WeaponInfo:
 	var projectile_speed: float = 500.0
-	var projectile_range: float = 1000.0
+	var projectile_range: float = 300
 	var ammo_type: String = ""
 	var ammo_capacity: int = 10
 	var current_ammo: int = 10

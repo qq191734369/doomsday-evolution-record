@@ -71,7 +71,7 @@ var player: CharacterInfo = CharacterInfo.new({
 	"position": Vector2(689.0, 373.0),
 	"attackDamage": 50,
 	"equipment": Equipment.new({
-		"weapon": WeaponData.WeaponInfo.new({
+		"weapon": WeaponData.RangedWeaponInfo.new({
 			"name": "Gun",
 			"type": WeaponData.WeaponType.RANGED,
 			"damage": 50,

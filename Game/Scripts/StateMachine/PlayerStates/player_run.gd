@@ -14,12 +14,15 @@ func update():
 	character.updateAnimation()
 	
 	# 对话开启时不响应攻击
-	if not DialogManager.is_active and Input.is_action_just_pressed("attack"):
-		if character.hasWeapon():
-			character.attack()
-			pass
-		else :
-			parentStateMachine.switchTo("Attack")
+	if not DialogManager.is_active:
+		if Input.is_action_pressed("attack"):
+			if character.hasWeapon():
+				character.start_attack()
+			else :
+				parentStateMachine.switchTo("Attack")
+		elif Input.is_action_just_released("attack"):
+			if character.hasWeapon():
+				character.stop_attack()
 	
 	if character.inputDirection == Vector2.ZERO:
 		parentStateMachine.switchTo("Idle")
