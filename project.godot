@@ -22,6 +22,7 @@ DialogManager="*uid://c23aaw7uctfvl"
 SceneManager="*uid://cueknapsypukl"
 SkillManager="*uid://lllveicy3clf"
 DataManager="*uid://bvdr7y48jnr0"
+EquipmentManager="*uid://b032ocxbqg83x"
 
 [display]
 

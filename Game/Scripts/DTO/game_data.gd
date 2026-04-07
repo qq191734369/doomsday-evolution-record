@@ -60,11 +60,7 @@ class CharacterInfo:
 	func get_attribute(attribute_name: String) -> float:
 		var base_value = base_attributes.get(attribute_name, 0)
 		
-		# 应用装备加成
-		if attribute_name == "attack_damage" and equipment and equipment.weapon:
-			base_value += equipment.weapon.damage
-		
-		# 应用修饰符
+		# 应用修饰符（包括装备修饰符）
 		for modifier in modifiers:
 			if modifier.attribute == attribute_name:
 				if modifier.type == "percentage":

@@ -308,7 +308,7 @@ func _process(delta: float) -> void:
 	updateSkillCooldowns(delta)
 
 func hasWeapon() -> bool:
-	return data and data.equipment and data.equipment.weapon
+	return EquipmentManager.has_weapon(data)
 
 func get_effective_attack_range() -> float:
 	# 计算有效攻击范围，取NPC默认攻击范围和武器攻击范围的最大值
