@@ -25,6 +25,26 @@ func _ready() -> void:
 	GameManager.playerHealthUpdated_signal.emit(data.currentHealth, data.maxHealth)
 	# 渲染队伍成员
 	call_deferred("_render_party_members")
+	
+	# 打印初始属性
+	print("初始属性:")
+	print("生命值: " + str(data.maxHealth))
+	print("攻击力: " + str(data.attackDamage))
+	print("速度: " + str(data.speed))
+	
+	# 学习力量提升被动技能
+	print("\n学习力量提升被动技能...")
+	learnSkill("passive_strength")
+	
+	# 学习生命增强被动技能
+	print("\n学习生命增强被动技能...")
+	learnSkill("passive_vitality")
+	
+	# 打印学习后的属性
+	print("\n学习被动技能后的属性:")
+	print("生命值: " + str(data.maxHealth))
+	print("攻击力: " + str(data.attackDamage))
+	print("速度: " + str(data.speed))
 
 func _render_party_members():
 	# 渲染队伍成员
@@ -48,6 +68,14 @@ func setCurrentHealthValue(value: int):
 func _unhandled_input(_event: InputEvent) -> void:
 	inputDirection = Input.get_vector("left", "right", "up", "down")
 	facingDirection = GetDirectionName()
+	
+	# 技能使用输入
+	if _event.is_action_pressed("skill_1"):
+		useSkill("basic_attack")
+	elif _event.is_action_pressed("skill_2"):
+		useSkill("fire_ball")
+	elif _event.is_action_pressed("skill_3"):
+		useSkill("heal")
 
 
 func _physics_process(_delta: float) -> void:

@@ -26,9 +26,6 @@ height = 48.0
 y_sort_enabled = true
 collision_layer = 2
 script = ExtResource("1_2p41y")
-playerDetectionRadius = null
-showDebuggVisual = null
-accelerate = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=651975218]
 position = Vector2(-1, -2.0000002)

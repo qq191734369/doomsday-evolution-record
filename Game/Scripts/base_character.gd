@@ -50,8 +50,23 @@ var knockBackDirection: Vector2
 
 var isInvincible: bool = false
 
+# 技能相关
+var skills: Array = []
+var skill_cooldowns: Dictionary = {}
+
+# 法力值属性
+var currentMana:
+	get:
+		if not _data:
+			return 0
+		return _data.currentMana
+		
+	set(value):
+		setCurrentManaValue(value)
+
 func _ready() -> void:
 	initEquipment()
+	initSkills()
 	
 func initEquipment():
 	slot_weapon.visible = false
@@ -70,6 +85,7 @@ func setData(d: GameData.CharacterInfo):
 	if d == _data:
 		return
 	_data = d
+	initSkills()
 
 func setCurrentHealthValue(value: int):
 	if not _data:
@@ -80,6 +96,207 @@ func setCurrentHealthValue(value: int):
 		isDead = true
 		area_2d_body.set_deferred("monitorable", false)
 		area_2d_body.set_deferred("monitoring", false)
+
+func setCurrentManaValue(value: int):
+	if not _data:
+		return
+	_data.currentMana = clamp(value, 0, _data.maxMana)
+
+func initSkills():
+	if not data:
+		return
+	skills = data.skills
+	skill_cooldowns.clear()
+	for skill_id in skills:
+		skill_cooldowns[skill_id] = 0.0
+		# 应用被动技能
+		var skill = SkillManager.get_skill(skill_id)
+		if skill and skill.type == SkillData.SkillType.PASSIVE:
+			applyPassiveSkill(skill)
+
+func applyPassiveSkill(skill):
+	if not skill or skill.type != SkillData.SkillType.PASSIVE:
+		return
+	
+	# 根据被动技能效果类型应用不同的效果
+	match skill.passive_effect:
+		"attack_damage":
+			data.attackDamage = int(data.attackDamage * (1 + skill.effect_value))
+			print("应用被动技能: " + skill.name + "，攻击力提升" + str(int(skill.effect_value * 100)) + "%")
+		"max_health":
+			var old_max_health = data.maxHealth
+			data.maxHealth = int(data.maxHealth * (1 + skill.effect_value))
+			data.currentHealth = min(data.currentHealth, data.maxHealth)
+			print("应用被动技能: " + skill.name + "，最大生命值提升" + str(int(skill.effect_value * 100)) + "%")
+		"max_mana":
+			data.maxMana = int(data.maxMana * (1 + skill.effect_value))
+			data.currentMana = min(data.currentMana, data.maxMana)
+			print("应用被动技能: " + skill.name + "，最大法力值提升" + str(int(skill.effect_value * 100)) + "%")
+		"speed":
+			data.speed = data.speed * (1 + skill.effect_value)
+			print("应用被动技能: " + skill.name + "，移动速度提升" + str(int(skill.effect_value * 100)) + "%")
+		"attack_speed":
+			# 这里可以影响武器的攻击速度
+			print("应用被动技能: " + skill.name + "，攻击速度提升" + str(int(skill.effect_value * 100)) + "%")
+		_:
+			print("未知的被动技能效果: " + skill.passive_effect)
+
+func learnSkill(skill_id: String):
+	if not skills.has(skill_id):
+		skills.append(skill_id)
+		skill_cooldowns[skill_id] = 0.0
+		data.skills = skills
+		# 检查是否是被动技能
+	var skill = SkillManager.get_skill(skill_id)
+	if skill and skill.type == SkillData.SkillType.PASSIVE:
+		applyPassiveSkill(skill)
+
+func forgetSkill(skill_id: String):
+	if skills.has(skill_id):
+		skills.erase(skill_id)
+		skill_cooldowns.erase(skill_id)
+		data.skills = skills
+
+func canUseSkill(skill_id: String) -> bool:
+	if not skills.has(skill_id):
+		return false
+	
+	var skill = SkillManager.get_skill(skill_id)
+	if not skill:
+		return false
+	
+	# 被动技能不能主动使用
+	if skill.type == SkillData.SkillType.PASSIVE:
+		return false
+	
+	if skill_cooldowns.get(skill_id, 0.0) > 0:
+		return false
+	
+	if data.currentMana < skill.mana_cost:
+		return false
+	
+	return true
+
+func useSkill(skill_id: String, target = null):
+	if not canUseSkill(skill_id):
+		return false
+	
+	var skill = SkillManager.get_skill(skill_id)
+	if not skill:
+		return false
+	
+	# 消耗法力值
+	currentMana -= skill.mana_cost
+	
+	# 设置技能冷却
+	skill_cooldowns[skill_id] = skill.cooldown
+	
+	# 根据技能类型执行不同的效果
+	match skill.type:
+		SkillData.SkillType.MELEE:
+			executeMeleeSkill(skill, target)
+		SkillData.SkillType.RANGED:
+			executeRangedSkill(skill, target)
+		SkillData.SkillType.MAGIC:
+			executeMagicSkill(skill, target)
+		SkillData.SkillType.BUFF:
+			executeBuffSkill(skill, target)
+		SkillData.SkillType.HEAL:
+			executeHealSkill(skill, target)
+		SkillData.SkillType.UTILITY:
+			executeUtilitySkill(skill, target)
+	
+	return true
+
+func executeMeleeSkill(skill, target):
+	# 近战技能逻辑
+	var area = Area2D.new()
+	var collision_shape = CollisionShape2D.new()
+	var circle_shape = CircleShape2D.new()
+	circle_shape.radius = skill.range
+	collision_shape.shape = circle_shape
+	area.add_child(collision_shape)
+	area.global_position = global_position
+	area.monitorable = true
+	area.monitoring = true
+	area.collision_layer = 2 # 敌人层
+	area.collision_mask = 2
+	
+	# 检测敌人
+	var enemies = area.get_overlapping_bodies()
+	for enemy in enemies:
+		if enemy is EnemyCharacter:
+			enemy.getHit(skill.damage, self)
+	
+	# 清理
+	area.queue_free()
+
+func executeRangedSkill(skill, target):
+	# 远程技能逻辑
+	if not target:
+		return
+	
+	var direction = global_position.direction_to(target.global_position)
+	
+	# 这里可以创建投射物
+	# 类似于武器的子弹逻辑
+
+func executeMagicSkill(skill, target):
+	# 魔法技能逻辑
+	if skill.target_type == 0 and target:
+		# 单体目标
+		if target is BaseCharacter:
+			target.getHit(skill.damage, self)
+	elif skill.target_type == 1:
+		# 区域效果
+		var area = Area2D.new()
+		var collision_shape = CollisionShape2D.new()
+		var circle_shape = CircleShape2D.new()
+		circle_shape.radius = skill.area_of_effect
+		collision_shape.shape = circle_shape
+		area.add_child(collision_shape)
+		area.global_position = global_position
+		area.monitorable = true
+		area.monitoring = true
+		area.collision_layer = 2
+		area.collision_mask = 2
+		
+		var enemies = area.get_overlapping_bodies()
+		for enemy in enemies:
+			if enemy is EnemyCharacter:
+				enemy.getHit(skill.damage, self)
+		
+		area.queue_free()
+
+func executeBuffSkill(skill, target):
+	# 增益技能逻辑
+	if not target:
+		target = self
+	
+	if target is BaseCharacter:
+		# 应用增益效果
+		# 这里可以添加状态系统来管理增益效果
+		print("应用增益: " + skill.name)
+
+func executeHealSkill(skill, target):
+	# 治疗技能逻辑
+	if not target:
+		target = self
+	
+	if target is BaseCharacter:
+		target.currentHealth += skill.heal_amount
+		print("治疗: " + str(skill.heal_amount))
+
+func executeUtilitySkill(skill, target):
+	# 实用技能逻辑
+	print("执行实用技能: " + skill.name)
+
+func updateSkillCooldowns(delta: float):
+	for skill_id in skill_cooldowns.keys():
+		skill_cooldowns[skill_id] = max(0.0, skill_cooldowns[skill_id] - delta)
+
+func _process(delta: float) -> void:
+	updateSkillCooldowns(delta)
 
 func hasWeapon() -> bool:
 	return data and data.equipment and data.equipment.weapon

@@ -6,6 +6,8 @@ static var singleton: GameData
 class CharacterInfo:
 	var maxHealth: int = 100
 	var currentHealth: int = 100
+	var maxMana: int = 100
+	var currentMana: int = 100
 	var attackDamage: int = 50
 	var speed: int = 200
 	var position: Vector2 = Vector2.ZERO
@@ -14,6 +16,7 @@ class CharacterInfo:
 	var experience: int = 0
 	var inventory: Array = []
 	var equipment: Equipment
+	var skills: Array = []
 	var currentState: String = "Idle"
 	var	inParty: bool = false
 	var	dialogueId
@@ -27,6 +30,8 @@ class CharacterInfo:
 	func _init(data: Dictionary) -> void:
 		maxHealth = data.get("maxHealth", 200)
 		currentHealth = data.get("currentHealth", 200)
+		maxMana = data.get("maxMana", 100)
+		currentMana = data.get("currentMana", 100)
 		attackDamage = data.get("attackDamage", 20)
 		speed = data.get("speed", 200)
 		position = data.get("position", Vector2.ZERO)
@@ -35,6 +40,7 @@ class CharacterInfo:
 		dialogueId = data.get("dialogueId", "")
 		position = data.get("position", position)
 		equipment = data.get("equipment", Equipment.new({}))
+		skills = data.get("skills", [])
 		
 class Equipment:
 	var weapon: WeaponData.WeaponInfo
@@ -103,7 +109,6 @@ var npcDictionary: Dictionary[String, CharacterInfo] = {
 			"type": WeaponData.WeaponType.RANGED,
 			"damage": 10,
 			"range": 200.0,
-			"attack_speed": 1
 		})
 	})
 	})
@@ -272,6 +277,8 @@ func _serialize_player() -> Dictionary:
 	var data = {
 		"maxHealth": player.maxHealth,
 		"currentHealth": player.currentHealth,
+		"maxMana": player.maxMana,
+		"currentMana": player.currentMana,
 		"attackDamage": player.attackDamage,
 		"speed": player.speed,
 		"position": [player.position.x, player.position.y],
@@ -280,6 +287,7 @@ func _serialize_player() -> Dictionary:
 		"experience": player.experience,
 		"inventory": player.inventory,
 		"equipment": player.equipment,
+		"skills": player.skills,
 		"currentState": player.currentState
 	}
 	return data
@@ -291,13 +299,16 @@ func _serialize_npcs() -> Dictionary:
 		data[npc_id] = {
 			"maxHealth": npc.maxHealth,
 			"currentHealth": npc.currentHealth,
+			"maxMana": npc.maxMana,
+			"currentMana": npc.currentMana,
 			"attackDamage": npc.attackDamage,
 			"speed": npc.speed,
 			"position": [npc.position.x, npc.position.y],
 			"name": npc.name,
 			"scene": npc.scene,
 			"inParty": npc.inParty,
-			"dialogueId": npc.dialogueId
+			"dialogueId": npc.dialogueId,
+			"skills": npc.skills
 		}
 	return data
 
@@ -343,6 +354,8 @@ func _serialize_game_state() -> Dictionary:
 func _deserialize_player(data: Dictionary):
 	player.maxHealth = data.get("maxHealth", 100)
 	player.currentHealth = data.get("currentHealth", 100)
+	player.maxMana = data.get("maxMana", 100)
+	player.currentMana = data.get("currentMana", 100)
 	player.attackDamage = data.get("attackDamage", 50)
 	player.speed = data.get("speed", 200)
 	if "position" in data and data["position"] is Array:
@@ -352,6 +365,7 @@ func _deserialize_player(data: Dictionary):
 	player.experience = data.get("experience", 0)
 	player.inventory = data.get("inventory", [])
 	player.equipment = data.get("equipment", {})
+	player.skills = data.get("skills", [])
 	player.currentState = data.get("currentState", "Idle")
 
 func _deserialize_npcs(data: Dictionary):
@@ -361,6 +375,8 @@ func _deserialize_npcs(data: Dictionary):
 		var npc_info = CharacterInfo.new({})
 		npc_info.maxHealth = npc_data.get("maxHealth", 100)
 		npc_info.currentHealth = npc_data.get("currentHealth", 100)
+		npc_info.maxMana = npc_data.get("maxMana", 100)
+		npc_info.currentMana = npc_data.get("currentMana", 100)
 		npc_info.attackDamage = npc_data.get("attackDamage", 30)
 		npc_info.speed = npc_data.get("speed", 180)
 		if "position" in npc_data and npc_data["position"] is Array:
@@ -369,6 +385,7 @@ func _deserialize_npcs(data: Dictionary):
 		npc_info.scene = npc_data.get("scene", "")
 		npc_info.inParty = npc_data.get("inParty", false)
 		npc_info.dialogueId = npc_data.get("dialogueId", "")
+		npc_info.skills = npc_data.get("skills", [])
 		npcDictionary[npc_id] = npc_info
 
 func _deserialize_enemies(data: Dictionary):
