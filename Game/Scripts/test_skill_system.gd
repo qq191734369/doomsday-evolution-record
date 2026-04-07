@@ -32,9 +32,9 @@ func _ready() -> void:
 	
 	# 打印初始属性
 	print("初始属性:")
-	print("生命值: " + str(test_character.data.maxHealth))
-	print("攻击力: " + str(test_character.data.attackDamage))
-	print("速度: " + str(test_character.data.speed))
+	print("生命值: " + str(test_character.data.get_max_health()))
+	print("攻击力: " + str(test_character.data.get_attack_damage()))
+	print("速度: " + str(test_character.data.get_speed()))
 	
 	# 学习力量提升被动技能
 	print("\n学习力量提升被动技能...")
@@ -46,9 +46,9 @@ func _ready() -> void:
 	
 	# 打印学习后的属性
 	print("\n学习被动技能后的属性:")
-	print("生命值: " + str(test_character.data.maxHealth))
-	print("攻击力: " + str(test_character.data.attackDamage))
-	print("速度: " + str(test_character.data.speed))
+	print("生命值: " + str(test_character.data.get_max_health()))
+	print("攻击力: " + str(test_character.data.get_attack_damage()))
+	print("速度: " + str(test_character.data.get_speed()))
 	
 	# 测试被动技能不能主动使用
 	print("\n测试被动技能是否能主动使用:")

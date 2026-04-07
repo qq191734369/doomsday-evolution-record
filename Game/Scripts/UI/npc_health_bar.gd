@@ -49,7 +49,7 @@ func _update_display():
 			print("找不到头像: " + avatar_path)
 	
 	if health_bar:
-		health_bar.value = float(npc.data.currentHealth) / float(npc.data.maxHealth) * 100
+		health_bar.value = float(npc.data.currentHealth) / float(npc.data.get_max_health()) * 100
 
 func update_health():
 	_update_display()

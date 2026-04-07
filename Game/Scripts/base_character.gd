@@ -18,8 +18,13 @@ var currentHealth:
 		
 	set(value):
 		setCurrentHealthValue(value)
-			
-			
+
+var maxHealth:
+	get:
+		if not _data:
+			return 0
+		return _data.get_max_health()
+		
 var isDead = false
 
 @onready var area_2d_body: Area2D = $Area2D_Body
@@ -64,6 +69,26 @@ var currentMana:
 	set(value):
 		setCurrentManaValue(value)
 
+var maxMana:
+	get:
+		if not _data:
+			return 0
+		return _data.get_max_mana()
+
+# 攻击力属性
+var attackDamage:
+	get:
+		if not _data:
+			return 0
+		return _data.get_attack_damage()
+
+# 速度属性
+var speed:
+	get:
+		if not _data:
+			return 0
+		return _data.get_speed()
+
 func _ready() -> void:
 	initEquipment()
 	initSkills()
@@ -90,7 +115,7 @@ func setData(d: GameData.CharacterInfo):
 func setCurrentHealthValue(value: int):
 	if not _data:
 		return
-	_data.currentHealth = clamp(value, 0, _data.maxHealth)
+	_data.currentHealth = clamp(value, 0, _data.get_max_health())
 	currentHealthChanged.emit()
 	if _data.currentHealth == 0:
 		isDead = true
@@ -100,7 +125,7 @@ func setCurrentHealthValue(value: int):
 func setCurrentManaValue(value: int):
 	if not _data:
 		return
-	_data.currentMana = clamp(value, 0, _data.maxMana)
+	_data.currentMana = clamp(value, 0, _data.get_max_mana())
 
 func initSkills():
 	if not data:
@@ -118,28 +143,10 @@ func applyPassiveSkill(skill):
 	if not skill or skill.type != SkillData.SkillType.PASSIVE:
 		return
 	
-	# 根据被动技能效果类型应用不同的效果
-	match skill.passive_effect:
-		"attack_damage":
-			data.attackDamage = int(data.attackDamage * (1 + skill.effect_value))
-			print("应用被动技能: " + skill.name + "，攻击力提升" + str(int(skill.effect_value * 100)) + "%")
-		"max_health":
-			var old_max_health = data.maxHealth
-			data.maxHealth = int(data.maxHealth * (1 + skill.effect_value))
-			data.currentHealth = min(data.currentHealth, data.maxHealth)
-			print("应用被动技能: " + skill.name + "，最大生命值提升" + str(int(skill.effect_value * 100)) + "%")
-		"max_mana":
-			data.maxMana = int(data.maxMana * (1 + skill.effect_value))
-			data.currentMana = min(data.currentMana, data.maxMana)
-			print("应用被动技能: " + skill.name + "，最大法力值提升" + str(int(skill.effect_value * 100)) + "%")
-		"speed":
-			data.speed = data.speed * (1 + skill.effect_value)
-			print("应用被动技能: " + skill.name + "，移动速度提升" + str(int(skill.effect_value * 100)) + "%")
-		"attack_speed":
-			# 这里可以影响武器的攻击速度
-			print("应用被动技能: " + skill.name + "，攻击速度提升" + str(int(skill.effect_value * 100)) + "%")
-		_:
-			print("未知的被动技能效果: " + skill.passive_effect)
+	# 被动技能效果已经通过修饰符系统应用
+	# 这里可以添加额外的逻辑，如粒子效果、动画等
+	print("应用被动技能: " + skill.name)
+	print("效果: " + skill.passive_effect + "，提升" + str(int(skill.effect_value * 100)) + "%")
 
 func learnSkill(skill_id: String):
 	if not skills.has(skill_id):
@@ -149,6 +156,8 @@ func learnSkill(skill_id: String):
 		# 检查是否是被动技能
 	var skill = SkillManager.get_skill(skill_id)
 	if skill and skill.type == SkillData.SkillType.PASSIVE:
+		# 应用被动技能修饰符
+		ModifierUtils.apply_passive_skill(data, skill_id)
 		applyPassiveSkill(skill)
 
 func forgetSkill(skill_id: String):

@@ -75,4 +75,4 @@ func _on_attacck_hit_box_area_entered(area: Area2D) -> void:
 	
 	var enemyNode = area.get_parent() as EnemyCharacter
 	if enemyNode:
-		enemyNode.getHit(character.data.attackDamage, character)
+		enemyNode.getHit(character.data.get_attack_damage(), character)

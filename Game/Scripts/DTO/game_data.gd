@@ -4,12 +4,16 @@ class_name GameData
 static var singleton: GameData
 
 class CharacterInfo:
-	var maxHealth: int = 100
+	# 基础属性
+	var base_attributes = {
+		"max_health": 100,
+		"attack_damage": 50,
+		"speed": 200,
+		"max_mana": 100
+	}
+	
 	var currentHealth: int = 100
-	var maxMana: int = 100
 	var currentMana: int = 100
-	var attackDamage: int = 50
-	var speed: int = 200
 	var position: Vector2 = Vector2.ZERO
 	var name: String = ""
 	var level: int = 1
@@ -17,6 +21,7 @@ class CharacterInfo:
 	var inventory: Array = []
 	var equipment: Equipment
 	var skills: Array = []
+	var modifiers: Array = []
 	var currentState: String = "Idle"
 	var	inParty: bool = false
 	var	dialogueId
@@ -28,12 +33,12 @@ class CharacterInfo:
 	var scene: String # 当前所在场景
 
 	func _init(data: Dictionary) -> void:
-		maxHealth = data.get("maxHealth", 200)
+		base_attributes["max_health"] = data.get("maxHealth", 200)
 		currentHealth = data.get("currentHealth", 200)
-		maxMana = data.get("maxMana", 100)
+		base_attributes["max_mana"] = data.get("maxMana", 100)
 		currentMana = data.get("currentMana", 100)
-		attackDamage = data.get("attackDamage", 20)
-		speed = data.get("speed", 200)
+		base_attributes["attack_damage"] = data.get("attackDamage", 20)
+		base_attributes["speed"] = data.get("speed", 200)
 		position = data.get("position", Vector2.ZERO)
 		name = data.get("name", "Player")
 		scene = data.get("scene", "")
@@ -41,7 +46,47 @@ class CharacterInfo:
 		position = data.get("position", position)
 		equipment = data.get("equipment", Equipment.new({}))
 		skills = data.get("skills", [])
+		modifiers = data.get("modifiers", [])
 		
+	# 添加修饰符
+	func add_modifier(modifier: Dictionary):
+		modifiers.append(modifier)
+
+	# 移除修饰符
+	func remove_modifier(modifier_id: String):
+		modifiers = modifiers.filter(func(m): return m.id != modifier_id)
+
+	# 获取属性值
+	func get_attribute(attribute_name: String) -> float:
+		var base_value = base_attributes.get(attribute_name, 0)
+		
+		# 应用装备加成
+		if attribute_name == "attack_damage" and equipment and equipment.weapon:
+			base_value += equipment.weapon.damage
+		
+		# 应用修饰符
+		for modifier in modifiers:
+			if modifier.attribute == attribute_name:
+				if modifier.type == "percentage":
+					base_value *= (1 + modifier.value)
+				elif modifier.type == "flat":
+					base_value += modifier.value
+		
+		return base_value
+
+	# 便捷的属性获取方法
+	func get_max_health() -> int:
+		return int(get_attribute("max_health"))
+
+	func get_attack_damage() -> int:
+		return int(get_attribute("attack_damage"))
+
+	func get_speed() -> float:
+		return get_attribute("speed")
+
+	func get_max_mana() -> int:
+		return int(get_attribute("max_mana"))
+
 class Equipment:
 	var weapon: WeaponData.WeaponInfo
 	
@@ -275,12 +320,12 @@ func from_serializable(data: Dictionary):
 # 序列化方法
 func _serialize_player() -> Dictionary:
 	var data = {
-		"maxHealth": player.maxHealth,
+		"maxHealth": player.base_attributes["max_health"],
 		"currentHealth": player.currentHealth,
-		"maxMana": player.maxMana,
+		"maxMana": player.base_attributes["max_mana"],
 		"currentMana": player.currentMana,
-		"attackDamage": player.attackDamage,
-		"speed": player.speed,
+		"attackDamage": player.base_attributes["attack_damage"],
+		"speed": player.base_attributes["speed"],
 		"position": [player.position.x, player.position.y],
 		"name": player.name,
 		"level": player.level,
@@ -288,6 +333,7 @@ func _serialize_player() -> Dictionary:
 		"inventory": player.inventory,
 		"equipment": player.equipment,
 		"skills": player.skills,
+		"modifiers": player.modifiers,
 		"currentState": player.currentState
 	}
 	return data
@@ -297,18 +343,19 @@ func _serialize_npcs() -> Dictionary:
 	for npc_id in npcDictionary.keys():
 		var npc = npcDictionary[npc_id]
 		data[npc_id] = {
-			"maxHealth": npc.maxHealth,
+			"maxHealth": npc.base_attributes["max_health"],
 			"currentHealth": npc.currentHealth,
-			"maxMana": npc.maxMana,
+			"maxMana": npc.base_attributes["max_mana"],
 			"currentMana": npc.currentMana,
-			"attackDamage": npc.attackDamage,
-			"speed": npc.speed,
+			"attackDamage": npc.base_attributes["attack_damage"],
+			"speed": npc.base_attributes["speed"],
 			"position": [npc.position.x, npc.position.y],
 			"name": npc.name,
 			"scene": npc.scene,
 			"inParty": npc.inParty,
 			"dialogueId": npc.dialogueId,
-			"skills": npc.skills
+			"skills": npc.skills,
+			"modifiers": npc.modifiers
 		}
 	return data
 
@@ -352,12 +399,12 @@ func _serialize_game_state() -> Dictionary:
 
 # 反序列化方法
 func _deserialize_player(data: Dictionary):
-	player.maxHealth = data.get("maxHealth", 100)
+	player.base_attributes["max_health"] = data.get("maxHealth", 100)
 	player.currentHealth = data.get("currentHealth", 100)
-	player.maxMana = data.get("maxMana", 100)
+	player.base_attributes["max_mana"] = data.get("maxMana", 100)
 	player.currentMana = data.get("currentMana", 100)
-	player.attackDamage = data.get("attackDamage", 50)
-	player.speed = data.get("speed", 200)
+	player.base_attributes["attack_damage"] = data.get("attackDamage", 50)
+	player.base_attributes["speed"] = data.get("speed", 200)
 	if "position" in data and data["position"] is Array:
 		player.position = Vector2(data["position"][0], data["position"][1])
 	player.name = data.get("name", "Player")
@@ -366,6 +413,7 @@ func _deserialize_player(data: Dictionary):
 	player.inventory = data.get("inventory", [])
 	player.equipment = data.get("equipment", {})
 	player.skills = data.get("skills", [])
+	player.modifiers = data.get("modifiers", [])
 	player.currentState = data.get("currentState", "Idle")
 
 func _deserialize_npcs(data: Dictionary):
@@ -373,12 +421,12 @@ func _deserialize_npcs(data: Dictionary):
 	for npc_id in data.keys():
 		var npc_data = data[npc_id]
 		var npc_info = CharacterInfo.new({})
-		npc_info.maxHealth = npc_data.get("maxHealth", 100)
+		npc_info.base_attributes["max_health"] = npc_data.get("maxHealth", 100)
 		npc_info.currentHealth = npc_data.get("currentHealth", 100)
-		npc_info.maxMana = npc_data.get("maxMana", 100)
+		npc_info.base_attributes["max_mana"] = npc_data.get("maxMana", 100)
 		npc_info.currentMana = npc_data.get("currentMana", 100)
-		npc_info.attackDamage = npc_data.get("attackDamage", 30)
-		npc_info.speed = npc_data.get("speed", 180)
+		npc_info.base_attributes["attack_damage"] = npc_data.get("attackDamage", 30)
+		npc_info.base_attributes["speed"] = npc_data.get("speed", 180)
 		if "position" in npc_data and npc_data["position"] is Array:
 			npc_info.position = Vector2(npc_data["position"][0], npc_data["position"][1])
 		npc_info.name = npc_data.get("name", "NPC")
@@ -386,6 +434,7 @@ func _deserialize_npcs(data: Dictionary):
 		npc_info.inParty = npc_data.get("inParty", false)
 		npc_info.dialogueId = npc_data.get("dialogueId", "")
 		npc_info.skills = npc_data.get("skills", [])
+		npc_info.modifiers = npc_data.get("modifiers", [])
 		npcDictionary[npc_id] = npc_info
 
 func _deserialize_enemies(data: Dictionary):

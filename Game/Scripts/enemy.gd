@@ -67,7 +67,7 @@ func GetDirectionName() -> String:
 func _on_area_2d_body_area_entered(area: Area2D) -> void:
 	var target = area.get_parent()
 	if target == player:
-		player.getHit(data.attackDamage, self)
+		player.getHit(data.get_attack_damage(), self)
 	elif target is NPC:
-		target.getHit(data.attackDamage, self)
+		target.getHit(data.get_attack_damage(), self)
 	

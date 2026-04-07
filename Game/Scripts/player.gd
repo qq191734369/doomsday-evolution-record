@@ -22,15 +22,15 @@ func _ready() -> void:
 	if !PartyManager.is_in_party(self):
 		PartyManager.add_member(self)
 	# 队伍初始化和血条初始化
-	GameManager.playerHealthUpdated_signal.emit(data.currentHealth, data.maxHealth)
+	GameManager.playerHealthUpdated_signal.emit(data.currentHealth, data.get_max_health())
 	# 渲染队伍成员
 	call_deferred("_render_party_members")
 	
 	# 打印初始属性
 	print("初始属性:")
-	print("生命值: " + str(data.maxHealth))
-	print("攻击力: " + str(data.attackDamage))
-	print("速度: " + str(data.speed))
+	print("生命值: " + str(data.get_max_health()))
+	print("攻击力: " + str(data.get_attack_damage()))
+	print("速度: " + str(data.get_speed()))
 	
 	# 学习力量提升被动技能
 	print("\n学习力量提升被动技能...")
@@ -42,9 +42,9 @@ func _ready() -> void:
 	
 	# 打印学习后的属性
 	print("\n学习被动技能后的属性:")
-	print("生命值: " + str(data.maxHealth))
-	print("攻击力: " + str(data.attackDamage))
-	print("速度: " + str(data.speed))
+	print("生命值: " + str(data.get_max_health()))
+	print("攻击力: " + str(data.get_attack_damage()))
+	print("速度: " + str(data.get_speed()))
 
 func _render_party_members():
 	# 渲染队伍成员
@@ -60,7 +60,7 @@ func setEnemyDetectionRadius():
 func setCurrentHealthValue(value: int):
 	super.setCurrentHealthValue(value)
 	
-	GameManager.playerHealthUpdate(data.currentHealth, data.maxHealth)
+	GameManager.playerHealthUpdate(data.currentHealth, data.get_max_health())
 	
 	if isDead == true:
 		GameManager.playerIsDead()

@@ -36,9 +36,9 @@ func run_to_target(delta):
 		var dir = c.global_position.direction_to(target_position)
 		var distance = c.global_position.distance_to(target_position)
 		if c.follow_distance < distance:
-			c.velocity = dir * c.data.speed
+			c.velocity = dir * c.data.get_speed()
 		elif c.stop_distance > distance:
-			c.velocity = -dir * c.data.speed * 0.5
+			c.velocity = -dir * c.data.get_speed() * 0.5
 		else:
 			c.velocity = Vector2.ZERO
 	
@@ -54,7 +54,7 @@ func run_to_target(delta):
 	var direction = c.global_position.direction_to(target_position)
 	
 	# 移动到目标
-	c.velocity = direction * c.data.speed
+	c.velocity = direction * c.data.get_speed()
 	c.move_and_slide()
 	
 	# 如果目标是坐标，当接近目标时停止移动
@@ -73,9 +73,9 @@ func update_follow_state(delta: float):
 	
 	var dir = currentCharacter.get_direction_to_follow_target()
 	if currentCharacter.is_exceeds_following_distance():
-		currentCharacter.velocity = dir * currentCharacter.data.speed
+		currentCharacter.velocity = dir * currentCharacter.data.get_speed()
 	elif currentCharacter.is_less_than_min_following_distance():
-		currentCharacter.velocity = -dir * currentCharacter.data.speed * 0.5
+		currentCharacter.velocity = -dir * currentCharacter.data.get_speed() * 0.5
 	else:
 		currentCharacter.velocity = currentCharacter.velocity.lerp(Vector2.ZERO, 0.2)
 	
