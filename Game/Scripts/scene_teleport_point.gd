@@ -23,7 +23,7 @@ func _on_area_entered(area: Area2D) -> void:
 	# 设置传送坐标
 	if target is Player:
 		var target_position = to_coordinate
-		var game_data = DataManager.get_instance().game_data
+		var game_data = DataManager.game_data
 		
 		var playerData = game_data.player
 		playerData.position = to_coordinate

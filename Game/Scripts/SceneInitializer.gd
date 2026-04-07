@@ -25,7 +25,7 @@ func init_player_in_scene(scene_root: Node2D) -> void:
 	var player_scene = load("uid://ba6tj4nvsql2e")
 	
 	# 获取DataManager实例
-	var data_manager = DataManager.get_instance()
+	var data_manager = DataManager
 	
 	# 获取玩家数据
 	var player_data = data_manager.get_player_data()
@@ -64,7 +64,7 @@ func init_npcs_in_scene(scene_root: BaseScene) -> void:
 	var npc_scene = load("uid://cdcmam8w3evcf")
 	
 	# 获取DataManager实例
-	var data_manager = DataManager.get_instance()
+	var data_manager = DataManager
 	
 	# 获取NPC数据
 	var npc_data = data_manager.get_game_data().npcDictionary
@@ -111,7 +111,7 @@ func init_enemies_in_scene(scene_root: Node2D, enemy_scene: PackedScene = null) 
 	await scene_root.get_tree().process_frame
 	
 	# 获取DataManager实例
-	var data_manager = DataManager.get_instance()
+	var data_manager = DataManager
 	
 	# 获取敌人数据
 	var enemy_data = data_manager.get_game_data().enemyDictionary

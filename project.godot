@@ -20,7 +20,8 @@ GameManager="*uid://n2gtidukqddd"
 PartyManager="*uid://dbqjoc5rgcu5k"
 DialogManager="*uid://c23aaw7uctfvl"
 SceneManager="*uid://cueknapsypukl"
-SkillManager="*res://Game/Scripts/skill_manager.gd"
+SkillManager="*uid://lllveicy3clf"
+DataManager="*uid://bvdr7y48jnr0"
 
 [display]
 

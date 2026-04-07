@@ -1,20 +1,10 @@
-class_name DataManager
-
-# 单例实例
-static var singleton: DataManager
+extends Node
 
 # 游戏数据
 var game_data: GameData
 
-# 单例方法
-static func get_instance() -> DataManager:
-	if not DataManager.singleton:
-		DataManager.singleton = DataManager.new()
-		DataManager.singleton._initialize()
-	return DataManager.singleton
-
 # 初始化
-func _initialize():
+func _ready() -> void:
 	# 获取GameData实例
 	game_data = GameData.get_instance()
 

@@ -5,7 +5,7 @@ var party_members: Array[BaseCharacter] = []
 # 渲染队伍角色
 func render_party_members():
 	# 获取DataManager实例
-	var data_manager = DataManager.get_instance()
+	var data_manager = DataManager
 	var game_data = data_manager.get_game_data()
 	
 	# 清空当前列表
@@ -69,7 +69,7 @@ func is_in_party(c: BaseCharacter) -> bool:
 	return party_members.has(c)
 
 func _add_member_to_gamedata(id: String):
-	var game_data = DataManager.get_instance().game_data
+	var game_data = DataManager.game_data
 	if game_data.isInParty(id):
 		return
 	
@@ -114,7 +114,7 @@ func add_member(member: BaseCharacter):
 	_add_member_to_instance_list(member)
 
 func _remove_from_gamedata(member: BaseCharacter):
-	var game_data = DataManager.get_instance().game_data
+	var game_data = DataManager.game_data
 	var dataIdx = game_data.partyList.find(member.data.name)
 	if dataIdx != -1:
 		game_data.partyList.remove_at(dataIdx)
