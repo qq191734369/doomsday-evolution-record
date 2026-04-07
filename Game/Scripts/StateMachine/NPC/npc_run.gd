@@ -40,7 +40,7 @@ func run_to_target(delta):
 		elif c.stop_distance > distance:
 			c.velocity = -dir * c.data.speed * 0.5
 		else:
-			c.velocity = c.velocity.lerp(Vector2.ZERO, 0.2)
+			c.velocity = Vector2.ZERO
 	
 		c.move_and_slide()
 		return
