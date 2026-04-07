@@ -68,11 +68,11 @@ func attackWithWeapon():
 	else :
 		# 计算与目标的距离
 		var distance = npc.global_position.distance_to(npc.current_attack_target.global_position)
-		# 计算攻击范围的一半
-		var half_range = npc.get_effective_attack_range() / 3
+		# 计算何时进行走位 躲避怪物
+		var min_enemy_distance = max(npc.get_effective_attack_range() / 3, 50)
 		
 		# 如果距离小于攻击范围的一半，执行放风筝操作
-		if distance < half_range and not npc.is_following():
+		if distance < min_enemy_distance and not npc.is_following():
 			# 计算后退方向（与目标相反的方向）
 			var retreat_direction = (npc.global_position - npc.current_attack_target.global_position).normalized()
 			# 设置移动目标为后退位置
