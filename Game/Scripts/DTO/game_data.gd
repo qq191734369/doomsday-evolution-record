@@ -18,13 +18,13 @@ class CharacterInfo:
 	var name: String = ""
 	var level: int = 1
 	var experience: int = 0
-	var inventory: Array = []
+	var bag: BagData.BagInfo
 	var equipment: Equipment
 	var skills: Array = []
 	var modifiers: Array = []
 	var currentState: String = "Idle"
 	var	inParty: bool = false
-	var	dialogueId
+	var	dialogueId: String
 	var follow_distance = 50.0 # 跟随间距
 	var stop_distance = 10.0
 	var player_max_distance =  200.0  # 与玩家最大距离s
@@ -47,6 +47,8 @@ class CharacterInfo:
 		equipment = data.get("equipment", Equipment.new({}))
 		skills = data.get("skills", [])
 		modifiers = data.get("modifiers", [])
+		# 初始化背包
+		bag = BagData.BagInfo.new()
 		
 	# 添加修饰符
 	func add_modifier(modifier: Dictionary):
@@ -120,7 +122,6 @@ var player: CharacterInfo = CharacterInfo.new({
 	"equipment": Equipment.new({
 		"weapon": WeaponData.RangedWeaponInfo.new({
 			"name": "Gun",
-			"type": WeaponData.WeaponType.RANGED,
 			"damage": 50,
 			"range": 200.0
 		})
@@ -147,7 +148,6 @@ var npcDictionary: Dictionary[String, CharacterInfo] = {
 		"equipment": Equipment.new({
 		"weapon": WeaponData.RangedWeaponInfo.new({
 			"name": "Gun",
-			"type": WeaponData.WeaponType.RANGED,
 			"damage": 10,
 			"range": 200.0,
 		})
@@ -315,6 +315,16 @@ func from_serializable(data: Dictionary):
 
 # 序列化方法
 func _serialize_player() -> Dictionary:
+	# 序列化背包
+	var serialized_inventory = []
+	if player.inventory:
+		for slot in player.inventory.slots:
+			if slot.item_id != "":
+				serialized_inventory.append({
+					"item_id": slot.item_id,
+					"quantity": slot.quantity
+				})
+
 	var data = {
 		"maxHealth": player.base_attributes["max_health"],
 		"currentHealth": player.currentHealth,
@@ -326,7 +336,7 @@ func _serialize_player() -> Dictionary:
 		"name": player.name,
 		"level": player.level,
 		"experience": player.experience,
-		"inventory": player.inventory,
+		"inventory": serialized_inventory,
 		"equipment": player.equipment,
 		"skills": player.skills,
 		"modifiers": player.modifiers,
@@ -338,6 +348,15 @@ func _serialize_npcs() -> Dictionary:
 	var data = {}
 	for npc_id in npcDictionary.keys():
 		var npc = npcDictionary[npc_id]
+		# 序列化背包
+		var serialized_inventory = []
+		if npc.inventory:
+			for slot in npc.inventory.slots:
+				if slot.item_id != "":
+					serialized_inventory.append({
+						"item_id": slot.item_id,
+						"quantity": slot.quantity
+					})
 		data[npc_id] = {
 			"maxHealth": npc.base_attributes["max_health"],
 			"currentHealth": npc.currentHealth,
@@ -350,6 +369,7 @@ func _serialize_npcs() -> Dictionary:
 			"scene": npc.scene,
 			"inParty": npc.inParty,
 			"dialogueId": npc.dialogueId,
+			"inventory": serialized_inventory,
 			"skills": npc.skills,
 			"modifiers": npc.modifiers
 		}
@@ -406,7 +426,18 @@ func _deserialize_player(data: Dictionary):
 	player.name = data.get("name", "Player")
 	player.level = data.get("level", 1)
 	player.experience = data.get("experience", 0)
-	player.inventory = data.get("inventory", [])
+	
+	# 初始化背包
+	player.bag = BagData.BagInfo.new()
+	
+	# 反序列化背包
+	var serialized_inventory = data.get("inventory", [])
+	for item_data in serialized_inventory:
+		var item_id = item_data.get("item_id", "")
+		var quantity = item_data.get("quantity", 1)
+		if item_id != "":
+			player.inventory.add_item(item_id, quantity)
+	
 	player.equipment = data.get("equipment", {})
 	player.skills = data.get("skills", [])
 	player.modifiers = data.get("modifiers", [])
@@ -429,6 +460,15 @@ func _deserialize_npcs(data: Dictionary):
 		npc_info.scene = npc_data.get("scene", "")
 		npc_info.inParty = npc_data.get("inParty", false)
 		npc_info.dialogueId = npc_data.get("dialogueId", "")
+		
+		# 反序列化背包
+		var serialized_inventory = npc_data.get("inventory", [])
+		for item_data in serialized_inventory:
+			var item_id = item_data.get("item_id", "")
+			var quantity = item_data.get("quantity", 1)
+			if item_id != "":
+				npc_info.inventory.add_item(item_id, quantity)
+		
 		npc_info.skills = npc_data.get("skills", [])
 		npc_info.modifiers = npc_data.get("modifiers", [])
 		npcDictionary[npc_id] = npc_info

@@ -72,7 +72,7 @@ func attack() -> void:
 		return
 	
 	# 远程武器处理
-	if data.type == WeaponData.WeaponType.RANGED:
+	if data is WeaponData.RangedWeaponInfo:
 		_fire_projectile()
 	# 其他武器类型可以在这里添加处理
 	
