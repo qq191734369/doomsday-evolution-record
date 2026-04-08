@@ -1,12 +1,12 @@
 class_name ModifierUtils
 
 # 创建修饰符
-static func create_modifier(id: String, attribute: String, value: float, modifier_type: String, source: String) -> Dictionary:
+static func create_modifier(id: String, attribute: String, value: float, modifier_type: SkillData.ModifierType, source: String) -> Dictionary:
 	return {
 		"id": id,
 		"attribute": attribute,
 		"value": value,
-		"type": modifier_type,  # "percentage" or "flat"
+		"type": modifier_type,  # SkillData.ModifierType.PERCENTAGE or SkillData.ModifierType.FLAT
 		"source": source  # "skill", "equipment", "talent"
 	}
 
@@ -18,7 +18,7 @@ static func apply_passive_skill(character_data, skill_id: String):
 			skill.id,
 			skill.passive_effect,
 			skill.effect_value,
-			"percentage",
+			SkillData.ModifierType.PERCENTAGE,
 			"skill"
 		)
 		character_data.add_modifier(modifier)

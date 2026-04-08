@@ -20,6 +20,12 @@ enum SkillRarity {
 	LEGENDARY   # 传说
 }
 
+# 修饰符类型枚举
+enum ModifierType {
+	PERCENTAGE, # 百分比加成
+	FLAT        # 固定值加成
+}
+
 # 技能基类
 class SkillInfo:
 	var id: String = ""
@@ -139,4 +145,3 @@ class PassiveSkillInfo extends SkillInfo:
 	# 被动技能总是可用的
 	func is_usable(character) -> bool:
 		return true
-

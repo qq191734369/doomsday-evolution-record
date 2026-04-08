@@ -63,9 +63,9 @@ class CharacterInfo:
 		# 应用修饰符（包括装备修饰符）
 		for modifier in modifiers:
 			if modifier.attribute == attribute_name:
-				if modifier.type == "percentage":
+				if modifier.type == SkillData.ModifierType.PERCENTAGE:
 					base_value *= (1 + modifier.value)
-				elif modifier.type == "flat":
+				elif modifier.type == SkillData.ModifierType.FLAT:
 					base_value += modifier.value
 		
 		return base_value

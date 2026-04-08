@@ -17,7 +17,7 @@ func create_equipment_modifier(equipment, slot: String) -> Array:
 				"weapon_damage_" + slot,
 				"attack_damage",
 				equipment.damage,
-				"flat",
+				SkillData.ModifierType.FLAT,
 				"equipment"
 			)
 			modifiers.append(damage_modifier)
@@ -27,7 +27,7 @@ func create_equipment_modifier(equipment, slot: String) -> Array:
 					"weapon_attack_speed_" + slot,
 					"attack_speed",
 					equipment.attack_speed - 1.0,  # 假设基础攻击速度为1.0
-					"percentage",
+					SkillData.ModifierType.PERCENTAGE,
 					"equipment"
 				)
 				modifiers.append(attack_speed_modifier)
@@ -38,7 +38,7 @@ func create_equipment_modifier(equipment, slot: String) -> Array:
 				"weapon_damage_" + slot,
 				"attack_damage",
 				equipment.damage,
-				"flat",
+				SkillData.ModifierType.FLAT,
 				"equipment"
 			)
 			modifiers.append(damage_modifier)
@@ -49,7 +49,7 @@ func create_equipment_modifier(equipment, slot: String) -> Array:
 				"weapon_damage_" + slot,
 				"attack_damage",
 				equipment.damage,
-				"flat",
+				SkillData.ModifierType.FLAT,
 				"equipment"
 			)
 			modifiers.append(damage_modifier)
@@ -59,7 +59,7 @@ func create_equipment_modifier(equipment, slot: String) -> Array:
 					"weapon_mana_cost_" + slot,
 					"mana_cost",
 					equipment.mana_cost * -0.1,  # 减少法力消耗
-					"percentage",
+					SkillData.ModifierType.PERCENTAGE,
 					"equipment"
 				)
 				modifiers.append(mana_cost_modifier)

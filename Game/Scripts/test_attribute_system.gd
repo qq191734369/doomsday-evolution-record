@@ -52,7 +52,7 @@ func _ready() -> void:
 		"test_speed_buff",
 		"speed",
 		0.5,
-		"percentage",
+		SkillData.ModifierType.PERCENTAGE,
 		"test"
 	)
 	char_data.add_modifier(test_modifier)
