@@ -44,11 +44,12 @@ class CharacterInfo:
 		scene = data.get("scene", "")
 		dialogueId = data.get("dialogueId", "")
 		position = data.get("position", position)
-		equipment = data.get("equipment", Equipment.new({}))
+		var equip_data = data.get("equipment")
+		equipment = Equipment.new(equip_data if equip_data != null else {})
 		skills = data.get("skills", [])
 		modifiers = data.get("modifiers", [])
 		# 初始化背包
-		bag = BagData.BagInfo.new()
+		bag = BagData.BagInfo.new(data.get("bag", {}))
 		
 	# 添加修饰符
 	func add_modifier(modifier: Dictionary):
@@ -88,8 +89,18 @@ class CharacterInfo:
 class Equipment:
 	var weapon: WeaponData.WeaponInfo
 	
-	func _init(data: Dictionary) -> void:
-		weapon = data.get("weapon")
+	func _init(data: Dictionary = {}) -> void:
+		var weaponData = data.get("weapon")
+		if weaponData:
+			var type = weaponData.get("weapon_type")
+			if type == WeaponData.WeaponType.MELEE:
+				weapon = WeaponData.MeleeWeaponInfo.new(weaponData)
+			elif type == WeaponData.WeaponType.RANGED:
+				weapon = WeaponData.RangedWeaponInfo.new(weaponData)
+			elif type == WeaponData.WeaponType.MAGIC:
+				weapon = WeaponData.MagicWeaponInfo.new(weaponData)
+			elif type == WeaponData.WeaponType.TOOL:
+				weapon = WeaponData.ToolInfo.new(weaponData)
 
 class EnemyInfo:
 	var maxHealth: int = 80
@@ -119,13 +130,14 @@ var player: CharacterInfo = CharacterInfo.new({
 	"name": "Player",
 	"position": Vector2(689.0, 373.0),
 	"attackDamage": 50,
-	"equipment": Equipment.new({
-		"weapon": WeaponData.RangedWeaponInfo.new({
+	"equipment": {
+		"weapon": {
+			"weapon_type": 1,
 			"name": "Gun",
 			"damage": 50,
 			"range": 200.0
-		})
-	})
+		}
+	}
 })
 
 # npc信息
@@ -145,13 +157,14 @@ var npcDictionary: Dictionary[String, CharacterInfo] = {
 		"dialogueId": "zhaoxiner_join_start",
 		"scene": "main",
 		"position": Vector2(720.0, 373.0),
-		"equipment": Equipment.new({
-		"weapon": WeaponData.RangedWeaponInfo.new({
-			"name": "Gun",
-			"damage": 10,
-			"range": 200.0,
-		})
-	})
+		"equipment": {
+			"weapon": {
+				"weapon_type": 1,
+				"name": "Gun",
+				"damage": 50,
+				"range": 200.0
+			}
+		}
 	})
 }
 
@@ -325,6 +338,16 @@ func _serialize_player() -> Dictionary:
 					"quantity": slot.quantity
 				})
 
+	# 序列化装备
+	var serialized_equipment = {}
+	if player.equipment and player.equipment.weapon:
+		serialized_equipment["weapon"] = {
+			"id": player.equipment.weapon.id,
+			"name": player.equipment.weapon.name,
+			"damage": player.equipment.weapon.damage,
+			"range": player.equipment.weapon.range
+		}
+
 	var data = {
 		"maxHealth": player.base_attributes["max_health"],
 		"currentHealth": player.currentHealth,
@@ -336,8 +359,7 @@ func _serialize_player() -> Dictionary:
 		"name": player.name,
 		"level": player.level,
 		"experience": player.experience,
-		"inventory": serialized_inventory,
-		"equipment": player.equipment,
+		"equipment": serialized_equipment,
 		"skills": player.skills,
 		"modifiers": player.modifiers,
 		"currentState": player.currentState
@@ -348,15 +370,16 @@ func _serialize_npcs() -> Dictionary:
 	var data = {}
 	for npc_id in npcDictionary.keys():
 		var npc = npcDictionary[npc_id]
-		# 序列化背包
-		var serialized_inventory = []
-		if npc.inventory:
-			for slot in npc.inventory.slots:
-				if slot.item_id != "":
-					serialized_inventory.append({
-						"item_id": slot.item_id,
-						"quantity": slot.quantity
-					})
+		# 序列化装备
+		var serialized_equipment = {}
+		if npc.equipment and npc.equipment.weapon:
+			serialized_equipment["weapon"] = {
+				"id": npc.equipment.weapon.id,
+				"name": npc.equipment.weapon.name,
+				"damage": npc.equipment.weapon.damage,
+				"range": npc.equipment.weapon.range
+			}
+
 		data[npc_id] = {
 			"maxHealth": npc.base_attributes["max_health"],
 			"currentHealth": npc.currentHealth,
@@ -369,7 +392,7 @@ func _serialize_npcs() -> Dictionary:
 			"scene": npc.scene,
 			"inParty": npc.inParty,
 			"dialogueId": npc.dialogueId,
-			"inventory": serialized_inventory,
+			"equipment": serialized_equipment,
 			"skills": npc.skills,
 			"modifiers": npc.modifiers
 		}
@@ -430,15 +453,10 @@ func _deserialize_player(data: Dictionary):
 	# 初始化背包
 	player.bag = BagData.BagInfo.new()
 	
-	# 反序列化背包
-	var serialized_inventory = data.get("inventory", [])
-	for item_data in serialized_inventory:
-		var item_id = item_data.get("item_id", "")
-		var quantity = item_data.get("quantity", 1)
-		if item_id != "":
-			player.inventory.add_item(item_id, quantity)
+	# 反序列化装备
+	var equipment_data = data.get("equipment", {})
+	player.equipment = Equipment.new(equipment_data)
 	
-	player.equipment = data.get("equipment", {})
 	player.skills = data.get("skills", [])
 	player.modifiers = data.get("modifiers", [])
 	player.currentState = data.get("currentState", "Idle")
@@ -461,13 +479,9 @@ func _deserialize_npcs(data: Dictionary):
 		npc_info.inParty = npc_data.get("inParty", false)
 		npc_info.dialogueId = npc_data.get("dialogueId", "")
 		
-		# 反序列化背包
-		var serialized_inventory = npc_data.get("inventory", [])
-		for item_data in serialized_inventory:
-			var item_id = item_data.get("item_id", "")
-			var quantity = item_data.get("quantity", 1)
-			if item_id != "":
-				npc_info.inventory.add_item(item_id, quantity)
+		# 反序列化装备
+		var equipment_data = npc_data.get("equipment", {})
+		npc_info.equipment = Equipment.new(equipment_data)
 		
 		npc_info.skills = npc_data.get("skills", [])
 		npc_info.modifiers = npc_data.get("modifiers", [])

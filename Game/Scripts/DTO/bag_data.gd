@@ -8,6 +8,26 @@ class BagInfo:
 	# 材料
 	var materals: Array[ItemData.MaterialItemInfo] = []
 	
+	# 构造函数
+	func _init(data: Dictionary = {}) -> void:
+		# 初始化消耗品
+		var consume_data = data.get("consume", [])
+		for item_data in consume_data:
+			var item = ItemData.ConsumableItemInfo.new(item_data)
+			consume.append(item)
+		
+		# 初始化装备
+		var equipment_data = data.get("equipment", [])
+		for item_data in equipment_data:
+			var item = EquipmentData.EquipmentInfo.new(item_data)
+			equipment.append(item)
+		
+		# 初始化材料
+		var materals_data = data.get("materals", [])
+		for item_data in materals_data:
+			var item = ItemData.MaterialItemInfo.new(item_data)
+			materals.append(item)
+	
 	# 添加物品
 	func add_item(item: Variant) -> bool:
 		if item is ItemData.ConsumableItemInfo:
