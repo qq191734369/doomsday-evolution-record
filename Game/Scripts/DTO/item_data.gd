@@ -47,3 +47,25 @@ class ItemInfo:
 	# 检查物品是否可用
 	func is_usable() -> bool:
 		return true
+
+# 消耗品类
+class ConsumableItemInfo extends ItemInfo:
+	var effect: Dictionary = {}
+	var use_time: float = 0.5
+
+	func _init(data: Dictionary = {}) -> void:
+		super(data)
+		type = ItemType.CONSUMABLE
+		effect = data.get("effect", effect)
+		use_time = data.get("use_time", use_time)
+
+# 材料类
+class MaterialItemInfo extends ItemInfo:
+	var material_type: String = ""
+	var quality: int = 1
+
+	func _init(data: Dictionary = {}) -> void:
+		super(data)
+		type = ItemType.MATERIAL
+		material_type = data.get("material_type", material_type)
+		quality = data.get("quality", quality)
