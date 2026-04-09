@@ -25,6 +25,7 @@ class WeaponInfo extends EquipmentData.EquipmentInfo:
 	# 构造函数
 	func _init(data: Dictionary = {}) -> void:
 		super(data)
+		stackable = false
 		type = ItemData.ItemType.EQUIPMENT
 		weapon_type = data.get("type", weapon_type)
 		damage = data.get("damage", damage)

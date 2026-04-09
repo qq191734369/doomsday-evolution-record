@@ -1,19 +1,8 @@
-extends Node2D
+extends BaseItem
 
 class_name Weapon
 
 @onready var sprite_2d_weapon: Sprite2D = $Sprite2D_Weapon
-
-var _data: WeaponData.WeaponInfo
-var data: WeaponData.WeaponInfo = WeaponData.WeaponInfo.new({
-	"name": "Gun"
-}):
-	set(value):
-		if value:
-			_data = value
-			updateWeaponTexture()
-	get:
-		return _data
 
 # 持武器的对象
 var holder: BaseCharacter
@@ -27,6 +16,14 @@ var attack_cooldown: float = 0.0
 
 # 自动攻击相关
 var is_attacking: bool = false
+
+func getData():
+	return data as WeaponData.WeaponInfo
+
+func updateData(value):
+	print("update weapon data")
+	super.updateData(value)
+	updateWeaponTexture()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

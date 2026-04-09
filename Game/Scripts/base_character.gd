@@ -102,7 +102,7 @@ func initEquipment():
 	if data.equipment.weapon:
 		print("初始化武器:character:{0}, weapon: {1}, type: {2}".format([data.name, data.equipment.weapon.name, data.equipment.weapon.type]))
 		slot_weapon.visible = true
-		weapon.data = data.equipment.weapon
+		weapon.updateData(data.equipment.weapon)
 		weapon.holder = self
 	
 
