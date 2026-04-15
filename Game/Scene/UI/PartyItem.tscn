@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://birn7jxlf3c7q"]
+
+[ext_resource type="Texture2D" uid="uid://dej2yyjvbpmbp" path="res://Assets/Animation/Characters/Player/Avartar_Player.png" id="1_m4b5l"]
+[ext_resource type="Script" uid="uid://cfw4wxip1w3mb" path="res://Game/Scripts/UI/party_item.gd" id="1_rk6p3"]
+[ext_resource type="Texture2D" uid="uid://bdoi3bboyjevp" path="res://Assets/UI/background2.png" id="1_w31nt"]
+[ext_resource type="Theme" uid="uid://c3doix6qh50mt" path="res://Game/Scene/UI_Theme/party_item.tres" id="2_etasn"]
+[ext_resource type="Texture2D" uid="uid://bh8oajwlky7fn" path="res://Assets/UI/avartar-bg.png" id="3_w31nt"]
+
+[node name="PartyItem" type="NinePatchRect" unique_id=826856369]
+custom_minimum_size = Vector2(350, 150)
+texture = ExtResource("1_w31nt")
+patch_margin_left = 35
+patch_margin_top = 41
+patch_margin_right = 36
+patch_margin_bottom = 42
+script = ExtResource("1_rk6p3")
+
+[node name="NinePatchRect_AvartarBg" type="NinePatchRect" parent="." unique_id=1814917374]
+layout_mode = 0
+offset_left = -12.0
+offset_top = -14.0
+offset_right = 153.0
+offset_bottom = 153.0
+texture = ExtResource("3_w31nt")
+
+[node name="Avartar" type="TextureRect" parent="NinePatchRect_AvartarBg" unique_id=703620855]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_left = 31.0
+offset_top = 41.0
+offset_right = 131.0
+offset_bottom = 141.0
+size_flags_horizontal = 0
+texture = ExtResource("1_m4b5l")
+expand_mode = 2
+
+[node name="NinePatchRect_Content" type="NinePatchRect" parent="." unique_id=900981770]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.694
+anchor_right = 0.694
+offset_left = -90.90001
+offset_top = 15.0
+offset_right = 91.09999
+offset_bottom = 136.0
+
+[node name="Label_Name" type="Label" parent="NinePatchRect_Content" unique_id=1109675939]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.079
+anchor_bottom = 0.079
+offset_left = 5.9999924
+offset_top = -11.559
+offset_right = 126.00002
+offset_bottom = 11.440998
+text = "你的名字"
+
+[node name="Label_Level" type="Label" parent="NinePatchRect_Content" unique_id=1082420605]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.059000004
+anchor_top = 0.64900005
+anchor_right = -0.059000004
+anchor_bottom = 0.64900005
+offset_left = 19.393002
+offset_top = -11.529007
+offset_right = 59.393
+offset_bottom = 11.470993
+text = "Lv: "
+
+[node name="Level_Value" type="Label" parent="NinePatchRect_Content/Label_Level" unique_id=1057371877]
+layout_mode = 0
+offset_left = 27.0
+offset_right = 67.0
+offset_bottom = 23.0
+text = "00"
+
+[node name="ProgressBar_Heallth" type="ProgressBar" parent="NinePatchRect_Content" unique_id=706618244]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.289
+anchor_bottom = 0.289
+offset_left = 4.0
+offset_top = -5.969002
+offset_right = 134.0
+offset_bottom = 6.030998
+theme = ExtResource("2_etasn")
+value = 50.0
+show_percentage = false
+
+[node name="ProgressBar_Mana" type="ProgressBar" parent="NinePatchRect_Content" unique_id=512609649]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.47900003
+anchor_bottom = 0.47900003
+offset_left = 4.0
+offset_top = -5.9590034
+offset_right = 134.0
+offset_bottom = 6.0409966
+theme = ExtResource("2_etasn")
+theme_type_variation = &"ProgressBar_Mana"
+value = 50.0
+show_percentage = false

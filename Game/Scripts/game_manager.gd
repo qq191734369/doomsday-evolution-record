@@ -1,6 +1,6 @@
 extends Node
 
-const GAME_UI_SCENE = preload("res://Game/Scene/Game_UI.tscn")
+const GAME_UI_SCENE = preload("uid://ba0ti45qjpolv")
 
 signal playerHealthUpdated_signal(newValue, maxValue)
 signal gameover_signal()

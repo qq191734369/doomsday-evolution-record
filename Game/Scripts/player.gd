@@ -16,16 +16,6 @@ func setData(d: GameData.CharacterInfo):
 func _ready() -> void:
 	super()
 	
-	camera_2d.make_current()
-	# 设置敌人检测区域的半径
-	setEnemyDetectionRadius()
-	if !PartyManager.is_in_party(self):
-		PartyManager.add_member(self)
-	# 队伍初始化和血条初始化
-	GameManager.playerHealthUpdated_signal.emit(data.currentHealth, data.get_max_health())
-	# 渲染队伍成员
-	call_deferred("_render_party_members")
-	
 	# 打印初始属性
 	print("初始属性:")
 	print("生命值: " + str(data.get_max_health()))
@@ -45,6 +35,17 @@ func _ready() -> void:
 	print("生命值: " + str(data.get_max_health()))
 	print("攻击力: " + str(data.get_attack_damage()))
 	print("速度: " + str(data.get_speed()))
+
+	camera_2d.make_current()
+	# 设置敌人检测区域的半径
+	setEnemyDetectionRadius()
+	if !PartyManager.is_in_party(self):
+		PartyManager.add_member(self)
+	# 队伍初始化和血条初始化
+	GameManager.playerHealthUpdated_signal.emit(currentHealth, maxHealth)
+	# 渲染队伍成员
+	call_deferred("_render_party_members")
+
 
 func _render_party_members():
 	# 渲染队伍成员

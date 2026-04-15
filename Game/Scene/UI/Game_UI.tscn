@@ -1,0 +1,149 @@
+[gd_scene format=3 uid="uid://ba0ti45qjpolv"]
+
+[ext_resource type="Script" uid="uid://cmvlwtp0u00av" path="res://Game/Scripts/game_ui_manager.gd" id="1_a8peb"]
+[ext_resource type="Texture2D" uid="uid://dej2yyjvbpmbp" path="res://Assets/Animation/Characters/Player/Avartar_Player.png" id="2_dbni7"]
+[ext_resource type="Theme" uid="uid://wgmbmuq0tq12" path="res://Game/Scene/UI_Theme/game_ui_theme.tres" id="3_3hvup"]
+[ext_resource type="PackedScene" uid="uid://birn7jxlf3c7q" path="res://Game/Scene/UI/PartyItem.tscn" id="4_1y113"]
+
+[node name="Game_UI" type="CanvasLayer" unique_id=1473725006]
+script = ExtResource("1_a8peb")
+
+[node name="Control_HUD" type="Control" parent="." unique_id=1591106627]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Avatar" type="Sprite2D" parent="Control_HUD" unique_id=1900428957]
+position = Vector2(68, 123)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_dbni7")
+
+[node name="ProgressBar" type="ProgressBar" parent="Control_HUD" unique_id=449515394]
+layout_mode = 1
+offset_left = 124.0
+offset_top = 71.0
+offset_right = 524.0
+offset_bottom = 111.0
+theme = ExtResource("3_3hvup")
+value = 100.0
+show_percentage = false
+
+[node name="NPCHealthContainer" type="VBoxContainer" parent="Control_HUD" unique_id=999999001]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 192.0
+offset_right = 443.0
+offset_bottom = 192.0
+theme = ExtResource("3_3hvup")
+
+[node name="Control_GameOver" type="Control" parent="." unique_id=124175415]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Control_GameOver" unique_id=1386082649]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label_GameOver" type="Label" parent="Control_GameOver" unique_id=26825402]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.0
+offset_top = -11.5
+offset_right = 46.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_3hvup")
+text = "GAME OVER"
+
+[node name="Button_Restart" type="Button" parent="Control_GameOver" unique_id=2014906631]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 75.0
+offset_right = 100.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_3hvup")
+text = "RESTART"
+
+[node name="Control_PartyDetail" type="Control" parent="." unique_id=1961977797]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel_BG" type="Panel" parent="Control_PartyDetail" unique_id=2088777828]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel_PartyList" type="Panel" parent="Control_PartyDetail/Panel_BG" unique_id=1576350649]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 0
+offset_left = 118.0
+offset_top = 128.0
+offset_right = 498.0
+offset_bottom = 928.0
+
+[node name="NinePatchRect_PartyBG" type="NinePatchRect" parent="Control_PartyDetail/Panel_BG/Panel_PartyList" unique_id=682993095]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+patch_margin_left = 36
+patch_margin_top = 41
+patch_margin_right = 36
+patch_margin_bottom = 43
+
+[node name="MarginContainer" type="MarginContainer" parent="Control_PartyDetail/Panel_BG/Panel_PartyList/NinePatchRect_PartyBG" unique_id=1731032576]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control_PartyDetail/Panel_BG/Panel_PartyList/NinePatchRect_PartyBG/MarginContainer" unique_id=2105870943]
+layout_mode = 2
+
+[node name="VBoxContainer_PartyList" type="VBoxContainer" parent="Control_PartyDetail/Panel_BG/Panel_PartyList/NinePatchRect_PartyBG/MarginContainer/ScrollContainer" unique_id=1239419236]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PartyItem" parent="Control_PartyDetail/Panel_BG/Panel_PartyList/NinePatchRect_PartyBG/MarginContainer/ScrollContainer/VBoxContainer_PartyList" unique_id=826856369 instance=ExtResource("4_1y113")]
+layout_mode = 2
+
+[connection signal="pressed" from="Control_GameOver/Button_Restart" to="." method="_on_button_restart_pressed"]
