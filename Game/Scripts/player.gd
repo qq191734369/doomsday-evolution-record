@@ -15,26 +15,6 @@ func setData(d: GameData.CharacterInfo):
 
 func _ready() -> void:
 	super()
-	
-	# 打印初始属性
-	print("初始属性:")
-	print("生命值: " + str(data.get_max_health()))
-	print("攻击力: " + str(data.get_attack_damage()))
-	print("速度: " + str(data.get_speed()))
-	
-	# 学习力量提升被动技能
-	print("\n学习力量提升被动技能...")
-	learnSkill("passive_strength")
-	
-	# 学习生命增强被动技能
-	print("\n学习生命增强被动技能...")
-	learnSkill("passive_vitality")
-	
-	# 打印学习后的属性
-	print("\n学习被动技能后的属性:")
-	print("生命值: " + str(data.get_max_health()))
-	print("攻击力: " + str(data.get_attack_damage()))
-	print("速度: " + str(data.get_speed()))
 
 	camera_2d.make_current()
 	# 设置敌人检测区域的半径
@@ -45,6 +25,26 @@ func _ready() -> void:
 	GameManager.playerHealthUpdated_signal.emit(currentHealth, maxHealth)
 	# 渲染队伍成员
 	call_deferred("_render_party_members")
+	
+	## 打印初始属性
+	#print("初始属性:")
+	#print("生命值: " + str(data.get_max_health()))
+	#print("攻击力: " + str(data.get_attack_damage()))
+	#print("速度: " + str(data.get_speed()))
+	#
+	## 学习力量提升被动技能
+	#print("\n学习力量提升被动技能...")
+	#learnSkill("passive_strength")
+	#
+	## 学习生命增强被动技能
+	#print("\n学习生命增强被动技能...")
+	#learnSkill("passive_vitality")
+	#
+	## 打印学习后的属性
+	#print("\n学习被动技能后的属性:")
+	#print("生命值: " + str(data.get_max_health()))
+	#print("攻击力: " + str(data.get_attack_damage()))
+	#print("速度: " + str(data.get_speed()))
 
 
 func _render_party_members():

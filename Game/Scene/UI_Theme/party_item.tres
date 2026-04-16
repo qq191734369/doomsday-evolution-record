@@ -1,11 +1,19 @@
 [gd_resource type="Theme" format=3 uid="uid://c3doix6qh50mt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r5rx1"]
-bg_color = Color(0.14509805, 0.14509805, 0.14509805, 1)
+bg_color = Color(0.16206557, 0.1620656, 0.16206557, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.46618688, 0.27129945, 0.22480202, 1)
+border_blend = true
 corner_radius_top_left = 15
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
+shadow_color = Color(0.4046482, 0.2233297, 0, 0.6)
+shadow_size = 3
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j6ipl"]
 bg_color = Color(0.9882353, 0.09019608, 0, 1)
@@ -13,6 +21,21 @@ corner_radius_top_left = 15
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0d7pu"]
+bg_color = Color(0.16206557, 0.1620656, 0.16206548, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.42483792, 0.45148236, 0.17565405, 1)
+border_blend = true
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_color = Color(0.46477193, 0.3089921, 0, 0.6)
+shadow_size = 3
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_22avy"]
 bg_color = Color(0.78538436, 0.6386697, 0, 1)
@@ -25,5 +48,5 @@ corner_radius_bottom_left = 15
 ProgressBar/styles/background = SubResource("StyleBoxFlat_r5rx1")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_j6ipl")
 ProgressBar_Mana/base_type = &"ProgressBar"
-ProgressBar_Mana/styles/background = null
+ProgressBar_Mana/styles/background = SubResource("StyleBoxFlat_0d7pu")
 ProgressBar_Mana/styles/fill = SubResource("StyleBoxFlat_22avy")

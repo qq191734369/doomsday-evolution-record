@@ -13,9 +13,14 @@ const NPC_HEALTH_BAR_SCENE = preload("res://Game/Scene/NPCHealthBar.tscn")
 
 const PARTY_ITEM = preload("uid://birn7jxlf3c7q")
 
+var ui_layers: Array = []
 
 # 存储NPC血条的字典 {npc: health_bar_instance}
 var npc_health_bars: Dictionary = {}
+
+var has_active_ui_layer: bool:
+	get:
+		return ui_layers.size() > 0
 
 func _ready() -> void:
 	control_game_over.visible = false
@@ -24,7 +29,7 @@ func _ready() -> void:
 	GameManager.gameover_signal.connect(showGameOverUI)
 	
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("show_ui"):
+	if Input.is_action_just_pressed("show_party_ui"):
 		toggle_party_panel()
 		
 
@@ -80,18 +85,27 @@ func show_party_panel():
 		child.queue_free()
 	
 	var party_list_data = PartyManager.party_members
-	for member in party_list_data:
+	for idx in party_list_data.size() - 1:
+		var member = party_list_data.get(idx)
 		var item_node = PARTY_ITEM.instantiate() as PartyItemNode
 		party_container.add_child(item_node)
 		item_node.init(member)
+		
+		if idx == 0:
+			item_node.setActive(true)
 	
 	control_party_detail.visible = true
+	if !ui_layers.has(party_container):
+		ui_layers.append(party_container)
 
 func hide_party_panel():
 	var party_container = v_box_container_party_list
 	control_party_detail.visible = false
 	for child in party_container.get_children():
 		child.queue_free()
+	
+	if ui_layers.has(party_container):
+		ui_layers.remove_at(ui_layers.find(party_container))
 	
 
 # NPC血量变化回调

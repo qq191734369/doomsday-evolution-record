@@ -326,6 +326,8 @@ func attack():
 		state_machine.switchTo("Attack")
 
 func start_attack():
+	if GameManager.game_ui_manager.has_active_ui_layer:
+		return
 	if hasWeapon() and weapon and weapon.has_method("start_attack"):
 		weapon.start_attack()
 

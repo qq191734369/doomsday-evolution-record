@@ -7,9 +7,13 @@ class_name PartyItemNode
 @onready var progress_bar_heallth: ProgressBar = $NinePatchRect_Content/ProgressBar_Heallth
 @onready var progress_bar_mana: ProgressBar = $NinePatchRect_Content/ProgressBar_Mana
 @onready var avartar: TextureRect = $NinePatchRect_AvartarBg/Avartar
+@onready var active: Label = $Active
 
 func init(data: BaseCharacter):
 	update.call_deferred(data)
+	
+func setActive(val: bool):
+	active.visible = val
 
 func update(data: BaseCharacter):
 	avartar.texture = load("res://Assets/Animation/Characters/{name}/Avartar_{name}.png".format({ "name": data.data.name }))
