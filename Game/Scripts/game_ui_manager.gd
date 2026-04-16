@@ -7,11 +7,8 @@ const NPC_HEALTH_BAR_SCENE = preload("res://Game/Scene/NPCHealthBar.tscn")
 @onready var progress_bar: ProgressBar = $Control_HUD/ProgressBar
 @onready var control_game_over: Control = $Control_GameOver
 @onready var npc_health_container: VBoxContainer = $Control_HUD/NPCHealthContainer
-@onready var control_party_detail: Control = $Control_PartyDetail
-@onready var v_box_container_party_list: VBoxContainer = $Control_PartyDetail/Panel_BG/Panel_PartyList/NinePatchRect_PartyBG/MarginContainer/ScrollContainer/VBoxContainer_PartyList
+@onready var control_party_detail: PartyDetailController = $Control_PartyDetail
 
-
-const PARTY_ITEM = preload("uid://birn7jxlf3c7q")
 
 var ui_layers: Array = []
 
@@ -30,8 +27,15 @@ func _ready() -> void:
 	
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("show_party_ui"):
-		toggle_party_panel()
-		
+		togglePartyPanel()
+
+func togglePartyPanel():
+	if ui_layers.has(control_party_detail):
+		control_party_detail.hide_party_panel()
+		ui_layers.remove_at(ui_layers.find(func(d): d == control_party_detail))
+	else :
+		control_party_detail.show_party_panel()
+		ui_layers.append(control_party_detail)
 
 # 接收血量更新信号
 func updateHealthProgressBar(currentHealth: int, maxHealth: int):
@@ -72,40 +76,6 @@ func clearNPCBars():
 	var bars = container.get_children()
 	for bar in bars:
 		bar.queue_free()
-
-func toggle_party_panel():
-	if control_party_detail.visible == true:
-		hide_party_panel()
-	else :
-		show_party_panel()
-		
-func show_party_panel():
-	var party_container = v_box_container_party_list
-	for child in party_container.get_children():
-		child.queue_free()
-	
-	var party_list_data = PartyManager.party_members
-	for idx in party_list_data.size() - 1:
-		var member = party_list_data.get(idx)
-		var item_node = PARTY_ITEM.instantiate() as PartyItemNode
-		party_container.add_child(item_node)
-		item_node.init(member)
-		
-		if idx == 0:
-			item_node.setActive(true)
-	
-	control_party_detail.visible = true
-	if !ui_layers.has(party_container):
-		ui_layers.append(party_container)
-
-func hide_party_panel():
-	var party_container = v_box_container_party_list
-	control_party_detail.visible = false
-	for child in party_container.get_children():
-		child.queue_free()
-	
-	if ui_layers.has(party_container):
-		ui_layers.remove_at(ui_layers.find(party_container))
 	
 
 # NPC血量变化回调

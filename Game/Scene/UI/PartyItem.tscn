@@ -105,8 +105,8 @@ show_percentage = false
 [node name="Active" type="Label" parent="." unique_id=1893098983]
 visible = false
 layout_mode = 0
-offset_left = 349.0
-offset_top = 62.0
-offset_right = 389.0
-offset_bottom = 85.0
+offset_left = 293.0
+offset_top = 102.0
+offset_right = 333.0
+offset_bottom = 125.0
 text = "选中"

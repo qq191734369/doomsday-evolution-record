@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dej2yyjvbpmbp" path="res://Assets/Animation/Characters/Player/Avartar_Player.png" id="2_dbni7"]
 [ext_resource type="Theme" uid="uid://wgmbmuq0tq12" path="res://Game/Scene/UI_Theme/game_ui_theme.tres" id="3_3hvup"]
 [ext_resource type="PackedScene" uid="uid://birn7jxlf3c7q" path="res://Game/Scene/UI/PartyItem.tscn" id="4_1y113"]
+[ext_resource type="Script" uid="uid://cq4wwlkphuxwx" path="res://Game/Scripts/UI/party_detail_controller.gd" id="4_dbni7"]
 
 [node name="Game_UI" type="CanvasLayer" unique_id=1473725006]
 script = ExtResource("1_a8peb")
@@ -95,6 +96,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("4_dbni7")
 
 [node name="Panel_BG" type="Panel" parent="Control_PartyDetail" unique_id=2088777828]
 layout_mode = 1
@@ -158,5 +160,28 @@ offset_left = -294.64008
 offset_top = 133.0
 offset_right = 296.35992
 offset_bottom = 930.0
+
+[node name="Label_CharacterName" type="Label" parent="Control_PartyDetail/Panel_BG/Panel_CharacterDetail" unique_id=1304007590]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -87.5
+offset_top = 571.0
+offset_right = 104.5
+offset_bottom = 620.0
+
+[node name="TextureRect_Character" type="TextureRect" parent="Control_PartyDetail/Panel_BG/Panel_CharacterDetail" unique_id=1748682524]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -283.5
+offset_top = 2.0
+offset_right = 283.5
+offset_bottom = 524.0
+grow_horizontal = 2
+expand_mode = 1
+stretch_mode = 4
 
 [connection signal="pressed" from="Control_GameOver/Button_Restart" to="." method="_on_button_restart_pressed"]
