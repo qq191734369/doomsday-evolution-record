@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://b447dw4tqmdgh"]
+
+[ext_resource type="Texture2D" uid="uid://bh8oajwlky7fn" path="res://Assets/UI/avartar-bg.png" id="1_cmdu5"]
+[ext_resource type="Script" uid="uid://cjs8ohmdistlh" path="res://Game/Scripts/UI/character_avartar.gd" id="2_0y74k"]
+[ext_resource type="Texture2D" uid="uid://dej2yyjvbpmbp" path="res://Assets/Animation/Characters/Player/Avartar_Player.png" id="2_amtim"]
+
+[node name="NinePatchRect_AvartarBg" type="NinePatchRect" unique_id=1246263112]
+offset_left = -12.0
+offset_top = -14.0
+offset_right = 153.0
+offset_bottom = 153.0
+texture = ExtResource("1_cmdu5")
+script = ExtResource("2_0y74k")
+
+[node name="Avartar" type="TextureRect" parent="." unique_id=833602679]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_left = 31.0
+offset_top = 41.0
+offset_right = 131.0
+offset_bottom = 141.0
+size_flags_horizontal = 0
+texture = ExtResource("2_amtim")
+expand_mode = 2

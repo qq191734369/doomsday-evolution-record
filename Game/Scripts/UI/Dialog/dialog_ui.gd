@@ -2,21 +2,18 @@ extends CanvasLayer
 
 const DIALOG_UI_THEME = preload("uid://gdvjaw4d474l")
 
-var label: Label
-var v_box_container: VBoxContainer
+@onready var label: RichTextLabel = $Control/Panel/RichTextLabel
+@onready var v_box_container: VBoxContainer = $Control/Panel/VBoxContainer
+@onready var avartar_left: AvartarNode = $Control/Panel/NinePatchRect_left
+@onready var avartar_right: AvartarNode = $Control/Panel/NinePatchRect_right
+
 var has_options: bool = false
-var avatar_left: Sprite2D
-var avatar_right: Sprite2D
 
 signal option_selected(option_data: Dictionary, ui: CanvasLayer)
 signal dialogue_continue()
 
 func _ready():
 	# 获取节点
-	label = get_node_or_null("Control/Panel/Label")
-	v_box_container = get_node_or_null("Control/Panel/VBoxContainer")
-	avatar_left = get_node_or_null("Control/Panel/Avartar_left")
-	avatar_right = get_node_or_null("Control/Panel/Avartar_right")
 	v_box_container.alignment = VBoxContainer.ALIGNMENT_END # 子节点从底部开始排列
 
 func _input(event):
@@ -37,10 +34,10 @@ func show_dialogue(text: String, options: Array, speaker: String = "", avatar_po
 	
 	# 处理头像
 	# 先隐藏两个头像
-	if avatar_left:
-		avatar_left.visible = false
-	if avatar_right:
-		avatar_right.visible = false
+	if avartar_left:
+		avartar_left.visible = false
+	if avartar_right:
+		avartar_right.visible = false
 	
 	if speaker:
 		# 加载头像
@@ -49,12 +46,12 @@ func show_dialogue(text: String, options: Array, speaker: String = "", avatar_po
 		
 		if avatar_texture:
 			# 根据位置显示对应头像
-			if avatar_position == "left" and avatar_left:
-				avatar_left.texture = avatar_texture
-				avatar_left.visible = true
-			elif avatar_position == "right" and avatar_right:
-				avatar_right.texture = avatar_texture
-				avatar_right.visible = true
+			if avatar_position == "left" and avartar_left:
+				avartar_left.avartar_texture = avatar_texture
+				avartar_left.visible = true
+			elif avatar_position == "right" and avartar_right:
+				avartar_right.avartar_texture = avatar_texture
+				avartar_right.visible = true
 		else:
 			print("无法加载头像: " + avatar_path)
 	

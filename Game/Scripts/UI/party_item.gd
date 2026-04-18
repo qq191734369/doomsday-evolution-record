@@ -6,7 +6,7 @@ class_name PartyItemNode
 @onready var level_value: Label = $NinePatchRect_Content/Label_Level/Level_Value
 @onready var progress_bar_heallth: ProgressBar = $NinePatchRect_Content/ProgressBar_Heallth
 @onready var progress_bar_mana: ProgressBar = $NinePatchRect_Content/ProgressBar_Mana
-@onready var avartar: TextureRect = $NinePatchRect_AvartarBg/Avartar
+@onready var avartar: AvartarNode = $NinePatchRect_AvartarBg
 @onready var active: Label = $Active
 
 # 信号，当点击时发出
@@ -34,7 +34,7 @@ func setActive(val: bool):
 
 func update(data: BaseCharacter):
 	self.data = data.data
-	avartar.texture = load("res://Assets/Animation/Characters/{name}/Avartar_{name}.png".format({ "name": data.data.name }))
+	avartar.avartar_texture = load("res://Assets/Animation/Characters/{name}/Avartar_{name}.png".format({ "name": data.data.name }))
 	label_name.text = data.data.name
 	level_value.text = str(data.data.level)
 	progress_bar_heallth.value = float(data.currentHealth) / float(data.maxHealth) * 100

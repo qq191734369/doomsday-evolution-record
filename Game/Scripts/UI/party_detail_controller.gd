@@ -12,7 +12,7 @@ const PARTY_ITEM = preload("uid://birn7jxlf3c7q")
 # 存储当前激活的PartyItem
 var active_party_item: PartyItemNode = null
 
-func _setActiveMember(item_node: PartyItemNode):
+func _set_active_member(item_node: PartyItemNode):
 	item_node.setActive(true)
 	var data = item_node.data
 	texture_rect_character.texture = load("res://Assets/Animation/Characters/{name}/{name}_Status.png".format({ "name": data.name }))
@@ -39,7 +39,7 @@ func show_party_panel():
 		)
 		
 		if idx == 0:
-			_setActiveMember.call_deferred((item_node))
+			_set_active_member.call_deferred((item_node))
 			active_party_item = item_node
 
 	visible = true
@@ -53,7 +53,7 @@ func on_party_item_clicked(item_node: PartyItemNode):
 		active_party_item.setActive(false)
 	
 	# 设置当前点击的PartyItem为激活状态
-	_setActiveMember(item_node)
+	_set_active_member(item_node)
 	active_party_item = item_node
 	
 	# 这里可以添加获取角色信息后的处理逻辑
