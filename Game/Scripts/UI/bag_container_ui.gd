@@ -11,7 +11,8 @@ const DEFAULT_SLOT_NUM = 36
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	init_slot()
+	pass
+	#init_slot()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

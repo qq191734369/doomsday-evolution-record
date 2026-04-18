@@ -27,7 +27,8 @@ func setup_child_mouse_filters(node: Node):
 		setup_child_mouse_filters(child)
 
 func init(data: BaseCharacter):
-	update.call_deferred(data)
+	self.data = data.data
+	update(data)
 	
 func setActive(val: bool):
 	active.visible = val

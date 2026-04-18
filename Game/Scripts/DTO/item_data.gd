@@ -30,6 +30,7 @@ class ItemInfo:
 	var max_stack: int = 99
 	var weight: float = 1.0
 	var sprite_path: String = ""
+	var count: int = 0
 
 	# 构造函数
 	func _init(data: Dictionary = {}) -> void:
@@ -43,6 +44,7 @@ class ItemInfo:
 		max_stack = data.get("max_stack", max_stack)
 		weight = data.get("weight", weight)
 		sprite_path = data.get("sprite_path", sprite_path)
+		count = data.get("count", count)
 
 	# 检查物品是否可用
 	func is_usable() -> bool:

@@ -1,4 +1,5 @@
 extends Resource
+
 class_name ItemDatabase
 
 @export var master_texture: Texture2D # 引用你的道具大图

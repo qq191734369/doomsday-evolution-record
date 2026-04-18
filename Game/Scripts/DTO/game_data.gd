@@ -130,6 +130,16 @@ var player: CharacterInfo = CharacterInfo.new({
 	"name": "Player",
 	"position": Vector2(689.0, 373.0),
 	"attackDamage": 50,
+	"bag": {
+		"consume": [{
+			"id": "water",
+			"name": "water",
+			"type": 1,
+			"stackable": true,
+			"quantity": 1,
+			"count": 9
+		}]
+	},
 	"equipment": {
 		"weapon": {
 			"weapon_type": 1,
