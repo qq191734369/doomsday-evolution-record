@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brqoup5ixmxoy"
-path="res://.godot/imported/ZhaoXinEr_Status.png-7cb3ca43313c54f0115b4ed9541767fd.ctex"
+uid="uid://edfm1b22p5ku"
+path="res://.godot/imported/bag_bg.png-5646a8012393e635db6a0428995117e7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Animation/Characters/ZhaoXinEr/ZhaoXinEr_Status.png"
-dest_files=["res://.godot/imported/ZhaoXinEr_Status.png-7cb3ca43313c54f0115b4ed9541767fd.ctex"]
+source_file="res://Assets/UI/Bag/bag_bg.png"
+dest_files=["res://.godot/imported/bag_bg.png-5646a8012393e635db6a0428995117e7.ctex"]
 
 [params]
 

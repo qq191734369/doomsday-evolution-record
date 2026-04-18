@@ -1,0 +1,222 @@
+[gd_scene format=3 uid="uid://fl2na3ps4ptg"]
+
+[ext_resource type="Script" uid="uid://dlvntihpoyncx" path="res://Game/Scripts/UI/bag_container_ui.gd" id="1_8s8d0"]
+[ext_resource type="Texture2D" uid="uid://m5bevnni5sq5" path="res://Assets/UI/Status/status_bg.png" id="1_mxpeo"]
+[ext_resource type="Texture2D" uid="uid://cv75nmas4b8ei" path="res://Assets/UI/Status/title_bg.png" id="2_8s8d0"]
+[ext_resource type="Texture2D" uid="uid://c2mgl3teu0wh2" path="res://Assets/UI/Bag/bag_slot.png" id="3_kbo1b"]
+
+[node name="BagContainer" type="Panel" unique_id=67285212]
+anchors_preset = -1
+anchor_left = 0.75900006
+anchor_right = 0.75900006
+offset_left = -322.28015
+offset_top = 345.0
+offset_right = 337.71985
+offset_bottom = 929.0
+script = ExtResource("1_8s8d0")
+
+[node name="NinePatchRect_BagBG" type="NinePatchRect" parent="." unique_id=246836387]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_mxpeo")
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=455457143]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=1725488533]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/ScrollContainer" unique_id=641535398]
+layout_mode = 2
+columns = 6
+
+[node name="BagItem" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=183841517]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem2" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=735677181]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem3" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1887254494]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem4" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=222596168]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem5" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1537784466]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem6" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1961029683]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem7" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1619910904]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem8" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=863876739]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem9" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1111829899]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem10" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=39319418]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem11" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1196513356]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem12" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=736706294]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem13" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=235501265]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem14" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1008063823]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem15" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1334314932]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem16" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1106364885]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem17" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=547389786]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem18" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1307325883]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem19" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1846445880]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem20" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=785764309]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem21" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=882319857]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem22" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1060434155]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem23" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=2063754701]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem24" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1267510530]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem25" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=205518137]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem26" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=2087267150]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem27" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=838984799]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem28" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=2085956528]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem29" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1305367027]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem30" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=106083245]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem31" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1059830554]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem32" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=737788153]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem33" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1543172690]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem34" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=312118008]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem35" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=850132717]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="BagItem36" type="TextureRect" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1969312246]
+layout_mode = 2
+texture = ExtResource("3_kbo1b")
+
+[node name="TextureRect_Name" type="TextureRect" parent="." unique_id=1157552926]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.508
+anchor_top = 0.014
+anchor_right = 0.508
+anchor_bottom = 0.014
+offset_left = -167.228
+offset_top = -26.158
+offset_right = 178.772
+offset_bottom = 32.842
+texture = ExtResource("2_8s8d0")
+expand_mode = 1
+
+[node name="Label_CharacterName" type="Label" parent="TextureRect_Name" unique_id=576668044]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -17.5
+offset_right = 69.0
+offset_bottom = 17.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "背包"
+horizontal_alignment = 1

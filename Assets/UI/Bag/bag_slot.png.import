@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqnyx3c65y32s"
-path="res://.godot/imported/Player-copy.png-95c122ab5aead7936dbd5fc596786bd0.ctex"
+uid="uid://c2mgl3teu0wh2"
+path="res://.godot/imported/bag_slot.png-7a0494855358ce0ababf33f2e127309b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Animation/Characters/Player/Player-copy.png"
-dest_files=["res://.godot/imported/Player-copy.png-95c122ab5aead7936dbd5fc596786bd0.ctex"]
+source_file="res://Assets/UI/Bag/bag_slot.png"
+dest_files=["res://.godot/imported/bag_slot.png-7a0494855358ce0ababf33f2e127309b.ctex"]
 
 [params]
 

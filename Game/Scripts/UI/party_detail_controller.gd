@@ -3,7 +3,7 @@ extends Control
 class_name PartyDetailController
 
 @onready var v_box_container_party_list: VBoxContainer = $Panel_BG/Panel_PartyList/NinePatchRect_PartyBG/MarginContainer/ScrollContainer/VBoxContainer_PartyList
-@onready var label_character_name: Label = $Panel_BG/Panel_CharacterDetail/Label_CharacterName
+@onready var label_character_name: Label = $Panel_BG/Panel_CharacterDetail/TextureRect_Name/Label_CharacterName
 @onready var texture_rect_character: TextureRect = $Panel_BG/Panel_CharacterDetail/TextureRect_Character
 
 
@@ -15,7 +15,7 @@ var active_party_item: PartyItemNode = null
 func _set_active_member(item_node: PartyItemNode):
 	item_node.setActive(true)
 	var data = item_node.data
-	texture_rect_character.texture = load("res://Assets/Animation/Characters/{name}/{name}_Status.png".format({ "name": data.name }))
+	texture_rect_character.texture = load("res://Assets/Animation/Characters/{name}/{name}_full.png".format({ "name": data.name }))
 	label_character_name.text = data.name
 
 func show_party_panel():
