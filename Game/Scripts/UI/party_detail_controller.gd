@@ -10,20 +10,28 @@ class_name PartyDetailController
 
 const PARTY_ITEM = preload("uid://birn7jxlf3c7q")
 
-var _item_db: ItemDatabase
-
 # 存储当前激活的PartyItem
 var active_party_item: PartyItemNode = null
 
+var is_opening_member: bool = false
+
 func _set_active_member(item_node: PartyItemNode):
+	if is_opening_member == true:
+		return
+	
+	is_opening_member = true
 	item_node.setActive(true)
 	var data = item_node.data
 	texture_rect_character.texture = load("res://Assets/Animation/Characters/{name}/{name}_full.png".format({ "name": data.name }))
 	label_character_name.text = data.name
-	load_bag_items(data)
+	await load_bag_items(data)
+	active_party_item = item_node
+	is_opening_member = false
 
 func load_bag_items(character_data: GameData.CharacterInfo) -> void:
 	bag_container.init_slot()
+	bag_container.grid_container.queue_sort()
+	await get_tree().process_frame
 	await get_tree().process_frame
 	_populate_bag_items(character_data)
 
@@ -53,12 +61,11 @@ func show_party_panel() -> PartyDetailController:
 		
 		item_node.mouse_filter = Control.MOUSE_FILTER_PASS
 		item_node.clicked.connect(func(party_item):
-			on_party_item_clicked(party_item)
+			await on_party_item_clicked(party_item)
 		)
 		
 		if idx == 0:
-			_set_active_member(item_node)
-			active_party_item = item_node
+			await _set_active_member(item_node)
 
 	visible = true
 	
@@ -66,11 +73,13 @@ func show_party_panel() -> PartyDetailController:
 
 
 func on_party_item_clicked(item_node: PartyItemNode):
+	if is_opening_member == true:
+		return
+	
 	if active_party_item:
 		active_party_item.setActive(false)
 	
-	_set_active_member(item_node)
-	active_party_item = item_node
+	await _set_active_member(item_node)
 	
 	print("Selected character: " + active_party_item.data.name)
 
