@@ -1,6 +1,34 @@
 [gd_scene format=3 uid="uid://clidtp6deo8i6"]
 
 [ext_resource type="Texture2D" uid="uid://c2mgl3teu0wh2" path="res://Assets/UI/Bag/bag_slot.png" id="1_lcd63"]
+[ext_resource type="Script" uid="uid://vlyqxxbxacai" path="res://Game/Scripts/UI/bag_item_ui.gd" id="2_r6uic"]
+[ext_resource type="Resource" uid="uid://bhxdn6l5g5erw" path="res://Resources/item_db.tres" id="3_gjj58"]
 
 [node name="BagItem" type="TextureRect" unique_id=1569717396]
 texture = ExtResource("1_lcd63")
+script = ExtResource("2_r6uic")
+item_database = ExtResource("3_gjj58")
+
+[node name="TextureRect_ItemView" type="TextureRect" parent="." unique_id=1795954809]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 3
+
+[node name="Label_StackNum" type="Label" parent="." unique_id=1280293409]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.90900004
+anchor_right = 1.0
+anchor_bottom = 0.90900004
+offset_left = -83.0
+offset_top = -23.264008
+offset_right = -16.0
+offset_bottom = -0.26400757
+text = "1"
+horizontal_alignment = 2

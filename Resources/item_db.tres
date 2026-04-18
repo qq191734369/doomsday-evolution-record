@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemDatabase" format=3 uid="uid://bhxdn6l5g5erw"]
+
+[ext_resource type="Script" uid="uid://cdui4n8wwmue8" path="res://Game/Scripts/item_data.gd" id="1_8rq73"]
+[ext_resource type="Script" uid="uid://cn0rwgy6305dk" path="res://Game/Scripts/item_database.gd" id="2_38kom"]
+[ext_resource type="Texture2D" uid="uid://bg17lfn73cpe8" path="res://Assets/Items/items.png" id="2_apeo7"]
+
+[sub_resource type="Resource" id="Resource_8rq73"]
+script = ExtResource("1_8rq73")
+id = "water"
+name = "water"
+metadata/_custom_type_script = "uid://cdui4n8wwmue8"
+
+[resource]
+script = ExtResource("2_38kom")
+master_texture = ExtResource("2_apeo7")
+items = Array[ExtResource("1_8rq73")]([SubResource("Resource_8rq73")])
+metadata/_custom_type_script = "uid://cn0rwgy6305dk"
