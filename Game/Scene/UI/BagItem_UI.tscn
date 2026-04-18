@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://clidtp6deo8i6"]
+
+[ext_resource type="Texture2D" uid="uid://c2mgl3teu0wh2" path="res://Assets/UI/Bag/bag_slot.png" id="1_lcd63"]
+
+[node name="BagItem" type="TextureRect" unique_id=1569717396]
+texture = ExtResource("1_lcd63")
