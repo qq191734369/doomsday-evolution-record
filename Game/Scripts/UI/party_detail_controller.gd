@@ -11,6 +11,7 @@ const PARTY_ITEM = preload("uid://birn7jxlf3c7q")
 
 # 存储当前激活的PartyItem
 var active_party_item: PartyItemNode = null
+var active_character_data: GameData.CharacterInfo = null
 
 var is_opening_member: bool = false
 
@@ -29,32 +30,47 @@ func _set_active_member(item_node: PartyItemNode):
 	is_opening_member = false
 
 func load_bag_items(character_data: GameData.CharacterInfo) -> void:
+	active_character_data = character_data
+	_ensure_bag_arrays_size()
 	if bag_container.item_swapped.is_connected(_on_item_swapped):
 		bag_container.item_swapped.disconnect(_on_item_swapped)
+	if bag_container.tab_changed.is_connected(_on_tab_changed):
+		bag_container.tab_changed.disconnect(_on_tab_changed)
 	bag_container.item_swapped.connect(_on_item_swapped)
-	await bag_container.init_slot()
-	_populate_bag_items(character_data)
+	bag_container.tab_changed.connect(_on_tab_changed)
+	await bag_container.init_slot(_get_current_bag_data())
+
+func _get_current_bag_data() -> Array:
+	match bag_container.current_tab:
+		BagContainerNode.BagTab.EQUIPMENT:
+			return active_character_data.bag.equipment
+		BagContainerNode.BagTab.CONSUMABLE:
+			return active_character_data.bag.consume
+		BagContainerNode.BagTab.MATERIAL:
+			return active_character_data.bag.materals
+	return active_character_data.bag.consume
+
+func _ensure_bag_arrays_size():
+	while active_character_data.bag.equipment.size() < bag_container.slot_num:
+		active_character_data.bag.equipment.append(null)
+	while active_character_data.bag.consume.size() < bag_container.slot_num:
+		active_character_data.bag.consume.append(null)
+	while active_character_data.bag.materals.size() < bag_container.slot_num:
+		active_character_data.bag.materals.append(null)
+
+func _on_tab_changed(tab_type: String):
+	_ensure_bag_arrays_size()
+	await bag_container.init_slot(_get_current_bag_data())
 
 func _on_item_swapped(from_idx: int, to_idx: int):
-	var consume = active_party_item.data.bag.consume
 	if from_idx < 0 or to_idx < 0 or from_idx == to_idx:
 		return
-	if from_idx >= consume.size() or to_idx >= consume.size():
+	var bag_data = _get_current_bag_data()
+	if from_idx >= bag_data.size() or to_idx >= bag_data.size():
 		return
-	var item_from = consume[from_idx]
-	consume[from_idx] = consume[to_idx]
-	consume[to_idx] = item_from
-
-func _populate_bag_items(character_data: GameData.CharacterInfo) -> void:
-	var consume = character_data.bag.consume
-	while consume.size() < bag_container.slots.size():
-		consume.append(null)
-	for i in bag_container.slots.size():
-		var slot = bag_container.slots[i] as BagItemSlot
-		if i < consume.size() and consume[i] != null:
-			slot.init(consume[i], i)
-		else:
-			slot.clear()
+	var item_from = bag_data[from_idx]
+	bag_data[from_idx] = bag_data[to_idx]
+	bag_data[to_idx] = item_from
 
 func show_party_panel() -> PartyDetailController:
 	var party_container = v_box_container_party_list

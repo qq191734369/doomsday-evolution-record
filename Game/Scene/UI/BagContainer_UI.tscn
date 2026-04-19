@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dlvntihpoyncx" path="res://Game/Scripts/UI/bag_container_ui.gd" id="1_8s8d0"]
 [ext_resource type="Texture2D" uid="uid://m5bevnni5sq5" path="res://Assets/UI/Status/status_bg.png" id="1_mxpeo"]
 [ext_resource type="Texture2D" uid="uid://cv75nmas4b8ei" path="res://Assets/UI/Status/title_bg.png" id="2_8s8d0"]
+[ext_resource type="PackedScene" uid="uid://clidtp6deo8i6" path="res://Game/Scene/UI/BagItem_UI.tscn" id="3_kbo1b"]
 
 [node name="BagContainer" type="Panel" unique_id=67285212]
 anchors_preset = -1
@@ -33,9 +34,35 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 50
+theme_override_constants/margin_top = 90
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
+
+[node name="TabContainer" type="HBoxContainer" parent="." unique_id=888888881]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 55.0
+offset_right = 150.0
+offset_bottom = 85.0
+grow_horizontal = 2
+
+[node name="Button_Equipment" type="Button" parent="TabContainer" unique_id=888888882]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "装备"
+
+[node name="Button_Consumable" type="Button" parent="TabContainer" unique_id=888888883]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "消耗品"
+
+[node name="Button_Material" type="Button" parent="TabContainer" unique_id=888888884]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "材料"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=1725488533]
 layout_mode = 2
@@ -43,6 +70,9 @@ layout_mode = 2
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/ScrollContainer" unique_id=641535398]
 layout_mode = 2
 columns = 6
+
+[node name="BagItem" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1569717396 instance=ExtResource("3_kbo1b")]
+layout_mode = 2
 
 [node name="TextureRect_Name" type="TextureRect" parent="." unique_id=1157552926]
 layout_mode = 1

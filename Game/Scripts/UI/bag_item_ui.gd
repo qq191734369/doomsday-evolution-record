@@ -8,6 +8,7 @@ signal drag_ended()
 @onready var texture_rect_item_view: TextureRect = $MarginContainer/TextureRect_ItemView
 @onready var label_stack_num: Label = $Label_StackNum
 @onready var ghost: TextureRect = $Ghost
+@onready var label_fallback: Label = $Label_Fallback
 
 @export var item_database: ItemDatabase
 
@@ -29,6 +30,8 @@ var data: ItemData.ItemInfo:
 				label_stack_num.text = str(_data.count)
 			else:
 				label_stack_num.text = ""
+		else :
+			label_fallback.text = _data.name
 	get():
 		return _data
 
