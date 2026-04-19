@@ -3,7 +3,7 @@ extends TextureRect
 class_name BagItemSlot
 
 signal drag_started(slot: BagItemSlot)
-signal drag_ended()
+signal drag_ended(from_slot: BagItemSlot)
 
 @onready var texture_rect_item_view: TextureRect = $MarginContainer/TextureRect_ItemView
 @onready var label_stack_num: Label = $Label_StackNum
@@ -65,7 +65,7 @@ func _end_drag():
 		return
 	is_dragging = false
 	ghost.visible = false
-	drag_ended.emit()
+	drag_ended.emit(self)
 
 func _process(_delta: float):
 	if is_dragging:

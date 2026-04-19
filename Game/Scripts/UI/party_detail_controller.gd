@@ -36,9 +36,13 @@ func load_bag_items(character_data: GameData.CharacterInfo) -> void:
 		bag_container.item_swapped.disconnect(_on_item_swapped)
 	if bag_container.tab_changed.is_connected(_on_tab_changed):
 		bag_container.tab_changed.disconnect(_on_tab_changed)
+	if bag_container.drag_to_character.is_connected(_on_drag_to_character):
+		bag_container.drag_to_character.disconnect(_on_drag_to_character)
 	bag_container.item_swapped.connect(_on_item_swapped)
 	bag_container.tab_changed.connect(_on_tab_changed)
-	await bag_container.init_slot(_get_current_bag_data())
+	bag_container.drag_to_character.connect(_on_drag_to_character)
+	bag_container.party_item_list = v_box_container_party_list
+	await bag_container.init_slot(_get_current_bag_data(), active_character_data)
 
 func _get_current_bag_data() -> Array:
 	match bag_container.current_tab:
@@ -50,17 +54,33 @@ func _get_current_bag_data() -> Array:
 			return active_character_data.bag.materals
 	return active_character_data.bag.consume
 
+func _get_character_bag(character_data: GameData.CharacterInfo, tab_type: String) -> Array:
+	match tab_type:
+		"equipment":
+			return character_data.bag.equipment
+		"consume":
+			return character_data.bag.consume
+		"materals":
+			return character_data.bag.materals
+	return character_data.bag.consume
+
+func _update_bag_ui():
+	bag_container.init_slot(_get_current_bag_data(), active_character_data)
+
 func _ensure_bag_arrays_size():
-	while active_character_data.bag.equipment.size() < bag_container.slot_num:
-		active_character_data.bag.equipment.append(null)
-	while active_character_data.bag.consume.size() < bag_container.slot_num:
-		active_character_data.bag.consume.append(null)
-	while active_character_data.bag.materals.size() < bag_container.slot_num:
-		active_character_data.bag.materals.append(null)
+	_ensure_character_bag_size(active_character_data)
+
+func _ensure_character_bag_size(character_data: GameData.CharacterInfo):
+	while character_data.bag.equipment.size() < bag_container.slot_num:
+		character_data.bag.equipment.append(null)
+	while character_data.bag.consume.size() < bag_container.slot_num:
+		character_data.bag.consume.append(null)
+	while character_data.bag.materals.size() < bag_container.slot_num:
+		character_data.bag.materals.append(null)
 
 func _on_tab_changed(tab_type: String):
 	_ensure_bag_arrays_size()
-	await bag_container.init_slot(_get_current_bag_data())
+	await bag_container.init_slot(_get_current_bag_data(), active_character_data)
 
 func _on_item_swapped(from_idx: int, to_idx: int):
 	if from_idx < 0 or to_idx < 0 or from_idx == to_idx:
@@ -71,6 +91,20 @@ func _on_item_swapped(from_idx: int, to_idx: int):
 	var item_from = bag_data[from_idx]
 	bag_data[from_idx] = bag_data[to_idx]
 	bag_data[to_idx] = item_from
+
+func _on_drag_to_character(source_character, target_character, item_data, from_idx: int):
+	if source_character == target_character:
+		return
+	var tab_type = bag_container._get_tab_type_name()
+	_ensure_character_bag_size(target_character)
+	var source_bag = _get_character_bag(source_character, tab_type)
+	var target_bag = _get_character_bag(target_character, tab_type)
+	var first_empty_idx = target_bag.find(null)
+	if first_empty_idx == -1:
+		return
+	target_bag[first_empty_idx] = item_data
+	source_bag[from_idx] = null
+	_update_bag_ui()
 
 func show_party_panel() -> PartyDetailController:
 	var party_container = v_box_container_party_list

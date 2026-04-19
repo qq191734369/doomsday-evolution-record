@@ -38,15 +38,25 @@ theme_override_constants/margin_top = 90
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=1725488533]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/ScrollContainer" unique_id=641535398]
+layout_mode = 2
+columns = 6
+
+[node name="BagItem" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1569717396 instance=ExtResource("3_kbo1b")]
+layout_mode = 2
+
 [node name="TabContainer" type="HBoxContainer" parent="." unique_id=888888881]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -150.0
-offset_top = 55.0
+offset_top = 45.0
 offset_right = 150.0
-offset_bottom = 85.0
+offset_bottom = 65.0
 grow_horizontal = 2
 
 [node name="Button_Equipment" type="Button" parent="TabContainer" unique_id=888888882]
@@ -63,16 +73,6 @@ text = "消耗品"
 layout_mode = 2
 size_flags_horizontal = 3
 text = "材料"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=1725488533]
-layout_mode = 2
-
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/ScrollContainer" unique_id=641535398]
-layout_mode = 2
-columns = 6
-
-[node name="BagItem" parent="MarginContainer/ScrollContainer/GridContainer" unique_id=1569717396 instance=ExtResource("3_kbo1b")]
-layout_mode = 2
 
 [node name="TextureRect_Name" type="TextureRect" parent="." unique_id=1157552926]
 layout_mode = 1

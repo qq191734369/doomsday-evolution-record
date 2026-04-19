@@ -4,6 +4,7 @@ class_name BagContainerNode
 
 signal item_swapped(from_idx: int, to_idx: int)
 signal tab_changed(tab_type: String)
+signal drag_to_character(source_character, target_character, item_data, from_idx: int)
 
 enum BagTab {EQUIPMENT, CONSUMABLE, MATERIAL}
 var current_tab: BagTab = BagTab.EQUIPMENT
@@ -21,6 +22,8 @@ const BAG_ITEM_UI = preload("uid://clidtp6deo8i6")
 var dragging_slot: BagItemSlot = null
 var slots: Array[BagItemSlot] = []
 var current_bag_data: Array = []
+var current_character_data = null
+var party_item_list: VBoxContainer = null
 
 func _ready():
 	btn_equipment.button_down.connect(func(): _on_tab_selected(BagTab.EQUIPMENT))
@@ -32,6 +35,33 @@ func _update_tab_buttons():
 	btn_equipment.button_pressed = current_tab == BagTab.EQUIPMENT
 	btn_consumable.button_pressed = current_tab == BagTab.CONSUMABLE
 	btn_material.button_pressed = current_tab == BagTab.MATERIAL
+	_set_button_style(btn_equipment, current_tab == BagTab.EQUIPMENT)
+	_set_button_style(btn_consumable, current_tab == BagTab.CONSUMABLE)
+	_set_button_style(btn_material, current_tab == BagTab.MATERIAL)
+
+func _set_button_style(btn: Button, is_active: bool):
+	if is_active:
+		btn.add_theme_stylebox_override("normal", _get_active_style())
+	else:
+		btn.add_theme_stylebox_override("normal", _get_inactive_style())
+
+func _get_active_style() -> StyleBox:
+	var style = StyleBoxFlat.new()
+	style.content_margin_left = 10
+	style.content_margin_right = 10
+	style.content_margin_top = 5
+	style.content_margin_bottom = 5
+	style.bg_color = Color(0.2, 0.2, 0.2, 0.9)
+	return style
+
+func _get_inactive_style() -> StyleBox:
+	var style = StyleBoxFlat.new()
+	style.content_margin_left = 10
+	style.content_margin_right = 10
+	style.content_margin_top = 5
+	style.content_margin_bottom = 5
+	style.bg_color = Color(0.4, 0.4, 0.4, 0.6)
+	return style
 
 func _on_tab_selected(tab: BagTab):
 	if current_tab == tab:
@@ -55,8 +85,9 @@ func _waitDone():
 	await get_tree().process_frame
 	await get_tree().process_frame
 
-func init_slot(bag_data: Array):
+func init_slot(bag_data: Array, character_data = null):
 	current_bag_data = bag_data
+	current_character_data = character_data
 	for item in grid_container.get_children():
 		item.queue_free()
 	slots.clear()
@@ -83,12 +114,29 @@ func _update_slots():
 func _on_slot_drag_started(slot: BagItemSlot):
 	dragging_slot = slot
 
-func _on_slot_drag_ended():
-	if dragging_slot:
-		var target_slot = _get_slot_under_mouse()
-		if target_slot and target_slot != dragging_slot:
-			_swap_slots(dragging_slot, target_slot)
+func _on_slot_drag_ended(from_slot: BagItemSlot):
+	if not dragging_slot:
+		return
+	var target_slot = _get_slot_under_mouse()
+	if target_slot and target_slot != dragging_slot:
+		_swap_slots(dragging_slot, target_slot)
+	else:
+		var target_party_item = _get_party_item_under_mouse()
+		if target_party_item:
+			var item_data = dragging_slot.data
+			var from_idx = dragging_slot.slot_index
+			if item_data and current_character_data:
+				drag_to_character.emit(current_character_data, target_party_item.data, item_data, from_idx)
 	dragging_slot = null
+
+func _get_party_item_under_mouse() -> PartyItemNode:
+	if not party_item_list:
+		return null
+	var mouse_pos = get_global_mouse_position()
+	for party_item in party_item_list.get_children():
+		if party_item is PartyItemNode and party_item.get_global_rect().has_point(mouse_pos):
+			return party_item
+	return null
 
 func _get_slot_under_mouse() -> BagItemSlot:
 	var mouse_pos = grid_container.get_global_mouse_position()
