@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://m5bevnni5sq5" path="res://Assets/UI/Status/status_bg.png" id="1_e42lq"]
 [ext_resource type="Texture2D" uid="uid://q31t3ls06bed" path="res://Assets/Animation/Characters/Player/Player_full.png" id="2_yiie1"]
 [ext_resource type="Texture2D" uid="uid://cv75nmas4b8ei" path="res://Assets/UI/Status/title_bg.png" id="3_5mnhb"]
+[ext_resource type="PackedScene" uid="uid://cydpms6kk2gpf" path="res://Game/Scene/UI/EquipmentSlot.tscn" id="4_yiie1"]
 
 [node name="Panel_CharacterDetail" type="Panel" unique_id=1338032165]
 anchors_preset = -1
@@ -67,3 +68,114 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 25
 text = "xxxxxxxxxx"
 horizontal_alignment = 1
+
+[node name="NinePatchRect_EquipmentContainer" type="NinePatchRect" parent="." unique_id=1206681392]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.804
+anchor_top = 0.020000001
+anchor_right = 0.804
+anchor_bottom = 0.020000001
+offset_left = -77.73602
+offset_top = 50.059998
+offset_right = 87.26398
+offset_bottom = 445.06
+
+[node name="EquipmentSlot_Weapon" parent="NinePatchRect_EquipmentContainer" unique_id=1569717396 instance=ExtResource("4_yiie1")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.776
+anchor_right = 0.776
+offset_left = -32.04001
+offset_top = 4.0
+offset_right = 31.959991
+offset_bottom = 68.0
+des = "武器"
+
+[node name="EquipmentSlot_Head" parent="NinePatchRect_EquipmentContainer" unique_id=970596667 instance=ExtResource("4_yiie1")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.333
+anchor_right = 0.333
+offset_left = -32.945
+offset_top = 75.0
+offset_right = 31.055
+offset_bottom = 139.0
+des = "头"
+
+[node name="EquipmentSlot_Arm" parent="NinePatchRect_EquipmentContainer" unique_id=977109432 instance=ExtResource("4_yiie1")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.776
+anchor_right = 0.776
+offset_left = -33.04001
+offset_top = 75.0
+offset_right = 30.959991
+offset_bottom = 139.0
+des = "手"
+
+[node name="EquipmentSlot_Body" parent="NinePatchRect_EquipmentContainer" unique_id=1571059978 instance=ExtResource("4_yiie1")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.31500003
+anchor_right = 0.31500003
+offset_left = -30.975006
+offset_top = 145.0
+offset_right = 33.024994
+offset_bottom = 209.0
+des = "甲"
+
+[node name="EquipmentSlot_Leg" parent="NinePatchRect_EquipmentContainer" unique_id=1270990042 instance=ExtResource("4_yiie1")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.76400006
+anchor_right = 0.76400006
+offset_left = -31.060013
+offset_top = 145.0
+offset_right = 32.939987
+offset_bottom = 209.0
+des = "腿"
+
+[node name="EquipmentSlot_Belt" parent="NinePatchRect_EquipmentContainer" unique_id=1347703691 instance=ExtResource("4_yiie1")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.321
+anchor_right = 0.321
+offset_left = -31.965
+offset_top = 215.0
+offset_right = 32.035
+offset_bottom = 279.0
+des = "腰带"
+
+[node name="EquipmentSlot_Necklace" parent="NinePatchRect_EquipmentContainer" unique_id=144955439 instance=ExtResource("4_yiie1")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.321
+anchor_right = 0.321
+offset_left = 42.035
+offset_top = 215.0
+offset_right = 106.035
+offset_bottom = 279.0
+des = "项链"
+
+[node name="EquipmentSlot_Ring1" parent="NinePatchRect_EquipmentContainer" unique_id=480889524 instance=ExtResource("4_yiie1")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.321
+anchor_right = 0.321
+offset_left = -31.965
+offset_top = 285.0
+offset_right = 32.035
+offset_bottom = 349.0
+des = "戒1"
+
+[node name="EquipmentSlot_Ring2" parent="NinePatchRect_EquipmentContainer" unique_id=1242831837 instance=ExtResource("4_yiie1")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.321
+anchor_right = 0.321
+offset_left = 41.035
+offset_top = 285.0
+offset_right = 105.035
+offset_bottom = 349.0
+des = "戒2"
