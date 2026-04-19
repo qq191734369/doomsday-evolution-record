@@ -3,9 +3,8 @@ extends Control
 class_name PartyDetailController
 
 @onready var v_box_container_party_list: VBoxContainer = $Panel_BG/Panel_PartyList/NinePatchRect_PartyBG/MarginContainer/ScrollContainer/VBoxContainer_PartyList
-@onready var label_character_name: Label = $Panel_BG/Panel_CharacterDetail/TextureRect_Name/Label_CharacterName
-@onready var texture_rect_character: TextureRect = $Panel_BG/Panel_CharacterDetail/TextureRect_Character
 @onready var bag_container: BagContainerNode = $Panel_BG/Bag
+@onready var character_detail_ui: CharacterDetailUI = $Panel_BG/CharacterDetailUI
 
 
 const PARTY_ITEM = preload("uid://birn7jxlf3c7q")
@@ -22,17 +21,15 @@ func _set_active_member(item_node: PartyItemNode):
 	is_opening_member = true
 	item_node.setActive(true)
 	var data = item_node.data
-	texture_rect_character.texture = load("res://Assets/Animation/Characters/{name}/{name}_full.png".format({ "name": data.name }))
-	label_character_name.text = data.name
+	# 更新面板
+	character_detail_ui.update(data)
+	
 	await load_bag_items(data)
 	active_party_item = item_node
 	is_opening_member = false
 
 func load_bag_items(character_data: GameData.CharacterInfo) -> void:
-	bag_container.init_slot()
-	bag_container.grid_container.queue_sort()
-	await get_tree().process_frame
-	await get_tree().process_frame
+	await bag_container.init_slot()
 	_populate_bag_items(character_data)
 
 func _populate_bag_items(character_data: GameData.CharacterInfo) -> void:
