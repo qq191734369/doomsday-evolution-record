@@ -32,13 +32,10 @@ func _set_active_member(item_node: PartyItemNode):
 func load_bag_items(character_data: GameData.CharacterInfo) -> void:
 	active_character_data = character_data
 	_ensure_bag_arrays_size()
-	if bag_container.item_swapped.is_connected(_on_item_swapped):
-		bag_container.item_swapped.disconnect(_on_item_swapped)
 	if bag_container.tab_changed.is_connected(_on_tab_changed):
 		bag_container.tab_changed.disconnect(_on_tab_changed)
 	if bag_container.drag_to_character.is_connected(_on_drag_to_character):
 		bag_container.drag_to_character.disconnect(_on_drag_to_character)
-	bag_container.item_swapped.connect(_on_item_swapped)
 	bag_container.tab_changed.connect(_on_tab_changed)
 	bag_container.drag_to_character.connect(_on_drag_to_character)
 	bag_container.party_item_list = v_box_container_party_list
@@ -81,16 +78,6 @@ func _ensure_character_bag_size(character_data: GameData.CharacterInfo):
 func _on_tab_changed(tab_type: String):
 	_ensure_bag_arrays_size()
 	await bag_container.init_slot(_get_current_bag_data(), active_character_data)
-
-func _on_item_swapped(from_idx: int, to_idx: int):
-	if from_idx < 0 or to_idx < 0 or from_idx == to_idx:
-		return
-	var bag_data = _get_current_bag_data()
-	if from_idx >= bag_data.size() or to_idx >= bag_data.size():
-		return
-	var item_from = bag_data[from_idx]
-	bag_data[from_idx] = bag_data[to_idx]
-	bag_data[to_idx] = item_from
 
 func _on_drag_to_character(source_character, target_character, item_data, from_idx: int):
 	if source_character == target_character:

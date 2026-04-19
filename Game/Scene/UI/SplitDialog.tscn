@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://ch4w2ubaov068"]
+
+[ext_resource type="Script" uid="uid://chah2hw7lqgh6" path="res://Game/Scripts/UI/split_dialog.gd" id="1"]
+
+[node name="SplitDialog" type="ConfirmationDialog" unique_id=1446117296]
+title = "拆分物品"
+initial_position = 2
+unresizable = true
+ok_button_text = "确定"
+cancel_button_text = "取消"
+script = ExtResource("1")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=470676819]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=2]
+layout_mode = 2
+text = "请输入拆分数量："
+
+[node name="SpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer" unique_id=3]
+layout_mode = 2
+min_value = 1.0
+max_value = 99.0
+value = 1.0

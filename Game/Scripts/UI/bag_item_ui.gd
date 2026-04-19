@@ -4,6 +4,7 @@ class_name BagItemSlot
 
 signal drag_started(slot: BagItemSlot)
 signal drag_ended(from_slot: BagItemSlot)
+signal item_right_clicked(item_data: ItemData.ItemInfo, slot_index: int)
 
 @onready var texture_rect_item_view: TextureRect = $MarginContainer/TextureRect_ItemView
 @onready var label_stack_num: Label = $Label_StackNum
@@ -22,6 +23,7 @@ var data: ItemData.ItemInfo:
 		if not val:
 			texture_rect_item_view.texture = null
 			label_stack_num.text = ""
+			label_fallback.text = ""
 			return
 		var texture = item_database.get_texture_by_id(_data.id)
 		if texture and texture_rect_item_view:
@@ -30,8 +32,14 @@ var data: ItemData.ItemInfo:
 				label_stack_num.text = str(_data.count)
 			else:
 				label_stack_num.text = ""
-		else :
+			label_fallback.text = ""
+		else:
+			texture_rect_item_view.texture = null
 			label_fallback.text = _data.name
+			if _data.count > 1:
+				label_stack_num.text = str(_data.count)
+			else:
+				label_stack_num.text = ""
 	get():
 		return _data
 
@@ -50,6 +58,9 @@ func _on_gui_input(event: InputEvent):
 				_start_drag()
 			else:
 				_end_drag()
+		elif event.button_index == MOUSE_BUTTON_RIGHT:
+			if event.pressed:
+				_show_action_menu()
 
 func _start_drag():
 	if is_dragging or not _data:
@@ -70,6 +81,9 @@ func _end_drag():
 func _process(_delta: float):
 	if is_dragging:
 		ghost.global_position = ghost.get_global_mouse_position() - ghost.size / 2
+
+func _show_action_menu():
+	item_right_clicked.emit(_data, slot_index)
 
 func init(d: ItemData.ItemInfo, idx: int):
 	slot_index = idx
