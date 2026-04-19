@@ -19,7 +19,7 @@ class BagInfo:
 			if item_data == null:
 				equipment.append(null)
 			else:
-				var item = EquipmentData.EquipmentInfo.new(item_data)
+				var item = EquipmentData.create_equipment(item_data)
 				equipment.append(item)
 
 		var materals_data = data.get("materals", [])

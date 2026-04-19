@@ -2,6 +2,7 @@ class_name WeaponData
 
 # 武器类型枚举
 enum WeaponType {
+	NONE = 0,
 	MELEE,      # 近战武器
 	RANGED,     # 远程武器
 	MAGIC,      # 魔法武器
@@ -10,7 +11,7 @@ enum WeaponType {
 
 # 武器基类
 class WeaponInfo extends EquipmentData.EquipmentInfo:
-	var weapon_type: WeaponType = WeaponType.MELEE
+	var weapon_type: WeaponType
 	var damage: int = 10
 	var attack_speed: float = 2.0
 	var range: float = 1.0

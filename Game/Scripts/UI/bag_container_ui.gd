@@ -13,6 +13,7 @@ enum BagTab {EQUIPMENT, CONSUMABLE, MATERIAL}
 var current_tab: BagTab = BagTab.EQUIPMENT
 
 @export var slot_num = 36
+@export var character_detail_ui: Node
 
 @onready var grid_container: GridContainer = $MarginContainer/ScrollContainer/GridContainer
 @onready var btn_equipment: Button = $TabContainer/Button_Equipment
@@ -24,7 +25,7 @@ const BAG_ITEM_UI = preload("uid://clidtp6deo8i6")
 var dragging_slot: BagItemSlot = null
 var slots: Array[BagItemSlot] = []
 var current_bag_data: Array = []
-var current_character_data = null
+var current_character_data: GameData.CharacterInfo = null
 var party_item_list: VBoxContainer = null
 
 var action_menu: PopupMenu
@@ -187,12 +188,62 @@ func _use_item(item_data: ItemData.ItemInfo, slot_index: int):
 		current_bag_data[slot_index] = null
 	_update_slots()
 
+
+func _update_equipment_slots():
+	if not character_detail_ui:
+		return
+	var detail_ui = character_detail_ui as CharacterDetailUI
+	if not detail_ui:
+		return
+	detail_ui.update_equipment_slots(current_character_data.equipment if current_character_data else null)
+	
+
 func _equip_item(item_data: ItemData.ItemInfo, slot_index: int):
 	if not current_character_data:
 		return
 	print("装备物品: " + item_data.name)
-	current_bag_data[slot_index] = null
+
+	var char_equip = current_character_data.equipment
+	if not char_equip:
+		char_equip = GameData.Equipment.new({})
+		current_character_data.equipment = char_equip
+
+	var old_equipment: ItemData.ItemInfo = null
+
+	if item_data is WeaponData.WeaponInfo:
+		old_equipment = char_equip.weapon
+		char_equip.weapon = item_data
+	elif item_data is EquipmentData.EquipmentInfo:
+		match item_data.armor_type:
+			EquipmentData.ArmorType.HELMET:
+				old_equipment = char_equip.helmet
+				char_equip.helmet = item_data
+			EquipmentData.ArmorType.PAULDRONS:
+				old_equipment = char_equip.pauldrons
+				char_equip.pauldrons = item_data
+			EquipmentData.ArmorType.CHESTPLATE:
+				old_equipment = char_equip.chestplate
+				char_equip.chestplate = item_data
+			EquipmentData.ArmorType.GREAVES:
+				old_equipment = char_equip.greaves
+				char_equip.greaves = item_data
+			EquipmentData.ArmorType.BELT:
+				old_equipment = char_equip.belt
+				char_equip.belt = item_data
+		match item_data.accessory_type:
+			EquipmentData.AccessoryType.NECKLACE:
+				old_equipment = char_equip.necklace
+				char_equip.necklace = item_data
+			EquipmentData.AccessoryType.RING:
+				if not char_equip.ring:
+					char_equip.ring = item_data
+				else:
+					old_equipment = char_equip.ring2
+					char_equip.ring2 = item_data
+
+	current_bag_data[slot_index] = old_equipment
 	_update_slots()
+	_update_equipment_slots()
 
 func _show_split_dialog(item_data: ItemData.ItemInfo, slot_index: int):
 	split_dialog.setup_dialog(item_data, slot_index)

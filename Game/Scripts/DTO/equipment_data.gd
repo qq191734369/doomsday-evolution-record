@@ -1,6 +1,7 @@
 class_name EquipmentData
 
 enum ArmorType {
+	NONE = 0,
 	HELMET,      # 头盔
 	PAULDRONS,   # 护肩
 	CHESTPLATE,  # 衣服
@@ -9,9 +10,46 @@ enum ArmorType {
 }
 
 enum AccessoryType {
+	NONE = 0,
 	NECKLACE,    # 项链
 	RING         # 戒指
 }
+
+static func create_equipment(data: Dictionary):
+	if data.is_empty():
+		return null
+	if data.has("accessory_type"):
+		var accessory_type_val = data.get("accessory_type")
+		match accessory_type_val as int:
+			AccessoryType.NECKLACE:
+				return NecklaceInfo.new(data)
+			AccessoryType.RING:
+				return RingInfo.new(data)
+	if data.has("weapon_type"):
+		var weapon_type_val = data.get("weapon_type")
+		match weapon_type_val as int:
+			WeaponData.WeaponType.MELEE:
+				return WeaponData.MeleeWeaponInfo.new(data)
+			WeaponData.WeaponType.RANGED:
+				return WeaponData.RangedWeaponInfo.new(data)
+			WeaponData.WeaponType.MAGIC:
+				return WeaponData.MagicWeaponInfo.new(data)
+			WeaponData.WeaponType.TOOL:
+				return WeaponData.ToolInfo.new(data)
+	if data.has("armor_type"):
+		var armor_type_val = data.get("armor_type")
+		match armor_type_val as int:
+			ArmorType.HELMET:
+				return HelmetInfo.new(data)
+			ArmorType.PAULDRONS:
+				return PauldronsInfo.new(data)
+			ArmorType.CHESTPLATE:
+				return ChestplateInfo.new(data)
+			ArmorType.GREAVES:
+				return GreavesInfo.new(data)
+			ArmorType.BELT:
+				return BeltInfo.new(data)
+	return EquipmentInfo.new(data)
 
 class EquipmentInfo extends ItemData.ItemInfo:
 	var is_equipment: bool
@@ -21,8 +59,6 @@ class EquipmentInfo extends ItemData.ItemInfo:
 	func _init(data: Dictionary):
 		super(data)
 		is_equipment = true
-		armor_type = data.get("armor_type", ArmorType.HELMET)
-		accessory_type = data.get("accessory_type", AccessoryType.NECKLACE)
 
 class HelmetInfo extends EquipmentInfo:
 	var defense: int = 5

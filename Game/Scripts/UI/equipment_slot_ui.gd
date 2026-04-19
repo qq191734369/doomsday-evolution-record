@@ -2,6 +2,18 @@ extends TextureRect
 
 class_name EquipmentSlotNode
 
+enum EquipmentSlotType {
+	WEAPON,
+	HELMET,
+	PAULDRONS,
+	CHESTPLATE,
+	GREAVES,
+	BELT,
+	NECKLACE,
+	RING1,
+	RING2
+}
+
 @onready var texture_rect_item_view: TextureRect = $MarginContainer/TextureRect_ItemView
 @onready var ghost: TextureRect = $Ghost
 @onready var label_fallback: Label = $Label_Fallback
@@ -14,6 +26,8 @@ class_name EquipmentSlotNode
 			label_description.text = val
 		else:
 			_pending_des = val
+
+@export var slot_type: EquipmentSlotType = EquipmentSlotType.WEAPON
 
 
 var _pending_des: String = ""
@@ -47,7 +61,7 @@ func _ready() -> void:
 	if _pending_des != "":
 		label_description.text = _pending_des
 		_pending_des = ""
-	
+
 
 func init(d: ItemData.ItemInfo):
 	data = d

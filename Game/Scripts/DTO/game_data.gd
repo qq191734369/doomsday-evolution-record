@@ -95,6 +95,7 @@ class Equipment:
 	var belt: EquipmentData.BeltInfo
 	var necklace: EquipmentData.NecklaceInfo
 	var ring: EquipmentData.RingInfo
+	var ring2: EquipmentData.RingInfo
 
 	func _init(data: Dictionary = {}) -> void:
 		var weaponData = data.get("weapon")
@@ -137,6 +138,10 @@ class Equipment:
 		if ringData:
 			ring = EquipmentData.RingInfo.new(ringData)
 
+		var ring2Data = data.get("ring2")
+		if ring2Data:
+			ring2 = EquipmentData.RingInfo.new(ring2Data)
+
 class EnemyInfo:
 	var maxHealth: int = 80
 	var currentHealth: int = 80
@@ -173,11 +178,80 @@ var player: CharacterInfo = CharacterInfo.new({
 			"stackable": true,
 			"quantity": 1,
 			"count": 9
-		}]
+		}],
+		"equipment": [
+			{
+				"id": "sword_001",
+				"name": "铁剑",
+				"rarity": 0,
+				"description": "一把普通的铁剑",
+				"value": 100,
+				"weapon_type": 1,
+				"damage": 25,
+				"attack_speed": 1.5
+			},
+			{
+				"id": "helmet_001",
+				"name": "铁头盔",
+				"rarity": 0,
+				"description": "基础的铁头盔",
+				"value": 80,
+				"armor_type": 1,
+				"defense": 5,
+				"magic_resist": 2
+			},
+			{
+				"id": "chestplate_001",
+				"name": "铁胸甲",
+				"rarity": 0,
+				"description": "基础的铁胸甲",
+				"value": 150,
+				"armor_type": 3,
+				"defense": 10,
+				"magic_resist": 3
+			},
+			{
+				"id": "greaves_001",
+				"name": "铁护腿",
+				"rarity": 0,
+				"description": "基础的铁护腿",
+				"value": 100,
+				"armor_type": 4,
+				"defense": 6,
+				"magic_resist": 2
+			},
+			{
+				"id": "ring_001",
+				"name": "力量戒指",
+				"rarity": 1,
+				"description": "增加攻击力的戒指",
+				"value": 200,
+				"accessory_type": 2,
+				"damage_bonus": 0.1
+			},
+			{
+				"id": "necklace_001",
+				"name": "生命项链",
+				"rarity": 1,
+				"description": "增加生命值的项链",
+				"value": 250,
+				"accessory_type": 1,
+				"health_bonus": 30
+			},
+			{
+				"id": "belt_001",
+				"name": "皮腰带",
+				"rarity": 0,
+				"description": "普通的皮腰带",
+				"value": 50,
+				"armor_type": 5,
+				"defense": 2
+			}
+		]
 	},
 	"equipment": {
 		"weapon": {
-			"weapon_type": 1,
+			"weapon_type": 2,
 			"name": "Gun",
 			"damage": 50,
 			"range": 200.0
@@ -204,7 +278,7 @@ var npcDictionary: Dictionary[String, CharacterInfo] = {
 		"position": Vector2(720.0, 373.0),
 		"equipment": {
 			"weapon": {
-				"weapon_type": 1,
+				"weapon_type": 2,
 				"name": "Gun",
 				"damage": 50,
 				"range": 200.0

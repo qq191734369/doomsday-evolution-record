@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://m5bevnni5sq5" path="res://Assets/UI/Status/status_bg.png" id="6_vhvky"]
 [ext_resource type="PackedScene" uid="uid://bvcfs1yoj6dec" path="res://Game/Scene/UI/CharacterDetail_UI.tscn" id="7_0d7dm"]
 [ext_resource type="Texture2D" uid="uid://cv75nmas4b8ei" path="res://Assets/UI/Status/title_bg.png" id="8_0d7dm"]
-[ext_resource type="Script" uid="uid://6nv8cr317jy2" path="res://Game/Scripts/UI/character_detail_ui.gd" id="8_tigls"]
 [ext_resource type="PackedScene" uid="uid://fl2na3ps4ptg" path="res://Game/Scene/UI/BagContainer_UI.tscn" id="9_vhvky"]
 
 [node name="Game_UI" type="CanvasLayer" unique_id=1473725006]
@@ -163,7 +162,6 @@ offset_left = 14.559998
 offset_top = 0.16000366
 offset_right = 637.56
 offset_bottom = 797.16003
-script = ExtResource("8_tigls")
 
 [node name="Panel_Skills" type="Panel" parent="Control_PartyDetail/Panel_BG" unique_id=851314963]
 layout_mode = 1
@@ -228,7 +226,7 @@ theme_override_font_sizes/font_size = 25
 text = "技能"
 horizontal_alignment = 1
 
-[node name="Bag" parent="Control_PartyDetail/Panel_BG" unique_id=67285212 instance=ExtResource("9_vhvky")]
+[node name="Bag" parent="Control_PartyDetail/Panel_BG" unique_id=67285212 node_paths=PackedStringArray("character_detail_ui") instance=ExtResource("9_vhvky")]
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -237,5 +235,6 @@ offset_left = 1137.0
 offset_top = 343.0
 offset_right = 1798.0
 offset_bottom = 927.0
+character_detail_ui = NodePath("../CharacterDetailUI")
 
 [connection signal="pressed" from="Control_GameOver/Button_Restart" to="." method="_on_button_restart_pressed"]

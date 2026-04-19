@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bvcfs1yoj6dec"]
 
+[ext_resource type="Script" uid="uid://6nv8cr317jy2" path="res://Game/Scripts/UI/character_detail_ui.gd" id="1_5mnhb"]
 [ext_resource type="Texture2D" uid="uid://m5bevnni5sq5" path="res://Assets/UI/Status/status_bg.png" id="1_e42lq"]
 [ext_resource type="Texture2D" uid="uid://q31t3ls06bed" path="res://Assets/Animation/Characters/Player/Player_full.png" id="2_yiie1"]
 [ext_resource type="Texture2D" uid="uid://cv75nmas4b8ei" path="res://Assets/UI/Status/title_bg.png" id="3_5mnhb"]
@@ -13,6 +14,7 @@ offset_left = -331.64008
 offset_top = 133.0
 offset_right = 302.35992
 offset_bottom = 930.0
+script = ExtResource("1_5mnhb")
 
 [node name="NinePatchRect_StatusBG" type="NinePatchRect" parent="." unique_id=226507717]
 layout_mode = 1
@@ -102,6 +104,7 @@ offset_top = 75.0
 offset_right = 31.055
 offset_bottom = 139.0
 des = "头"
+slot_type = 1
 
 [node name="EquipmentSlot_Arm" parent="NinePatchRect_EquipmentContainer" unique_id=977109432 instance=ExtResource("4_yiie1")]
 layout_mode = 1
@@ -113,6 +116,7 @@ offset_top = 75.0
 offset_right = 30.959991
 offset_bottom = 139.0
 des = "手"
+slot_type = 2
 
 [node name="EquipmentSlot_Body" parent="NinePatchRect_EquipmentContainer" unique_id=1571059978 instance=ExtResource("4_yiie1")]
 layout_mode = 1
@@ -124,6 +128,7 @@ offset_top = 145.0
 offset_right = 33.024994
 offset_bottom = 209.0
 des = "甲"
+slot_type = 3
 
 [node name="EquipmentSlot_Leg" parent="NinePatchRect_EquipmentContainer" unique_id=1270990042 instance=ExtResource("4_yiie1")]
 layout_mode = 1
@@ -135,6 +140,7 @@ offset_top = 145.0
 offset_right = 32.939987
 offset_bottom = 209.0
 des = "腿"
+slot_type = 4
 
 [node name="EquipmentSlot_Belt" parent="NinePatchRect_EquipmentContainer" unique_id=1347703691 instance=ExtResource("4_yiie1")]
 layout_mode = 1
@@ -146,6 +152,7 @@ offset_top = 215.0
 offset_right = 32.035
 offset_bottom = 279.0
 des = "腰带"
+slot_type = 5
 
 [node name="EquipmentSlot_Necklace" parent="NinePatchRect_EquipmentContainer" unique_id=144955439 instance=ExtResource("4_yiie1")]
 layout_mode = 1
@@ -157,6 +164,7 @@ offset_top = 215.0
 offset_right = 106.035
 offset_bottom = 279.0
 des = "项链"
+slot_type = 6
 
 [node name="EquipmentSlot_Ring1" parent="NinePatchRect_EquipmentContainer" unique_id=480889524 instance=ExtResource("4_yiie1")]
 layout_mode = 1
@@ -168,6 +176,7 @@ offset_top = 285.0
 offset_right = 32.035
 offset_bottom = 349.0
 des = "戒1"
+slot_type = 7
 
 [node name="EquipmentSlot_Ring2" parent="NinePatchRect_EquipmentContainer" unique_id=1242831837 instance=ExtResource("4_yiie1")]
 layout_mode = 1
@@ -179,3 +188,4 @@ offset_top = 285.0
 offset_right = 105.035
 offset_bottom = 349.0
 des = "戒2"
+slot_type = 8
