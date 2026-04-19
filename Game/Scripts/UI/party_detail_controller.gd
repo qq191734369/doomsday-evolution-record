@@ -29,18 +29,32 @@ func _set_active_member(item_node: PartyItemNode):
 	is_opening_member = false
 
 func load_bag_items(character_data: GameData.CharacterInfo) -> void:
+	if bag_container.item_swapped.is_connected(_on_item_swapped):
+		bag_container.item_swapped.disconnect(_on_item_swapped)
+	bag_container.item_swapped.connect(_on_item_swapped)
 	await bag_container.init_slot()
 	_populate_bag_items(character_data)
 
+func _on_item_swapped(from_idx: int, to_idx: int):
+	var consume = active_party_item.data.bag.consume
+	if from_idx < 0 or to_idx < 0 or from_idx == to_idx:
+		return
+	if from_idx >= consume.size() or to_idx >= consume.size():
+		return
+	var item_from = consume[from_idx]
+	consume[from_idx] = consume[to_idx]
+	consume[to_idx] = item_from
+
 func _populate_bag_items(character_data: GameData.CharacterInfo) -> void:
-	var slots = bag_container.grid_container.get_children()
-	var slot_index = 0
-	for consume_item in character_data.bag.consume:
-		if slot_index >= slots.size():
-			break
-		var slot = slots[slot_index] as BagItemSlot
-		slot.init(consume_item)
-		slot_index += 1
+	var consume = character_data.bag.consume
+	while consume.size() < bag_container.slots.size():
+		consume.append(null)
+	for i in bag_container.slots.size():
+		var slot = bag_container.slots[i] as BagItemSlot
+		if i < consume.size() and consume[i] != null:
+			slot.init(consume[i], i)
+		else:
+			slot.clear()
 
 func show_party_panel() -> PartyDetailController:
 	var party_container = v_box_container_party_list
