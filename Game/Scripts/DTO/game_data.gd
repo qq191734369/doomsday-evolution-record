@@ -88,7 +88,14 @@ class CharacterInfo:
 
 class Equipment:
 	var weapon: WeaponData.WeaponInfo
-	
+	var helmet: EquipmentData.HelmetInfo
+	var pauldrons: EquipmentData.PauldronsInfo
+	var chestplate: EquipmentData.ChestplateInfo
+	var greaves: EquipmentData.GreavesInfo
+	var belt: EquipmentData.BeltInfo
+	var necklace: EquipmentData.NecklaceInfo
+	var ring: EquipmentData.RingInfo
+
 	func _init(data: Dictionary = {}) -> void:
 		var weaponData = data.get("weapon")
 		if weaponData:
@@ -101,6 +108,34 @@ class Equipment:
 				weapon = WeaponData.MagicWeaponInfo.new(weaponData)
 			elif type == WeaponData.WeaponType.TOOL:
 				weapon = WeaponData.ToolInfo.new(weaponData)
+
+		var helmetData = data.get("helmet")
+		if helmetData:
+			helmet = EquipmentData.HelmetInfo.new(helmetData)
+
+		var pauldronsData = data.get("pauldrons")
+		if pauldronsData:
+			pauldrons = EquipmentData.PauldronsInfo.new(pauldronsData)
+
+		var chestplateData = data.get("chestplate")
+		if chestplateData:
+			chestplate = EquipmentData.ChestplateInfo.new(chestplateData)
+
+		var greavesData = data.get("greaves")
+		if greavesData:
+			greaves = EquipmentData.GreavesInfo.new(greavesData)
+
+		var beltData = data.get("belt")
+		if beltData:
+			belt = EquipmentData.BeltInfo.new(beltData)
+
+		var necklaceData = data.get("necklace")
+		if necklaceData:
+			necklace = EquipmentData.NecklaceInfo.new(necklaceData)
+
+		var ringData = data.get("ring")
+		if ringData:
+			ring = EquipmentData.RingInfo.new(ringData)
 
 class EnemyInfo:
 	var maxHealth: int = 80

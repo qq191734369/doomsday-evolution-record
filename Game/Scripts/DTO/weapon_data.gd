@@ -13,16 +13,12 @@ class WeaponInfo extends EquipmentData.EquipmentInfo:
 	var weapon_type: WeaponType = WeaponType.MELEE
 	var damage: int = 10
 	var attack_speed: float = 2.0
-	var durability: int = 100
-	var max_durability: int = 100
 	var range: float = 1.0
 	var effects: Array[Dictionary] = []
 	var animation_path: String = ""
-	# 近战武器也有可能有弹道
 	var projectile_speed: float = 500.0
 	var projectile_range: float = 300
 
-	# 构造函数
 	func _init(data: Dictionary = {}) -> void:
 		super(data)
 		stackable = false
@@ -30,33 +26,12 @@ class WeaponInfo extends EquipmentData.EquipmentInfo:
 		weapon_type = data.get("type", weapon_type)
 		damage = data.get("damage", damage)
 		attack_speed = data.get("attack_speed", attack_speed)
-		durability = data.get("durability", durability)
-		max_durability = data.get("max_durability", max_durability)
 		range = data.get("range", range)
 		effects = data.get("effects", effects)
 		animation_path = data.get("animation_path", animation_path)
 		projectile_speed = data.get("projectile_speed", projectile_speed)
 		projectile_range = data.get("projectile_range", projectile_range)
 
-	# 检查武器是否可用
-	func is_usable() -> bool:
-		return durability > 0
-
-	# 使用武器（减少耐久度）
-	func use() -> bool:
-		if not is_usable():
-			return false
-		durability -= 1
-		return true
-
-	# 修复武器
-	func repair(amount: int = -1) -> void:
-		if amount == -1:
-			durability = max_durability
-		else:
-			durability = min(durability + amount, max_durability)
-
-	# 获取武器效果
 	func get_effects() -> Array[Dictionary]:
 		return effects
 
