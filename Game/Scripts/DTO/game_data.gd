@@ -11,7 +11,7 @@ class CharacterInfo:
 		"speed": 200,
 		"max_mana": 100
 	}
-	
+	var id: String # 角色id，全局唯一
 	var currentHealth: int = 100
 	var currentMana: int = 100
 	var position: Vector2 = Vector2.ZERO

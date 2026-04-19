@@ -1,118 +1,127 @@
 class_name BagData
 
 class BagInfo:
-	# 消耗品
 	var consume: Array[ItemData.ConsumableItemInfo] = []
-	# 装备
 	var equipment: Array[EquipmentData.EquipmentInfo] = []
-	# 材料
 	var materals: Array[ItemData.MaterialItemInfo] = []
-	
-	# 构造函数
+
 	func _init(data: Dictionary = {}) -> void:
-		# 初始化消耗品
 		var consume_data = data.get("consume", [])
 		for item_data in consume_data:
-			var item = ItemData.ConsumableItemInfo.new(item_data)
-			consume.append(item)
-		
-		# 初始化装备
+			if item_data == null:
+				consume.append(null)
+			else:
+				var item = ItemData.ConsumableItemInfo.new(item_data)
+				consume.append(item)
+
 		var equipment_data = data.get("equipment", [])
 		for item_data in equipment_data:
-			var item = EquipmentData.EquipmentInfo.new(item_data)
-			equipment.append(item)
-		
-		# 初始化材料
+			if item_data == null:
+				equipment.append(null)
+			else:
+				var item = EquipmentData.EquipmentInfo.new(item_data)
+				equipment.append(item)
+
 		var materals_data = data.get("materals", [])
 		for item_data in materals_data:
-			var item = ItemData.MaterialItemInfo.new(item_data)
-			materals.append(item)
-	
-	# 添加物品
-	func add_item(item: Variant, quantity: int = 1) -> bool:
+			if item_data == null:
+				materals.append(null)
+			else:
+				var item = ItemData.MaterialItemInfo.new(item_data)
+				materals.append(item)
+
+	func add_item(item: Variant, count: int = 1) -> bool:
 		if item is ItemData.ConsumableItemInfo:
-			# 检查是否可堆叠且已存在
 			if item.stackable:
-				for existing_item in consume:
-					if existing_item.id == item.id:
-						existing_item.quantity += quantity
+				for i in consume.size():
+					if consume[i] != null and consume[i].id == item.id:
+						consume[i].count = mini(consume[i].count + count, consume[i].max_stack)
 						return true
-			# 不可堆叠或不存在，添加新物品
-			consume.append(item)
-			item.quantity = quantity
-			return true
+			var slot_index = _find_first_empty_slot(consume)
+			if slot_index >= 0:
+				consume[slot_index] = item
+				item.count = count
+				return true
+			return false
 		elif item is EquipmentData.EquipmentInfo:
-			equipment.append(item)
-			return true
+			var slot_index = _find_first_empty_slot(equipment)
+			if slot_index >= 0:
+				equipment[slot_index] = item
+				return true
+			return false
 		elif item is ItemData.MaterialItemInfo:
-			# 检查是否可堆叠且已存在
 			if item.stackable:
-				for existing_item in materals:
-					if existing_item.id == item.id:
-						existing_item.quantity += quantity
+				for i in materals.size():
+					if materals[i] != null and materals[i].id == item.id:
+						materals[i].count = mini(materals[i].count + count, materals[i].max_stack)
 						return true
-			# 不可堆叠或不存在，添加新物品
-			materals.append(item)
-			item.quantity = quantity
-			return true
+			var slot_index = _find_first_empty_slot(materals)
+			if slot_index >= 0:
+				materals[slot_index] = item
+				item.count = count
+				return true
+			return false
 		return false
-	
-	# 删除物品
-	func remove_item(item: Variant, quantity: int = 1) -> bool:
+
+	func remove_item(item: Variant, count: int = 1) -> bool:
 		if item is ItemData.ConsumableItemInfo:
-			if consume.has(item):
+			var slot_index = consume.find(item)
+			if slot_index >= 0:
 				if item.stackable:
-					item.quantity = max(0, item.quantity - quantity)
-					if item.quantity == 0:
-						consume.erase(item)
+					item.count = max(0, item.count - count)
+					if item.count == 0:
+						consume[slot_index] = null
 				else:
-					consume.erase(item)
+					consume[slot_index] = null
 				return true
 		elif item is EquipmentData.EquipmentInfo:
-			if equipment.has(item):
-				equipment.erase(item)
+			var slot_index = equipment.find(item)
+			if slot_index >= 0:
+				equipment[slot_index] = null
 				return true
 		elif item is ItemData.MaterialItemInfo:
-			if materals.has(item):
+			var slot_index = materals.find(item)
+			if slot_index >= 0:
 				if item.stackable:
-					item.quantity = max(0, item.quantity - quantity)
-					if item.quantity == 0:
-						materals.erase(item)
+					item.count = max(0, item.count - count)
+					if item.count == 0:
+						materals[slot_index] = null
 				else:
-					materals.erase(item)
+					materals[slot_index] = null
 				return true
 		return false
-	
-	# 根据ID删除物品
-	func remove_item_by_id(item_id: String, quantity: int = 1) -> bool:
-		# 检查消耗品
-		for item in consume:
-			if item.id == item_id:
-				if item.stackable:
-					item.quantity = max(0, item.quantity - quantity)
-					if item.quantity == 0:
-						consume.erase(item)
+
+	func remove_item_by_id(item_id: String, count: int = 1) -> bool:
+		for i in consume.size():
+			if consume[i] != null and consume[i].id == item_id:
+				if consume[i].stackable:
+					consume[i].count = max(0, consume[i].count - count)
+					if consume[i].count == 0:
+						consume[i] = null
 				else:
-					consume.erase(item)
+					consume[i] = null
 				return true
-		# 检查装备
-		for item in equipment:
-			if item.id == item_id:
-				equipment.erase(item)
+		for i in equipment.size():
+			if equipment[i] != null and equipment[i].id == item_id:
+				equipment[i] = null
 				return true
-		# 检查材料
-		for item in materals:
-			if item.id == item_id:
-				if item.stackable:
-					item.quantity = max(0, item.quantity - quantity)
-					if item.quantity == 0:
-						materals.erase(item)
+		for i in materals.size():
+			if materals[i] != null and materals[i].id == item_id:
+				if materals[i].stackable:
+					materals[i].count = max(0, materals[i].count - count)
+					if materals[i].count == 0:
+						materals[i] = null
 				else:
-					materals.erase(item)
+					materals[i] = null
 				return true
 		return false
-	
-	# 获取物品数量
+
+	func _find_first_empty_slot(arr: Array) -> int:
+		for i in arr.size():
+			if arr[i] == null:
+				return i
+		return -1
+
 	func get_item_count(item_type: String) -> int:
 		match item_type:
 			"consume":
@@ -121,44 +130,33 @@ class BagInfo:
 				return equipment.size()
 			"materals":
 				return materals.size()
-			_:
-				return 0
-	
-	# 清空背包
+		return 0
+
+	func get_item_count_by_id(item_id: String) -> int:
+		for item in consume:
+			if item != null and item.id == item_id:
+				return item.count
+		for item in equipment:
+			if item != null and item.id == item_id:
+				return 1
+		for item in materals:
+			if item != null and item.id == item_id:
+				return item.count
+		return 0
+
 	func clear() -> void:
 		consume.clear()
 		equipment.clear()
 		materals.clear()
-	
-	# 检查物品是否存在
+
 	func has_item(item_id: String) -> bool:
-		# 检查消耗品
 		for item in consume:
-			if item.id == item_id:
+			if item != null and item.id == item_id:
 				return true
-		# 检查装备
 		for item in equipment:
-			if item.id == item_id:
+			if item != null and item.id == item_id:
 				return true
-		# 检查材料
 		for item in materals:
-			if item.id == item_id:
+			if item != null and item.id == item_id:
 				return true
 		return false
-	
-	# 根据ID获取物品数量
-	func get_item_count_by_id(item_id: String) -> int:
-		# 检查消耗品
-		for item in consume:
-			if item.id == item_id:
-				return 1
-		# 检查装备
-		for item in equipment:
-			if item.id == item_id:
-				return 1
-		# 检查材料
-		for item in materals:
-			if item.id == item_id:
-				return 1
-		return 0
-	

@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://dgrpbh1xi5hsq"]
+
+[ext_resource type="Script" uid="uid://dnfwrarvjlhqk" path="res://Game/Scripts/drop_item.gd" id="1_dropitem"]
+[ext_resource type="Texture2D" uid="uid://bg17lfn73cpe8" path="res://Assets/Items/items.png" id="2_item_tex"]
+[ext_resource type="Resource" uid="uid://bhxdn6l5g5erw" path="res://Resources/item_db.tres" id="2_r356l"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_drop"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pickup"]
+radius = 50.0
+
+[node name="DropItem" type="Area2D" unique_id=123]
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_dropitem")
+item_database = ExtResource("2_r356l")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=316810594]
+texture = ExtResource("2_item_tex")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="Label" type="Label" parent="." unique_id=307085494]
+offset_left = -18.0
+offset_top = -9.0
+offset_right = 22.0
+offset_bottom = 14.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=79656843]
+shape = SubResource("CircleShape2D_drop")
+
+[node name="PickUpArea" type="Area2D" parent="." unique_id=998072290]
+collision_layer = 0
+collision_mask = 2
+
+[node name="PickUpCollision" type="CollisionShape2D" parent="PickUpArea" unique_id=1116499554]
+shape = SubResource("CircleShape2D_pickup")

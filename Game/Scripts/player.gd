@@ -69,14 +69,20 @@ func setCurrentHealthValue(value: int):
 func _unhandled_input(_event: InputEvent) -> void:
 	inputDirection = Input.get_vector("left", "right", "up", "down")
 	facingDirection = GetDirectionName()
-	
-	# 技能使用输入
+
 	if _event.is_action_pressed("skill_1"):
 		useSkill("basic_attack")
 	elif _event.is_action_pressed("skill_2"):
 		useSkill("fire_ball")
 	elif _event.is_action_pressed("skill_3"):
 		useSkill("heal")
+	elif _event.is_action_pressed("interact"):
+		try_pick_up_item()
+
+func try_pick_up_item() -> void:
+	var nearest_item = DropItem.get_nearest_drop_item(global_position, 100.0)
+	if nearest_item and nearest_item.can_be_picked_up():
+		nearest_item.pick_up_by(self)
 
 
 func _physics_process(_delta: float) -> void:
