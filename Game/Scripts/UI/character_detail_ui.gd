@@ -50,6 +50,7 @@ signal equipment_changed(slot_name: String, item_data: ItemData.ItemInfo, old_it
 
 
 var _current_character: GameData.CharacterInfo = null
+var _current_character_node: BaseCharacter = null
 
 
 # Called when the node enters the scene tree for the first time.
@@ -141,10 +142,8 @@ func _get_slot_node_from_type(slot_type: EquipmentSlotNode.EquipmentSlotType) ->
 
 
 func _refresh_character_weapon():
-	if _current_character and _current_character.inParty and _current_character.name == "Player":
-		var player = get_tree().root.get_node("SceneRoot/Level/Player")
-		if player and player.has_method("refresh_equipment"):
-			player.refresh_equipment()
+	print("[CharacterDetailUI] _refresh_character_weapon: _current_character=", _current_character.name if _current_character else "null")
+	_current_character_node.refresh_equipment()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -152,7 +151,9 @@ func _process(delta: float) -> void:
 	pass
 
 
-func update(d: GameData.CharacterInfo):
+func update(val: BaseCharacter):
+	_current_character_node = val
+	var d = val.data
 	_current_character = d
 	texture_rect_character.texture = load("res://Assets/Animation/Characters/{name}/{name}_full.png".format({ "name": d.name }))
 	label_character_name.text = d.name

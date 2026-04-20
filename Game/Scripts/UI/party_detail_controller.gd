@@ -23,7 +23,7 @@ func _set_active_member(item_node: PartyItemNode):
 	item_node.setActive(true)
 	var data = item_node.data
 	# 更新面板
-	character_detail_ui.update(data)
+	character_detail_ui.update(item_node.character)
 	
 	await load_bag_items(data)
 	active_party_item = item_node

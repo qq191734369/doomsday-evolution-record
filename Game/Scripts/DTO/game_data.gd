@@ -391,6 +391,7 @@ var player: CharacterInfo = CharacterInfo.new({
 	},
 	"equipment": {
 		"weapon": {
+			"id": "gun",
 			"weapon_type": 2,
 			"name": "Gun",
 			"damage": 50,
@@ -418,6 +419,7 @@ var npcDictionary: Dictionary[String, CharacterInfo] = {
 		"position": Vector2(720.0, 373.0),
 		"equipment": {
 			"weapon": {
+				"id": "gun",
 				"weapon_type": 2,
 				"name": "Gun",
 				"damage": 50,

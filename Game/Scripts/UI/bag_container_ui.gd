@@ -197,10 +197,11 @@ func _update_equipment_slots():
 		detail_ui.update_data_panel(current_character_data)
 
 func _refresh_character_weapon(character_data: GameData.CharacterInfo):
-	if character_data.inParty and character_data.name == "Player":
-		var player = get_tree().root.get_node("SceneRoot/Level/Player")
-		if player and player.has_method("refresh_equipment"):
-			player.refresh_equipment()
+	if not character_detail_ui:
+		return
+	var character_node = character_detail_ui._current_character_node
+	if character_node and character_node.has_method("refresh_equipment"):
+		character_node.refresh_equipment()
 	
 
 func _get_equipment_slot(item_data: ItemData.ItemInfo) -> String:

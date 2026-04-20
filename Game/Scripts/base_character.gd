@@ -176,13 +176,17 @@ func initEquipment():
 		weapon.holder = self
 
 func refresh_equipment():
+	print("[BaseCharacter] refresh_equipment: character=", data.name if data else "null")
 	if not data or not data.equipment:
+		print("[BaseCharacter] refresh_equipment: no data or equipment")
 		return
 	if data.equipment.weapon:
+		print("[BaseCharacter] refresh_equipment: weapon=", data.equipment.weapon.name, " type=", data.equipment.weapon.weapon_type)
 		slot_weapon.visible = true
 		weapon.updateData(data.equipment.weapon)
 		weapon.holder = self
 	else:
+		print("[BaseCharacter] refresh_equipment: no weapon equipped")
 		slot_weapon.visible = false
 	
 

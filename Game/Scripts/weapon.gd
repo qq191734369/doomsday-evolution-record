@@ -40,7 +40,7 @@ func _process(delta: float) -> void:
 func updateWeaponTexture():
 	if not data:
 		return
-	var res = load("res://Assets/Animation/Weapon/" + data.name + '.png')
+	var res = TextureManager.get_texture(data.id)
 	
 	if not res:
 		return
@@ -51,13 +51,11 @@ func updateWeaponTexture():
 # # 攻击方法
 func attack() -> void:
 	if not data:
+		print("[Weapon] attack: no data")
 		return
-	
-	# 检查武器是否可用
-	if not data.is_usable():
-		print("武器损坏，无法使用")
-		return
-	
+
+	print("[Weapon] attack: weapon_type=", data.weapon_type if "weapon_type" in data else "unknown")
+
 	# 检查攻击冷却
 	var current_timestamp = Time.get_unix_time_from_system()
 	

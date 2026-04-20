@@ -14,6 +14,7 @@ signal item_dropped_on_character(target_character: GameData.CharacterInfo, item_
 signal clicked(party_item: PartyItemNode)
 
 var data: GameData.CharacterInfo
+var character: BaseCharacter
 
 func _ready():
 	setup_child_mouse_filters(self)
@@ -47,6 +48,7 @@ func setup_child_mouse_filters(node: Node):
 		setup_child_mouse_filters(child)
 
 func init(data: BaseCharacter):
+	character = data
 	self.data = data.data
 	update(data)
 	
