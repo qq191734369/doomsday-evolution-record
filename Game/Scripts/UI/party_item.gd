@@ -2,6 +2,8 @@ extends NinePatchRect
 
 class_name PartyItemNode
 
+signal item_dropped_on_character(target_character: GameData.CharacterInfo, item_data: ItemData.ItemInfo, from_bag_index: int)
+
 @onready var label_name: Label = $NinePatchRect_Content/Label_Name
 @onready var level_value: Label = $NinePatchRect_Content/Label_Level/Level_Value
 @onready var progress_bar_heallth: ProgressBar = $NinePatchRect_Content/ProgressBar_Heallth
@@ -9,14 +11,32 @@ class_name PartyItemNode
 @onready var avartar: AvartarNode = $NinePatchRect_AvartarBg
 @onready var active: Label = $Active
 
-# 信号，当点击时发出
 signal clicked(party_item: PartyItemNode)
 
 var data: GameData.CharacterInfo
 
 func _ready():
-	# 设置所有子元素的鼠标过滤器为忽略，这样点击会穿透到父元素
 	setup_child_mouse_filters(self)
+
+
+func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
+	if not data is Dictionary:
+		return false
+	if not data.has("item_data") or not data.has("from_bag"):
+		return false
+	return data.get("item_data") != null
+
+
+func _drop_data(_pos: Vector2, data: Variant) -> void:
+	if not data is Dictionary:
+		return
+	if not data.has("item_data") or not data.has("from_bag"):
+		return
+	var item_data: ItemData.ItemInfo = data.get("item_data")
+	var from_bag_index: int = data.get("from_bag_index", -1)
+	if not item_data or not self.data:
+		return
+	item_dropped_on_character.emit(self.data, item_data, from_bag_index)
 
 func setup_child_mouse_filters(node: Node):
 	# 递归设置所有子元素的鼠标过滤器

@@ -54,25 +54,54 @@ func _on_gui_input(event: InputEvent):
 	if not _data:
 		return
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.pressed:
-				_start_drag()
-			else:
-				_end_drag()
-		elif event.button_index == MOUSE_BUTTON_RIGHT:
+		if event.button_index == MOUSE_BUTTON_RIGHT:
 			if event.pressed:
 				_show_action_menu()
 
-func _start_drag():
-	if is_dragging or not _data:
+func _get_drag_data(_pos: Vector2) -> Variant:
+	if not _data:
+		return false
+	var drag_data = {
+		"item_data": _data,
+		"from_bag": true,
+		"from_bag_index": slot_index,
+		"from_slot": self
+	}
+	var preview = TextureRect.new()
+	preview.texture = texture_rect_item_view.texture
+	if not preview.texture:
+		var label = Label.new()
+		label.text = _data.name
+		preview.add_child(label)
+	preview.size = Vector2(48, 48)
+	var control = Control.new()
+	control.add_child(preview)
+	preview.position = -preview.size / 2
+	set_drag_preview(control)
+	return drag_data
+
+
+func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
+	if not data is Dictionary:
+		return false
+	if not data.has("item_data"):
+		return false
+	return true
+
+
+func _drop_data(_pos: Vector2, data: Variant) -> void:
+	if not data is Dictionary:
 		return
-	is_dragging = true
-	ghost.texture = texture_rect_item_view.texture
-	if not ghost.texture:
-		label_fallback_ghost.text = _data.name
-	ghost.modulate = Color(1, 1, 1, 0.5)
-	ghost.visible = true
-	drag_started.emit(self)
+	if not data.has("item_data"):
+		return
+	var item_data: ItemData.ItemInfo = data.get("item_data")
+	var from_bag_index: int = data.get("from_bag_index", -1)
+	if not item_data:
+		return
+	item_dropped.emit(item_data, slot_index, from_bag_index)
+
+
+signal item_dropped(item_data: ItemData.ItemInfo, to_slot_index: int, from_slot_index: int)
 
 func _end_drag():
 	if not is_dragging:

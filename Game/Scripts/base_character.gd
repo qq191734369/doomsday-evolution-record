@@ -174,6 +174,16 @@ func initEquipment():
 		slot_weapon.visible = true
 		weapon.updateData(data.equipment.weapon)
 		weapon.holder = self
+
+func refresh_equipment():
+	if not data or not data.equipment:
+		return
+	if data.equipment.weapon:
+		slot_weapon.visible = true
+		weapon.updateData(data.equipment.weapon)
+		weapon.holder = self
+	else:
+		slot_weapon.visible = false
 	
 
 func setData(d: GameData.CharacterInfo):

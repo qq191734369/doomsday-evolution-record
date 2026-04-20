@@ -60,6 +60,24 @@ class EquipmentInfo extends ItemData.ItemInfo:
 		super(data)
 		is_equipment = true
 
+	func generate_modifiers() -> Array[SkillData.Modifier]:
+		var modifiers: Array[SkillData.Modifier] = []
+		for config in _get_modifier_configs():
+			var value = config.get("value", 0)
+			if value > 0:
+				modifiers.append(SkillData.Modifier.new({
+					"id": "%s_%s" % [id, config.get("id", config.get("attribute"))],
+					"attribute": config.get("attribute", ""),
+					"type": config.get("type", SkillData.ModifierType.FLAT),
+					"value": value,
+					"source": "equipment",
+					"source_id": id
+				}))
+		return modifiers
+
+	func _get_modifier_configs() -> Array[Dictionary]:
+		return []
+
 class HelmetInfo extends EquipmentInfo:
 	var defense: int = 5
 	var magic_resist: int = 2
@@ -71,6 +89,13 @@ class HelmetInfo extends EquipmentInfo:
 		defense = data.get("defense", defense)
 		magic_resist = data.get("magic_resist", magic_resist)
 		health_bonus = data.get("health_bonus", health_bonus)
+
+	func _get_modifier_configs() -> Array[Dictionary]:
+		return [
+			{"attribute": "defense", "value": defense, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "magic_resist", "value": magic_resist, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "max_health", "value": health_bonus, "type": SkillData.ModifierType.FLAT}
+		]
 
 class PauldronsInfo extends EquipmentInfo:
 	var defense: int = 3
@@ -84,6 +109,13 @@ class PauldronsInfo extends EquipmentInfo:
 		magic_resist = data.get("magic_resist", magic_resist)
 		move_speed_bonus = data.get("move_speed_bonus", move_speed_bonus)
 
+	func _get_modifier_configs() -> Array[Dictionary]:
+		return [
+			{"attribute": "defense", "value": defense, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "magic_resist", "value": magic_resist, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "speed", "value": move_speed_bonus, "type": SkillData.ModifierType.PERCENTAGE}
+		]
+
 class ChestplateInfo extends EquipmentInfo:
 	var defense: int = 10
 	var magic_resist: int = 3
@@ -96,6 +128,13 @@ class ChestplateInfo extends EquipmentInfo:
 		magic_resist = data.get("magic_resist", magic_resist)
 		health_bonus = data.get("health_bonus", health_bonus)
 
+	func _get_modifier_configs() -> Array[Dictionary]:
+		return [
+			{"attribute": "defense", "value": defense, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "magic_resist", "value": magic_resist, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "max_health", "value": health_bonus, "type": SkillData.ModifierType.FLAT}
+		]
+
 class GreavesInfo extends EquipmentInfo:
 	var defense: int = 6
 	var magic_resist: int = 2
@@ -107,6 +146,13 @@ class GreavesInfo extends EquipmentInfo:
 		defense = data.get("defense", defense)
 		magic_resist = data.get("magic_resist", magic_resist)
 		move_speed_bonus = data.get("move_speed_bonus", move_speed_bonus)
+
+	func _get_modifier_configs() -> Array[Dictionary]:
+		return [
+			{"attribute": "defense", "value": defense, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "magic_resist", "value": magic_resist, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "speed", "value": move_speed_bonus, "type": SkillData.ModifierType.PERCENTAGE}
+		]
 
 class BeltInfo extends EquipmentInfo:
 	var defense: int = 2
@@ -122,6 +168,14 @@ class BeltInfo extends EquipmentInfo:
 		health_bonus = data.get("health_bonus", health_bonus)
 		mana_bonus = data.get("mana_bonus", mana_bonus)
 
+	func _get_modifier_configs() -> Array[Dictionary]:
+		return [
+			{"attribute": "defense", "value": defense, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "magic_resist", "value": magic_resist, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "max_health", "value": health_bonus, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "max_mana", "value": mana_bonus, "type": SkillData.ModifierType.FLAT}
+		]
+
 class NecklaceInfo extends EquipmentInfo:
 	var magic_resist: int = 5
 	var health_bonus: int = 15
@@ -135,6 +189,13 @@ class NecklaceInfo extends EquipmentInfo:
 		health_bonus = data.get("health_bonus", health_bonus)
 		mana_bonus = data.get("mana_bonus", mana_bonus)
 		luck_bonus = data.get("luck_bonus", luck_bonus)
+
+	func _get_modifier_configs() -> Array[Dictionary]:
+		return [
+			{"attribute": "magic_resist", "value": magic_resist, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "max_health", "value": health_bonus, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "max_mana", "value": mana_bonus, "type": SkillData.ModifierType.FLAT}
+		]
 
 class RingInfo extends EquipmentInfo:
 	var damage_bonus: float = 0.0
@@ -151,3 +212,12 @@ class RingInfo extends EquipmentInfo:
 		health_bonus = data.get("health_bonus", health_bonus)
 		mana_bonus = data.get("mana_bonus", mana_bonus)
 		crit_rate_bonus = data.get("crit_rate_bonus", crit_rate_bonus)
+
+	func _get_modifier_configs() -> Array[Dictionary]:
+		return [
+			{"attribute": "attack_damage", "value": damage_bonus, "type": SkillData.ModifierType.PERCENTAGE},
+			{"attribute": "attack_speed", "value": attack_speed_bonus, "type": SkillData.ModifierType.PERCENTAGE},
+			{"attribute": "max_health", "value": health_bonus, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "max_mana", "value": mana_bonus, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "crit_rate", "value": crit_rate_bonus, "type": SkillData.ModifierType.FLAT}
+		]

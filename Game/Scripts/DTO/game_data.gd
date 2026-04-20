@@ -36,7 +36,7 @@ class CharacterInfo:
 	var bag: BagData.BagInfo
 	var equipment: Equipment
 	var skills: Array = []
-	var modifiers: Array = []
+	var modifiers: Array[SkillData.Modifier] = []
 	var currentState: String = "Idle"
 	var	inParty: bool = false
 	var	dialogueId: String
@@ -67,23 +67,60 @@ class CharacterInfo:
 		var equip_data = data.get("equipment")
 		equipment = Equipment.new(equip_data if equip_data != null else {})
 		skills = data.get("skills", [])
-		modifiers = data.get("modifiers", [])
-		# 初始化背包
-		bag = BagData.BagInfo.new(data.get("bag", {}))
-		# 初始化战斗属性
+		var raw_modifiers = data.get("modifiers", [])
+		if raw_modifiers is Array:
+			for m in raw_modifiers:
+				if m is SkillData.Modifier:
+					modifiers.append(m)
+				elif m is Dictionary:
+					modifiers.append(SkillData.Modifier.new(m))
 		battle_attributes["defense"] = data.get("defense", 0)
 		battle_attributes["magic_resist"] = data.get("magic_resist", 0)
 		battle_attributes["evasion"] = data.get("evasion", 0.0)
 		battle_attributes["crit_rate"] = data.get("crit_rate", 0.0)
 		battle_attributes["crit_damage"] = data.get("crit_damage", 0.0)
+		bag = BagData.BagInfo.new(data.get("bag", {}))
+		sync_equipment_modifiers()
+
+	# 装备变化时的回调，子类可重写
+	func on_equipment_changed():
+		sync_equipment_modifiers()
+
+	# 使用消耗品时的回调，子类可重写
+	func on_consume_item(item_data: ItemData.ItemInfo):
+		pass
 
 	# 添加修饰符
-	func add_modifier(modifier: Dictionary):
+	func add_modifier(modifier: SkillData.Modifier):
 		modifiers.append(modifier)
 
-	# 移除修饰符
-	func remove_modifier(modifier_id: String):
-		modifiers = modifiers.filter(func(m): return m.id != modifier_id)
+	# 批量添加修饰符
+	func add_modifiers(new_modifiers: Array[SkillData.Modifier]):
+		modifiers.append_array(new_modifiers)
+
+	# 移除指定来源的修饰符
+	func remove_modifiers_by_source(source: String, source_id: String = ""):
+		modifiers = modifiers.filter(func(m): return not (m.source == source and (source_id == "" or m.source_id == source_id)))
+
+	# 同步装备修饰符
+	func sync_equipment_modifiers():
+		remove_modifiers_by_source("equipment")
+		remove_modifiers_by_source("weapon")
+		if equipment:
+			var all_equipment = [
+				equipment.weapon,
+				equipment.helmet,
+				equipment.pauldrons,
+				equipment.chestplate,
+				equipment.greaves,
+				equipment.belt,
+				equipment.necklace,
+				equipment.ring,
+				equipment.ring2
+			]
+			for equip in all_equipment:
+				if equip and equip.has_method("generate_modifiers"):
+					add_modifiers(equip.generate_modifiers())
 
 	# 获取属性值
 	func get_attribute(attribute_name: String) -> float:
@@ -153,6 +190,41 @@ class CharacterInfo:
 
 	func get_crit_damage() -> float:
 		return get_battle_attribute("crit_damage")
+
+	func equip(slot: String, item: ItemData.ItemInfo) -> ItemData.ItemInfo:
+		if not equipment:
+			return null
+		var old_item: ItemData.ItemInfo = null
+		match slot:
+			"weapon":
+				old_item = equipment.weapon
+				equipment.weapon = item as WeaponData.WeaponInfo
+			"helmet":
+				old_item = equipment.helmet
+				equipment.helmet = item as EquipmentData.HelmetInfo
+			"pauldrons":
+				old_item = equipment.pauldrons
+				equipment.pauldrons = item as EquipmentData.PauldronsInfo
+			"chestplate":
+				old_item = equipment.chestplate
+				equipment.chestplate = item as EquipmentData.ChestplateInfo
+			"greaves":
+				old_item = equipment.greaves
+				equipment.greaves = item as EquipmentData.GreavesInfo
+			"belt":
+				old_item = equipment.belt
+				equipment.belt = item as EquipmentData.BeltInfo
+			"necklace":
+				old_item = equipment.necklace
+				equipment.necklace = item as EquipmentData.NecklaceInfo
+			"ring1":
+				old_item = equipment.ring
+				equipment.ring = item as EquipmentData.RingInfo
+			"ring2":
+				old_item = equipment.ring2
+				equipment.ring2 = item as EquipmentData.RingInfo
+		on_equipment_changed()
+		return old_item
 
 class Equipment:
 	var weapon: WeaponData.WeaponInfo

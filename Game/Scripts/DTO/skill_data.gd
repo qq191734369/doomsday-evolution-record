@@ -26,6 +26,35 @@ enum ModifierType {
 	FLAT        # 固定值加成
 }
 
+class Modifier:
+	var id: String
+	var attribute: String
+	var type: ModifierType
+	var value: float
+	var source: String
+	var source_id: String
+
+	func _init(data: Dictionary = {}) -> void:
+		id = data.get("id", "")
+		attribute = data.get("attribute", "")
+		type = data.get("type", ModifierType.FLAT)
+		value = data.get("value", 0.0)
+		source = data.get("source", "")
+		source_id = data.get("source_id", "")
+
+	func _to_dict() -> Dictionary:
+		return {
+			"id": id,
+			"attribute": attribute,
+			"type": type,
+			"value": value,
+			"source": source,
+			"source_id": source_id
+		}
+
+	static func from_dict(data: Dictionary) -> Modifier:
+		return Modifier.new(data)
+
 # 技能基类
 class SkillInfo:
 	var id: String = ""

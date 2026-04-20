@@ -114,8 +114,7 @@ func init_slot(bag_data: Array, character_data = null):
 		grid_container.add_child(bag_slot)
 		slots.append(bag_slot)
 		bag_slot.slot_index = i
-		bag_slot.drag_started.connect(_on_slot_drag_started)
-		bag_slot.drag_ended.connect(_on_slot_drag_ended)
+		bag_slot.item_dropped.connect(_on_slot_item_dropped)
 		bag_slot.item_right_clicked.connect(_on_slot_item_right_clicked)
 
 	await _waitDone()
@@ -129,23 +128,21 @@ func _update_slots():
 		else:
 			slot.clear()
 
-func _on_slot_drag_started(slot: BagItemSlot):
-	dragging_slot = slot
-
-func _on_slot_drag_ended(from_slot: BagItemSlot):
-	if not dragging_slot:
+func set_bag_slot(index: int, item: ItemData.ItemInfo):
+	if index < 0 or index >= current_bag_data.size():
 		return
-	var target_slot = _get_slot_under_mouse()
-	if target_slot and target_slot != dragging_slot:
-		_swap_slots(dragging_slot, target_slot)
+	current_bag_data[index] = item
+	_update_slots()
+
+func _on_slot_item_dropped(item_data: ItemData.ItemInfo, to_slot_index: int, from_slot_index: int):
+	print("[BagContainer] _on_slot_item_dropped: item=", item_data.name, " from=", from_slot_index, " to=", to_slot_index)
+	if from_slot_index == to_slot_index:
+		return
+	if item_data.stackable and item_data.count > 1:
+		_merge_stack(item_data, from_slot_index, to_slot_index)
 	else:
-		var target_party_item = _get_party_item_under_mouse()
-		if target_party_item:
-			var item_data = dragging_slot.data
-			var from_idx = dragging_slot.slot_index
-			if item_data and current_character_data:
-				drag_to_character.emit(current_character_data, target_party_item.data, item_data, from_idx)
-	dragging_slot = null
+		_swap_slots_by_index(from_slot_index, to_slot_index)
+	_update_slots()
 
 func _on_slot_item_right_clicked(item_data: ItemData.ItemInfo, slot_index: int):
 	var has_empty_slot = _has_empty_slot()
@@ -196,54 +193,53 @@ func _update_equipment_slots():
 	if not detail_ui:
 		return
 	detail_ui.update_equipment_slots(current_character_data.equipment if current_character_data else null)
+	if current_character_data:
+		detail_ui.update_data_panel(current_character_data)
+
+func _refresh_character_weapon(character_data: GameData.CharacterInfo):
+	if character_data.inParty and character_data.name == "Player":
+		var player = get_tree().root.get_node("SceneRoot/Level/Player")
+		if player and player.has_method("refresh_equipment"):
+			player.refresh_equipment()
 	
+
+func _get_equipment_slot(item_data: ItemData.ItemInfo) -> String:
+	if item_data is WeaponData.WeaponInfo:
+		return "weapon"
+	if item_data is EquipmentData.EquipmentInfo:
+		match item_data.armor_type:
+			EquipmentData.ArmorType.HELMET:
+				return "helmet"
+			EquipmentData.ArmorType.PAULDRONS:
+				return "pauldrons"
+			EquipmentData.ArmorType.CHESTPLATE:
+				return "chestplate"
+			EquipmentData.ArmorType.GREAVES:
+				return "greaves"
+			EquipmentData.ArmorType.BELT:
+				return "belt"
+		match item_data.accessory_type:
+			EquipmentData.AccessoryType.NECKLACE:
+				return "necklace"
+			EquipmentData.AccessoryType.RING:
+				return "ring1"
+	return ""
 
 func _equip_item(item_data: ItemData.ItemInfo, slot_index: int):
 	if not current_character_data:
 		return
 	print("装备物品: " + item_data.name)
 
-	var char_equip = current_character_data.equipment
-	if not char_equip:
-		char_equip = GameData.Equipment.new({})
-		current_character_data.equipment = char_equip
+	var slot = _get_equipment_slot(item_data)
+	if slot == "":
+		return
 
-	var old_equipment: ItemData.ItemInfo = null
-
-	if item_data is WeaponData.WeaponInfo:
-		old_equipment = char_equip.weapon
-		char_equip.weapon = item_data
-	elif item_data is EquipmentData.EquipmentInfo:
-		match item_data.armor_type:
-			EquipmentData.ArmorType.HELMET:
-				old_equipment = char_equip.helmet
-				char_equip.helmet = item_data
-			EquipmentData.ArmorType.PAULDRONS:
-				old_equipment = char_equip.pauldrons
-				char_equip.pauldrons = item_data
-			EquipmentData.ArmorType.CHESTPLATE:
-				old_equipment = char_equip.chestplate
-				char_equip.chestplate = item_data
-			EquipmentData.ArmorType.GREAVES:
-				old_equipment = char_equip.greaves
-				char_equip.greaves = item_data
-			EquipmentData.ArmorType.BELT:
-				old_equipment = char_equip.belt
-				char_equip.belt = item_data
-		match item_data.accessory_type:
-			EquipmentData.AccessoryType.NECKLACE:
-				old_equipment = char_equip.necklace
-				char_equip.necklace = item_data
-			EquipmentData.AccessoryType.RING:
-				if not char_equip.ring:
-					char_equip.ring = item_data
-				else:
-					old_equipment = char_equip.ring2
-					char_equip.ring2 = item_data
-
+	var old_equipment = current_character_data.equip(slot, item_data)
 	current_bag_data[slot_index] = old_equipment
 	_update_slots()
 	_update_equipment_slots()
+	if item_data is WeaponData.WeaponInfo:
+		_refresh_character_weapon(current_character_data)
 
 func _show_split_dialog(item_data: ItemData.ItemInfo, slot_index: int):
 	split_dialog.setup_dialog(item_data, slot_index)
@@ -327,32 +323,23 @@ func _get_slot_under_mouse() -> BagItemSlot:
 			return slot
 	return null
 
-func _swap_slots(from_slot: BagItemSlot, to_slot: BagItemSlot):
-	var from_idx = from_slot.slot_index
-	var to_idx = to_slot.slot_index
-	var from_data = from_slot.data
-	var to_data = to_slot.data
-
-	if from_data != null and to_data != null and from_data.id == to_data.id and from_data.stackable:
-		var total_count = from_data.count + to_data.count
-		var max_stack = from_data.max_stack if from_data.max_stack > 0 else 99
+func _merge_stack(item_data: ItemData.ItemInfo, from_idx: int, to_idx: int):
+	var to_item = current_bag_data[to_idx]
+	if to_item and to_item.id == item_data.id:
+		var total_count = item_data.count + to_item.count
+		var max_stack = item_data.max_stack if item_data.max_stack > 0 else 99
 		if total_count <= max_stack:
-			to_data.count = total_count
-			from_slot.data = null
-			to_slot.data = to_data
+			to_item.count = total_count
 			current_bag_data[from_idx] = null
-			current_bag_data[to_idx] = to_data
 		else:
-			to_data.count = max_stack
-			from_data.count = total_count - max_stack
-			from_slot.data = from_data
-			to_slot.data = to_data
-			current_bag_data[from_idx] = from_data
-			current_bag_data[to_idx] = to_data
+			to_item.count = max_stack
+			item_data.count = total_count - max_stack
+			current_bag_data[from_idx] = item_data
 	else:
-		from_slot.data = to_data
-		to_slot.data = from_data
-		current_bag_data[from_idx] = to_data
-		current_bag_data[to_idx] = from_data
+		_swap_slots_by_index(from_idx, to_idx)
 
-	item_swapped.emit(from_idx, to_idx)
+func _swap_slots_by_index(from_idx: int, to_idx: int):
+	var from_data = current_bag_data[from_idx]
+	var to_data = current_bag_data[to_idx]
+	current_bag_data[from_idx] = to_data
+	current_bag_data[to_idx] = from_data

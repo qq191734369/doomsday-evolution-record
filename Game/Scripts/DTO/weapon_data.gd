@@ -36,6 +36,27 @@ class WeaponInfo extends EquipmentData.EquipmentInfo:
 	func get_effects() -> Array[Dictionary]:
 		return effects
 
+	func _get_modifier_configs() -> Array[Dictionary]:
+		return [
+			{"attribute": "attack_damage", "value": damage, "type": SkillData.ModifierType.FLAT},
+			{"attribute": "attack_speed", "value": attack_speed, "type": SkillData.ModifierType.FLAT}
+		]
+
+	func generate_modifiers() -> Array[SkillData.Modifier]:
+		var modifiers: Array[SkillData.Modifier] = []
+		for config in _get_modifier_configs():
+			var value = config.get("value", 0)
+			if value > 0:
+				modifiers.append(SkillData.Modifier.new({
+					"id": "%s_%s" % [id, config.get("attribute", "")],
+					"attribute": config.get("attribute", ""),
+					"type": config.get("type", SkillData.ModifierType.FLAT),
+					"value": value,
+					"source": "weapon",
+					"source_id": id
+				}))
+		return modifiers
+
 # 近战武器类
 class MeleeWeaponInfo extends WeaponInfo:
 	var swing_range: float = 1.5
@@ -51,6 +72,12 @@ class MeleeWeaponInfo extends WeaponInfo:
 		blunt_damage = data.get("blunt_damage", blunt_damage)
 		slash_damage = data.get("slash_damage", slash_damage)
 
+	func _get_modifier_configs() -> Array[Dictionary]:
+		var configs = super()
+		configs.append({"attribute": "blunt_damage", "value": blunt_damage, "type": SkillData.ModifierType.FLAT})
+		configs.append({"attribute": "slash_damage", "value": slash_damage, "type": SkillData.ModifierType.FLAT})
+		return configs
+
 # 远程武器类
 class RangedWeaponInfo extends WeaponInfo:
 	var ammo_type: String = ""
@@ -64,11 +91,9 @@ class RangedWeaponInfo extends WeaponInfo:
 		ammo_capacity = data.get("ammo_capacity", ammo_capacity)
 		current_ammo = data.get("current_ammo", current_ammo)
 
-	# 检查是否有弹药
 	func has_ammo() -> bool:
 		return current_ammo > 0
 
-	# 装弹
 	func reload(amount: int = -1) -> void:
 		if amount == -1:
 			current_ammo = ammo_capacity

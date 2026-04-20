@@ -36,10 +36,23 @@ func load_bag_items(character_data: GameData.CharacterInfo) -> void:
 		bag_container.tab_changed.disconnect(_on_tab_changed)
 	if bag_container.drag_to_character.is_connected(_on_drag_to_character):
 		bag_container.drag_to_character.disconnect(_on_drag_to_character)
+	if character_detail_ui.equipment_changed.is_connected(_on_equipment_changed):
+		character_detail_ui.equipment_changed.disconnect(_on_equipment_changed)
 	bag_container.tab_changed.connect(_on_tab_changed)
 	bag_container.drag_to_character.connect(_on_drag_to_character)
+	character_detail_ui.equipment_changed.connect(_on_equipment_changed)
 	bag_container.party_item_list = v_box_container_party_list
 	await bag_container.init_slot(_get_current_bag_data(), active_character_data)
+
+
+func _on_equipment_changed(slot_name: String, item_data: ItemData.ItemInfo, old_item: ItemData.ItemInfo, from_bag_index: int):
+	print("[PartyDetailController] _on_equipment_changed: slot_name=", slot_name, " item=", item_data.name if item_data else "null", " old_item=", old_item.name if old_item else "null", " from_bag_index=", from_bag_index)
+	if not active_character_data:
+		print("[PartyDetailController] _on_equipment_changed: active_character_data is null")
+		return
+	if bag_container.current_tab == BagContainerNode.BagTab.EQUIPMENT:
+		print("[PartyDetailController] _on_equipment_changed: setting bag slot ", from_bag_index, " to old_item")
+		bag_container.set_bag_slot(from_bag_index, old_item)
 
 func _get_current_bag_data() -> Array:
 	match bag_container.current_tab:
@@ -111,6 +124,7 @@ func show_party_panel() -> PartyDetailController:
 		item_node.clicked.connect(func(party_item):
 			await on_party_item_clicked(party_item)
 		)
+		item_node.item_dropped_on_character.connect(_on_party_item_dropped)
 		
 		if idx == 0:
 			await _set_active_member(item_node)
@@ -118,6 +132,24 @@ func show_party_panel() -> PartyDetailController:
 	visible = true
 	
 	return self
+
+
+func _on_party_item_dropped(target_character: GameData.CharacterInfo, item_data: ItemData.ItemInfo, from_bag_index: int):
+	print("[PartyDetailController] _on_party_item_dropped: target=", target_character.name if target_character else "null", " item=", item_data.name if item_data else "null", " from_bag_index=", from_bag_index)
+	if not active_character_data:
+		return
+	var tab_type = bag_container._get_tab_type_name()
+	_ensure_character_bag_size(target_character)
+	var source_bag = _get_character_bag(active_character_data, tab_type)
+	var target_bag = _get_character_bag(target_character, tab_type)
+	var first_empty_idx = target_bag.find(null)
+	if first_empty_idx == -1:
+		print("[PartyDetailController] _on_party_item_dropped: target bag is full")
+		return
+	target_bag[first_empty_idx] = item_data
+	source_bag[from_bag_index] = null
+	_update_bag_ui()
+	print("[PartyDetailController] _on_party_item_dropped: success")
 
 
 func on_party_item_clicked(item_node: PartyItemNode):
