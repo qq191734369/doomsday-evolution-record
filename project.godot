@@ -25,6 +25,8 @@ DataManager="*uid://bvdr7y48jnr0"
 EquipmentManager="*uid://b032ocxbqg83x"
 BagManager="*uid://bkgpspinuexwk"
 DropManager="*uid://bnrmrj5sbhi58"
+TextureManager="*res://Game/Scripts/texture_manager.gd"
+LoadingManager="*res://Game/Scripts/loading_manager.gd"
 
 [display]
 

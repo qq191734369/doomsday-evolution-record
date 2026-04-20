@@ -10,6 +10,7 @@ signal item_right_clicked(item_data: ItemData.ItemInfo, slot_index: int)
 @onready var label_stack_num: Label = $Label_StackNum
 @onready var ghost: TextureRect = $Ghost
 @onready var label_fallback: Label = $Label_Fallback
+@onready var label_fallback_ghost: Label = $Ghost/Label_Fallback_Ghost
 
 @export var item_database: ItemDatabase
 
@@ -67,6 +68,8 @@ func _start_drag():
 		return
 	is_dragging = true
 	ghost.texture = texture_rect_item_view.texture
+	if not ghost.texture:
+		label_fallback_ghost.text = _data.name
 	ghost.modulate = Color(1, 1, 1, 0.5)
 	ghost.visible = true
 	drag_started.emit(self)
@@ -76,6 +79,7 @@ func _end_drag():
 		return
 	is_dragging = false
 	ghost.visible = false
+	label_fallback_ghost.text = ""
 	drag_ended.emit(self)
 
 func _process(_delta: float):

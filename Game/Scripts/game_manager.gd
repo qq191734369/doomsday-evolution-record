@@ -9,6 +9,7 @@ var game_ui_instance: CanvasLayer
 var game_ui_manager: GameUI
 
 func _ready() -> void:
+	LoadingManager.start_loading()
 	create_game_ui()
 
 func create_game_ui():
