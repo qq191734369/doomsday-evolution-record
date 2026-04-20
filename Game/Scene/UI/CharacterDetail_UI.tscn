@@ -5,6 +5,11 @@
 [ext_resource type="Texture2D" uid="uid://q31t3ls06bed" path="res://Assets/Animation/Characters/Player/Player_full.png" id="2_yiie1"]
 [ext_resource type="Texture2D" uid="uid://cv75nmas4b8ei" path="res://Assets/UI/Status/title_bg.png" id="3_5mnhb"]
 [ext_resource type="PackedScene" uid="uid://cydpms6kk2gpf" path="res://Game/Scene/UI/EquipmentSlot.tscn" id="4_yiie1"]
+[ext_resource type="PackedScene" uid="uid://dkt1h2lwk0nvf" path="res://Game/Scene/UI/Key_Value_UI.tscn" id="6_xu7sh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xu7sh"]
+font_size = 20
+font_color = Color(0, 0, 0, 1)
 
 [node name="Panel_CharacterDetail" type="Panel" unique_id=1338032165]
 anchors_preset = -1
@@ -189,3 +194,156 @@ offset_right = 105.035
 offset_bottom = 349.0
 des = "戒2"
 slot_type = 8
+
+[node name="NinePatchRect_DataContainer" type="NinePatchRect" parent="." unique_id=1643409970]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.693
+anchor_right = 0.9710001
+anchor_bottom = 0.98300004
+
+[node name="KeyValue_ATK" parent="NinePatchRect_DataContainer" unique_id=1301221155 instance=ExtResource("6_xu7sh")]
+layout_mode = 0
+offset_left = 23.685974
+offset_top = 16.678955
+offset_right = 177.37195
+offset_bottom = 55.35791
+key = "攻击:"
+value = "123"
+settings = SubResource("LabelSettings_xu7sh")
+
+[node name="KeyValue_Defense" parent="NinePatchRect_DataContainer" unique_id=937857709 instance=ExtResource("6_xu7sh")]
+layout_mode = 0
+offset_left = 23.685974
+offset_top = 46.678955
+offset_right = 177.37195
+offset_bottom = 85.35791
+key = "防御:"
+value = "123"
+settings = SubResource("LabelSettings_xu7sh")
+
+[node name="KeyValue_Speed" parent="NinePatchRect_DataContainer" unique_id=73546604 instance=ExtResource("6_xu7sh")]
+layout_mode = 0
+offset_left = 23.685974
+offset_top = 76.678955
+offset_right = 177.37195
+offset_bottom = 115.35791
+key = "速度:"
+value = "123"
+settings = SubResource("LabelSettings_xu7sh")
+
+[node name="KeyValue_EVA" parent="NinePatchRect_DataContainer" unique_id=1743481127 instance=ExtResource("6_xu7sh")]
+layout_mode = 0
+offset_left = 23.685974
+offset_top = 108.678955
+offset_right = 177.37195
+offset_bottom = 147.35791
+key = "闪避:"
+value = "123"
+settings = SubResource("LabelSettings_xu7sh")
+
+[node name="KeyValue_Health" parent="NinePatchRect_DataContainer" unique_id=888350281 instance=ExtResource("6_xu7sh")]
+layout_mode = 0
+offset_left = 23.685974
+offset_top = 138.67896
+offset_right = 177.37195
+offset_bottom = 177.35791
+key = "HP :"
+value = "123"
+settings = SubResource("LabelSettings_xu7sh")
+
+[node name="KeyValue_Mana" parent="NinePatchRect_DataContainer" unique_id=1402539693 instance=ExtResource("6_xu7sh")]
+layout_mode = 0
+offset_left = 23.685974
+offset_top = 171.67896
+offset_right = 177.37195
+offset_bottom = 210.35791
+key = "MP :"
+value = "123"
+settings = SubResource("LabelSettings_xu7sh")
+
+[node name="KeyValue_CRIT" parent="NinePatchRect_DataContainer" unique_id=1089704481 instance=ExtResource("6_xu7sh")]
+layout_mode = 0
+offset_left = 167.68597
+offset_top = 16.678955
+offset_right = 321.37195
+offset_bottom = 55.35791
+key = "暴击:"
+value = "123"
+settings = SubResource("LabelSettings_xu7sh")
+
+[node name="KeyValue_CRITD" parent="NinePatchRect_DataContainer" unique_id=1846750603 instance=ExtResource("6_xu7sh")]
+layout_mode = 0
+offset_left = 167.68597
+offset_top = 46.678955
+offset_right = 321.37195
+offset_bottom = 85.35791
+key = "爆伤:"
+value = "123"
+settings = SubResource("LabelSettings_xu7sh")
+
+[node name="KeyValue_MR" parent="NinePatchRect_DataContainer" unique_id=572674026 instance=ExtResource("6_xu7sh")]
+layout_mode = 0
+offset_left = 167.68597
+offset_top = 76.678955
+offset_right = 321.37195
+offset_bottom = 115.35791
+key = "魔抗:"
+value = "123"
+settings = SubResource("LabelSettings_xu7sh")
+
+[node name="KeyValue_STR" parent="NinePatchRect_DataContainer" unique_id=1905930483 instance=ExtResource("6_xu7sh")]
+layout_mode = 0
+offset_left = 325.68597
+offset_top = 16.678955
+offset_right = 479.37195
+offset_bottom = 55.35791
+key = "力量 :"
+value = "200"
+settings = SubResource("LabelSettings_xu7sh")
+max_value = 999
+
+[node name="KeyValue_INT" parent="NinePatchRect_DataContainer" unique_id=622259105 instance=ExtResource("6_xu7sh")]
+layout_mode = 0
+offset_left = 325.68597
+offset_top = 52.678955
+offset_right = 479.37195
+offset_bottom = 91.35791
+key = "智力 :"
+value = "200"
+settings = SubResource("LabelSettings_xu7sh")
+max_value = 999
+
+[node name="KeyValue_AGI" parent="NinePatchRect_DataContainer" unique_id=1111488556 instance=ExtResource("6_xu7sh")]
+layout_mode = 0
+offset_left = 325.68597
+offset_top = 91.678955
+offset_right = 479.37195
+offset_bottom = 130.35791
+key = "敏捷 :"
+value = "200"
+settings = SubResource("LabelSettings_xu7sh")
+max_value = 999
+
+[node name="KeyValue_VIT" parent="NinePatchRect_DataContainer" unique_id=1647217337 instance=ExtResource("6_xu7sh")]
+layout_mode = 0
+offset_left = 325.68597
+offset_top = 129.67896
+offset_right = 479.37195
+offset_bottom = 168.35791
+key = "体质 :"
+value = "200"
+settings = SubResource("LabelSettings_xu7sh")
+max_value = 999
+
+[node name="KeyValue_SPI" parent="NinePatchRect_DataContainer" unique_id=973806036 instance=ExtResource("6_xu7sh")]
+layout_mode = 0
+offset_left = 325.68597
+offset_top = 165.67896
+offset_right = 479.37195
+offset_bottom = 204.35791
+key = "精神 :"
+value = "200"
+settings = SubResource("LabelSettings_xu7sh")
+max_value = 999

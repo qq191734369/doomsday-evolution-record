@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://dkt1h2lwk0nvf"]
+
+[ext_resource type="Script" uid="uid://2hhamf467bf4" path="res://Game/Scripts/UI/key_value_ui.gd" id="1_yyuw2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_yyuw2"]
+font_size = 20
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yyuw2"]
+bg_color = Color(0, 0, 0, 0.36078432)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_grtub"]
+bg_color = Color(0, 0.7280953, 0.060340263, 1)
+
+[sub_resource type="Theme" id="Theme_nj5mq"]
+ProgressBar/styles/background = SubResource("StyleBoxFlat_yyuw2")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_grtub")
+
+[node name="KeyValue" type="HBoxContainer" unique_id=1301221155]
+offset_right = 153.68597
+offset_bottom = 38.678955
+script = ExtResource("1_yyuw2")
+settings = SubResource("LabelSettings_yyuw2")
+
+[node name="Label_Key" type="Label" parent="." unique_id=2057055200]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "key:"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Label_Value" type="Label" parent="." unique_id=1719527794]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.25
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "123123"
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="Label_Value" unique_id=1304266397]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.79600006
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 3.7339954
+offset_right = -1.0
+offset_bottom = -0.018001556
+theme = SubResource("Theme_nj5mq")
+value = 46.0
+show_percentage = false

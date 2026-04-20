@@ -2,6 +2,7 @@ extends Panel
 
 class_name CharacterDetailUI
 
+# 装备栏
 @onready var texture_rect_character: TextureRect = $TextureRect_Character
 @onready var label_character_name: Label = $TextureRect_Name/Label_CharacterName
 @onready var equipment_slot_weapon: EquipmentSlotNode = $NinePatchRect_EquipmentContainer/EquipmentSlot_Weapon
@@ -13,6 +14,24 @@ class_name CharacterDetailUI
 @onready var equipment_slot_necklace: EquipmentSlotNode = $NinePatchRect_EquipmentContainer/EquipmentSlot_Necklace
 @onready var equipment_slot_ring_1: EquipmentSlotNode = $NinePatchRect_EquipmentContainer/EquipmentSlot_Ring1
 @onready var equipment_slot_ring_2: EquipmentSlotNode = $NinePatchRect_EquipmentContainer/EquipmentSlot_Ring2
+
+
+# 数据栏
+@onready var key_value_atk: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_ATK
+@onready var key_value_defense: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_Defense
+@onready var key_value_speed: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_Speed
+@onready var key_value_eva: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_EVA
+@onready var key_value_health: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_Health
+@onready var key_value_mana: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_Mana
+@onready var key_value_crit: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_CRIT
+@onready var key_value_critd: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_CRITD
+@onready var key_value_mr: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_MR
+@onready var key_value_str: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_STR
+@onready var key_value_int: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_INT
+@onready var key_value_agi: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_AGI
+@onready var key_value_vit: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_VIT
+@onready var key_value_spi: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_SPI
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
