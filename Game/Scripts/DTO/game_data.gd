@@ -9,8 +9,23 @@ class CharacterInfo:
 		"max_health": 100,
 		"attack_damage": 50,
 		"speed": 200,
-		"max_mana": 100
+		"max_mana": 100,
+		"strength": 10,      # 力量
+		"intelligence": 10, # 智力
+		"agility": 10,       # 敏捷
+		"vitality": 10,      # 体质
+		"spirit": 10         # 精神
 	}
+	# 战斗属性（受装备影响）
+	var battle_attributes = {
+		"defense": 0,           # 防御力
+		"magic_resist": 0,      # 魔法防御
+		"evasion": 0.0,         # 闪避率
+		"crit_rate": 0.0,       # 暴击率
+		"crit_damage": 0.0      # 爆伤
+	}
+	const MAX_ATTRIBUTE_VALUE = 9999
+
 	var id: String # 角色id，全局唯一
 	var currentHealth: int = 100
 	var currentMana: int = 100
@@ -39,6 +54,11 @@ class CharacterInfo:
 		currentMana = data.get("currentMana", 100)
 		base_attributes["attack_damage"] = data.get("attackDamage", 20)
 		base_attributes["speed"] = data.get("speed", 200)
+		base_attributes["strength"] = data.get("strength", 10)
+		base_attributes["intelligence"] = data.get("intelligence", 10)
+		base_attributes["agility"] = data.get("agility", 10)
+		base_attributes["vitality"] = data.get("vitality", 10)
+		base_attributes["spirit"] = data.get("spirit", 10)
 		position = data.get("position", Vector2.ZERO)
 		name = data.get("name", "Player")
 		scene = data.get("scene", "")
@@ -50,7 +70,13 @@ class CharacterInfo:
 		modifiers = data.get("modifiers", [])
 		# 初始化背包
 		bag = BagData.BagInfo.new(data.get("bag", {}))
-		
+		# 初始化战斗属性
+		battle_attributes["defense"] = data.get("defense", 0)
+		battle_attributes["magic_resist"] = data.get("magic_resist", 0)
+		battle_attributes["evasion"] = data.get("evasion", 0.0)
+		battle_attributes["crit_rate"] = data.get("crit_rate", 0.0)
+		battle_attributes["crit_damage"] = data.get("crit_damage", 0.0)
+
 	# 添加修饰符
 	func add_modifier(modifier: Dictionary):
 		modifiers.append(modifier)
@@ -62,7 +88,6 @@ class CharacterInfo:
 	# 获取属性值
 	func get_attribute(attribute_name: String) -> float:
 		var base_value = base_attributes.get(attribute_name, 0)
-		
 		# 应用修饰符（包括装备修饰符）
 		for modifier in modifiers:
 			if modifier.attribute == attribute_name:
@@ -70,8 +95,21 @@ class CharacterInfo:
 					base_value *= (1 + modifier.value)
 				elif modifier.type == SkillData.ModifierType.FLAT:
 					base_value += modifier.value
-		
+		# 检查最大值限制
+		if attribute_name in ["strength", "intelligence", "agility", "vitality", "spirit"]:
+			base_value = mini(base_value, MAX_ATTRIBUTE_VALUE)
 		return base_value
+
+	# 获取战斗属性值
+	func get_battle_attribute(attribute_name: String) -> float:
+		var value = battle_attributes.get(attribute_name, 0)
+		for modifier in modifiers:
+			if modifier.attribute == attribute_name:
+				if modifier.type == SkillData.ModifierType.PERCENTAGE:
+					value *= (1 + modifier.value)
+				elif modifier.type == SkillData.ModifierType.FLAT:
+					value += modifier.value
+		return value
 
 	# 便捷的属性获取方法
 	func get_max_health() -> int:
@@ -85,6 +123,36 @@ class CharacterInfo:
 
 	func get_max_mana() -> int:
 		return int(get_attribute("max_mana"))
+
+	func get_strength() -> int:
+		return int(get_attribute("strength"))
+
+	func get_intelligence() -> int:
+		return int(get_attribute("intelligence"))
+
+	func get_agility() -> int:
+		return int(get_attribute("agility"))
+
+	func get_vitality() -> int:
+		return int(get_attribute("vitality"))
+
+	func get_spirit() -> int:
+		return int(get_attribute("spirit"))
+
+	func get_defense() -> float:
+		return get_battle_attribute("defense")
+
+	func get_magic_resist() -> float:
+		return get_battle_attribute("magic_resist")
+
+	func get_evasion() -> float:
+		return get_battle_attribute("evasion")
+
+	func get_crit_rate() -> float:
+		return get_battle_attribute("crit_rate")
+
+	func get_crit_damage() -> float:
+		return get_battle_attribute("crit_damage")
 
 class Equipment:
 	var weapon: WeaponData.WeaponInfo

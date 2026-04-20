@@ -17,19 +17,33 @@ class_name CharacterDetailUI
 
 
 # 数据栏
+# 攻击力
 @onready var key_value_atk: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_ATK
+# 防御
 @onready var key_value_defense: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_Defense
+# 速度
 @onready var key_value_speed: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_Speed
+# 闪避
 @onready var key_value_eva: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_EVA
+# HP
 @onready var key_value_health: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_Health
+# MP
 @onready var key_value_mana: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_Mana
+# 暴击率
 @onready var key_value_crit: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_CRIT
+# 暴击伤害
 @onready var key_value_critd: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_CRITD
+# 魔法防御
 @onready var key_value_mr: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_MR
+# 力量
 @onready var key_value_str: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_STR
+# 智力
 @onready var key_value_int: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_INT
+# 敏捷
 @onready var key_value_agi: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_AGI
+# 体质
 @onready var key_value_vit: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_VIT
+# 精神
 @onready var key_value_spi: KeyValueNode = $NinePatchRect_DataContainer/KeyValue_SPI
 
 

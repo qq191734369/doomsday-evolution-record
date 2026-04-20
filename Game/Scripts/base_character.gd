@@ -89,6 +89,76 @@ var speed:
 			return 0
 		return _data.get_speed()
 
+# 力量属性
+var strength:
+	get:
+		if not _data:
+			return 0
+		return _data.get_strength()
+
+# 智力属性
+var intelligence:
+	get:
+		if not _data:
+			return 0
+		return _data.get_intelligence()
+
+# 敏捷属性
+var agility:
+	get:
+		if not _data:
+			return 0
+		return _data.get_agility()
+
+# 体质属性
+var vitality:
+	get:
+		if not _data:
+			return 0
+		return _data.get_vitality()
+
+# 精神属性
+var spirit:
+	get:
+		if not _data:
+			return 0
+		return _data.get_spirit()
+
+# 防御力属性
+var defense:
+	get:
+		if not _data:
+			return 0.0
+		return _data.get_defense()
+
+# 魔法防御属性
+var magic_resist:
+	get:
+		if not _data:
+			return 0.0
+		return _data.get_magic_resist()
+
+# 闪避率属性
+var evasion:
+	get:
+		if not _data:
+			return 0.0
+		return _data.get_evasion()
+
+# 暴击率属性
+var crit_rate:
+	get:
+		if not _data:
+			return 0.0
+		return _data.get_crit_rate()
+
+# 爆伤属性
+var crit_damage:
+	get:
+		if not _data:
+			return 0.0
+		return _data.get_crit_damage()
+
 func _ready() -> void:
 	initEquipment()
 	initSkills()
