@@ -58,7 +58,12 @@ func update(_delta: float) -> void:
 		npc.state_machine.switchTo("Run")
 
 func attackWithWeapon():
-	# 使用武器攻击
+	if not npc.weapon:
+		return
+	var current_time = Time.get_ticks_msec() / 1000.0
+	if current_time - npc.weapon.last_attack_time < npc.weapon.attack_cooldown:
+		return
+	npc.weapon.last_attack_time = current_time
 	npc.attack()
 	
 	# 玩家在移动时 只跟玩家走

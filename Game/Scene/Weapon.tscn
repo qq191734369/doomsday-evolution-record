@@ -1,11 +1,22 @@
 [gd_scene format=3 uid="uid://bv0bvm46gcguh"]
 
 [ext_resource type="Script" uid="uid://bop6727ic877e" path="res://Game/Scripts/weapon.gd" id="1_p20so"]
-[ext_resource type="Texture2D" uid="uid://bcds3s3he6afv" path="res://Assets/Animation/Weapon/Gun.png" id="2_5w1k5"]
+[ext_resource type="Texture2D" uid="uid://dyxesjbmqe0ox" path="res://Assets/Items/gun.png" id="2_5w1k5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5w1k5"]
+size = Vector2(34, 20)
 
 [node name="Weapon" type="Node2D" unique_id=396455914]
 script = ExtResource("1_p20so")
 
-[node name="Sprite2D_Weapon" type="Sprite2D" parent="." unique_id=272114601]
+[node name="Area2D" type="Area2D" parent="." unique_id=78336936]
+collision_layer = 0
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1041669321]
+position = Vector2(17, 0)
+shape = SubResource("RectangleShape2D_5w1k5")
+
+[node name="Sprite2D_Weapon" type="Sprite2D" parent="Area2D" unique_id=272114601]
 texture = ExtResource("2_5w1k5")
 offset = Vector2(7, -2)

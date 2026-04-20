@@ -172,8 +172,8 @@ func initEquipment():
 	if data.equipment.weapon:
 		print("初始化武器:character:{0}, weapon: {1}, type: {2}".format([data.name, data.equipment.weapon.name, data.equipment.weapon.type]))
 		slot_weapon.visible = true
-		weapon.updateData(data.equipment.weapon)
 		weapon.holder = self
+		weapon.updateData(data.equipment.weapon)
 
 func refresh_equipment():
 	print("[BaseCharacter] refresh_equipment: character=", data.name if data else "null")
@@ -183,8 +183,8 @@ func refresh_equipment():
 	if data.equipment.weapon:
 		print("[BaseCharacter] refresh_equipment: weapon=", data.equipment.weapon.name, " type=", data.equipment.weapon.weapon_type)
 		slot_weapon.visible = true
-		weapon.updateData(data.equipment.weapon)
 		weapon.holder = self
+		weapon.updateData(data.equipment.weapon)
 	else:
 		print("[BaseCharacter] refresh_equipment: no weapon equipped")
 		slot_weapon.visible = false
@@ -390,6 +390,11 @@ func updateSkillCooldowns(delta: float):
 
 func _process(delta: float) -> void:
 	updateSkillCooldowns(delta)
+	if weapon and weapon.is_attacking and weapon._data:
+		var current_time = Time.get_ticks_msec() / 1000.0
+		if current_time - weapon.last_attack_time >= weapon.attack_cooldown:
+			weapon.last_attack_time = current_time
+			weapon.attack()
 
 func hasWeapon() -> bool:
 	return EquipmentManager.has_weapon(data)

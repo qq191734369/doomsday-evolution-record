@@ -35,9 +35,10 @@ func _process(_delta):
 		var mouse_pos = get_global_mouse_position()
 		direction = slot_pos.direction_to(mouse_pos)
 	
+	var base_angle = direction.angle()
 	weapon.position = direction * radius
-	# 计算角度（弧度），并旋转武器轴心
-	weapon.rotation = direction.angle()
+	weapon.set_base_rotation(base_angle)
+	weapon.rotation = base_angle
 	
 	if direction.x < 0:
 		weapon.sprite_2d_weapon.flip_v = true

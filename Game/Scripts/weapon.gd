@@ -2,150 +2,90 @@ extends BaseItem
 
 class_name Weapon
 
-@onready var sprite_2d_weapon: Sprite2D = $Sprite2D_Weapon
-
 # 持武器的对象
 var holder: BaseCharacter
+
+# 攻击速度相关
+var last_attack_time: float = 0.0
+var attack_cooldown: float = 0.5
+
+# 自动攻击
+var is_attacking: bool = false
+
+# 武器位置
+@onready var weapon_position: Vector2 = Vector2.ZERO
+
+# 策略
+var _strategy: WeaponStrategy
 
 # 子弹场景
 var bullet_scene: PackedScene
 
-# 攻击速度相关
-var last_attack_time: float = 0.0
-var attack_cooldown: float = 0.0
+@onready var sprite_2d_weapon: Sprite2D = $Area2D/Sprite2D_Weapon
+@onready var area_2d: Area2D = $Area2D
+@onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
 
-# 自动攻击相关
-var is_attacking: bool = false
+# 旋转相关
+var _base_rotation: float = 0.0
 
-func getData():
-	return data as WeaponData.WeaponInfo
-
-func updateData(value):
-	print("update weapon data")
-	super.updateData(value)
-	updateWeaponTexture()
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	updateWeaponTexture()
-	# 加载子弹场景
 	bullet_scene = load("res://Game/Scene/Bullet.tscn")
+	updateWeaponTexture()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	# 自动攻击逻辑
-	if is_attacking:
-		attack()
+func set_base_rotation(angle: float) -> void:
+	_base_rotation = angle
 
-func updateWeaponTexture():
-	if not data:
+func updateData(value: Variant):
+	super.updateData(value)
+	if not _data:
 		return
-	var res = TextureManager.get_texture(data.id)
-	
-	if not res:
-		return
-	
-	if sprite_2d_weapon:
-		sprite_2d_weapon.texture = res
+	updateWeaponTexture()
+	_update_strategy()
 
-# # 攻击方法
+func _update_strategy() -> void:
+	if not _data:
+		return
+	var weapon_type = _data.weapon_type if "weapon_type" in _data else WeaponData.WeaponType.MELEE
+	match weapon_type:
+		WeaponData.WeaponType.MELEE:
+			var melee_range = _data.range if "range" in _data else 80.0
+			var swing_angle = 90.0
+			if _data is WeaponData.MeleeWeaponInfo:
+				swing_angle = _data.swing_angle if "swing_angle" in _data else 90.0
+			_strategy = WeaponStrategy.MeleeWeaponStrategy.new(self, holder, swing_angle, melee_range)
+		WeaponData.WeaponType.RANGED:
+			var speed = _data.projectile_speed if "projectile_speed" in _data else 500.0
+			var range = _data.projectile_range if "projectile_range" in _data else 300.0
+			_strategy = WeaponStrategy.RangedWeaponStrategy.new(self, holder, speed, range)
+		WeaponData.WeaponType.MAGIC:
+			var mana_cost = _data.mana_cost if "mana_cost" in _data else 10
+			var effect = _data.spell_effect if "spell_effect" in _data else ""
+			_strategy = WeaponStrategy.MagicWeaponStrategy.new(self, holder, mana_cost, effect)
+		WeaponData.WeaponType.TOOL:
+			var effect = _data.tool_effect if "tool_effect" in _data else ""
+			_strategy = WeaponStrategy.ToolWeaponStrategy.new(self, holder, effect)
+		_:
+			_strategy = WeaponStrategy.MeleeWeaponStrategy.new(self, holder, 90.0, 80.0)
+	print("[Weapon] _update_strategy: type=", weapon_type, " strategy=", _strategy.get_class())
+
 func attack() -> void:
-	if not data:
+	if not _data:
 		print("[Weapon] attack: no data")
 		return
+	if _strategy:
+		_strategy.attack()
 
-	print("[Weapon] attack: weapon_type=", data.weapon_type if "weapon_type" in data else "unknown")
-
-	# 检查攻击冷却
-	var current_timestamp = Time.get_unix_time_from_system()
-	
-	# 计算冷却时间（attack_speed越大，冷却时间越短）
-	attack_cooldown = 1.0 / max(data.attack_speed, 0.1)
-	
-	# 检查是否在冷却期内
-	if current_timestamp - last_attack_time < attack_cooldown:
-		return
-	
-	# 远程武器处理
-	if data is WeaponData.RangedWeaponInfo:
-		_fire_projectile()
-	# 其他武器类型可以在这里添加处理
-	
-	# 更新最后攻击时间
-	last_attack_time = current_timestamp
-
-# 发射子弹
-func _fire_projectile():
-	# 检查是否有子弹场景
-	if not bullet_scene:
-		print("子弹场景未加载")
-		return
-	
-	# 检查是否有弹药（如果是远程武器）
-	#if data is WeaponData.RangedWeaponInfo:
-		#var ranged_data = data as WeaponData.RangedWeaponInfo
-		#if not ranged_data.has_ammo():
-			#print("弹药不足")
-			#return
-		## 消耗弹药
-		#ranged_data.current_ammo -= 1
-	
-	# 计算方向
-	var weapon_position = global_position
-	var direction = Vector2.ZERO
-	
-	# 检测持有者类型
-	if holder is Player:
-		# 玩家的武器跟随鼠标
-		var mouse_position = get_global_mouse_position()
-		direction = weapon_position.direction_to(mouse_position)
-	elif holder is NPC:
-		# NPC的武器指向攻击目标
-		if holder.current_attack_target:
-			direction = weapon_position.direction_to(holder.current_attack_target.global_position)
-		else:
-			# 默认方向：向右
-			direction = Vector2(1, 0)
-	else:
-		# 默认行为：向右
-		direction = Vector2(1, 0)
-	
-	# 创建子弹
-	var bullet = bullet_scene.instantiate()
-	
-	# 设置子弹属性
-	if bullet.has_method("set_direction"):
-		bullet.set_direction(direction)
-	
-	if bullet.has_method("set_speed"):
-		if data is WeaponData.RangedWeaponInfo:
-			bullet.set_speed((data as WeaponData.RangedWeaponInfo).projectile_speed)
-		else:
-			bullet.set_speed(500.0)  # 默认速度
-	
-	if bullet.has_method("set_damage"):
-		bullet.set_damage(data.damage)
-	
-	# 设置子弹最大距离
-	if bullet.has_method("set_max_distance"):
-		if data is WeaponData.RangedWeaponInfo:
-			bullet.set_max_distance((data as WeaponData.RangedWeaponInfo).projectile_range)
-		else:
-			bullet.set_max_distance(300.0)  # 默认距离
-	
-	# 设置子弹位置
-	bullet.global_position = weapon_position + direction * 20  # 从武器前端发射
-	
-	# 添加子弹到场景
-	get_tree().root.add_child(bullet)
-	
-	# 使用武器（减少耐久度）
-	#data.use()
-
-# 开始攻击（用于自动攻击）
 func start_attack() -> void:
 	is_attacking = true
 
-# 停止攻击（用于自动攻击）
 func stop_attack() -> void:
 	is_attacking = false
+
+func updateWeaponTexture() -> void:
+	if not _data:
+		return
+	var res = TextureManager.get_texture(_data.id)
+	if not res:
+		return
+	if sprite_2d_weapon:
+		sprite_2d_weapon.texture = res
