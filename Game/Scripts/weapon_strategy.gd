@@ -67,7 +67,7 @@ class MeleeWeaponStrategy extends WeaponStrategy:
 		tween.tween_callback(_on_swing_finished.bind(area))
 
 	func _on_swing_finished(area: Area2D) -> void:
-		if area:
+		if is_instance_valid(area):
 			area.rotation = 0.0
 			area.position = Vector2.ZERO
 
@@ -93,10 +93,12 @@ class MeleeWeaponStrategy extends WeaponStrategy:
 		if not hit_area.area_entered.is_connected(_on_hit_area_entered):
 			hit_area.area_entered.connect(_on_hit_area_entered)
 		var timer = hit_area.get_tree().create_timer(0.2)
-		timer.timeout.connect(func(): 
-			if collision_shape:
-				collision_shape.disabled = true
-		)
+		var shape_ref: CollisionShape2D = collision_shape
+		timer.timeout.connect(_disable_shape.bind(shape_ref))
+
+	func _disable_shape(shape: CollisionShape2D) -> void:
+		if is_instance_valid(shape):
+			shape.disabled = true
 
 	func _on_hit_area_entered(area: Area2D) -> void:
 		var grassNode = area as Grass
