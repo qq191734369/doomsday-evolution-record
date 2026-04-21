@@ -66,10 +66,12 @@ func attackWithWeapon():
 		# 一边攻击一边移动
 		_run_to_follow_target()
 	else :
+		npc.set_move_target(null)
+		npc.state_machine.switchTo("Idle")
 		# 计算与目标的距离
 		var distance = npc.global_position.distance_to(npc.current_attack_target.global_position)
 		# 计算何时进行走位 躲避怪物
-		var min_enemy_distance = npc.get_effective_attack_range() / 3
+		var min_enemy_distance = maxf(npc.get_effective_attack_range() / 3, 50.0)
 		
 		# 如果距离小于攻击范围的一半，执行放风筝操作
 		if distance < min_enemy_distance and not npc.is_following():

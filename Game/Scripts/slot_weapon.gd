@@ -37,7 +37,6 @@ func _process(_delta):
 	
 	var base_angle = direction.angle()
 	weapon.position = direction * radius
-	weapon.set_base_rotation(base_angle)
 	weapon.rotation = base_angle
 	
 	if direction.x < 0:

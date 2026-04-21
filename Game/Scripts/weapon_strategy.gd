@@ -47,12 +47,28 @@ class MeleeWeaponStrategy extends WeaponStrategy:
 		_start_swing(angle)
 
 	func _start_swing(base_angle: float) -> void:
-		if not weapon_node:
+		if not weapon_node or not holder:
 			return
-		var start_rot = weapon_node._base_rotation
-		_target_rotation = base_angle + deg_to_rad(swing_angle)
-		var tween = weapon_node.area_2d.create_tween()
-		tween.tween_property(weapon_node.area_2d, "rotation", _target_rotation, swing_duration).from(start_rot)
+		var is_left_side: bool = weapon_node.global_position.x < holder.global_position.x
+		var swing_rad: float = deg_to_rad(swing_angle)
+		var start_rot: float
+		var end_rot: float
+		if is_left_side:
+			start_rot = base_angle - swing_rad
+			end_rot = base_angle + swing_rad
+		else:
+			start_rot = base_angle + swing_rad
+			end_rot = base_angle - swing_rad
+		var area: Area2D = weapon_node.area_2d
+		area.rotation = start_rot
+		_target_rotation = end_rot
+		var tween = area.create_tween()
+		tween.tween_property(area, "rotation", end_rot, swing_duration)
+		tween.tween_callback(_on_swing_finished.bind(area))
+
+	func _on_swing_finished(area: Area2D) -> void:
+		if area:
+			area.rotation = 0.0
 
 	func _create_hit_area(base_angle: float) -> void:
 		var hit_area = weapon_node.area_2d

@@ -296,6 +296,7 @@ func check_return_to_player() -> bool:
 	
 	var distance_to_player = global_position.distance_to(player.global_position)
 	return distance_to_player > player_max_distance
+	
 
 func set_move_target(target_object: Variant) -> void:
 	target = target_object

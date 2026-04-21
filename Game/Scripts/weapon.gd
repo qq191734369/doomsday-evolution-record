@@ -25,15 +25,9 @@ var bullet_scene: PackedScene
 @onready var area_2d: Area2D = $Area2D
 @onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
 
-# 旋转相关
-var _base_rotation: float = 0.0
-
 func _ready() -> void:
 	bullet_scene = load("res://Game/Scene/Bullet.tscn")
 	updateWeaponTexture()
-
-func set_base_rotation(angle: float) -> void:
-	_base_rotation = angle
 
 func updateData(value: Variant):
 	super.updateData(value)

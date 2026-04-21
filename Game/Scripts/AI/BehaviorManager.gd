@@ -9,7 +9,7 @@ var current_behavior: Behavior = null
 var the_most_important_behavior: Behavior
 # 行为检测频率控制
 var behavior_check_timer: float = 0.0
-var behavior_check_interval: float = 0.1  # 每0.1秒检查一次行为
+var behavior_check_interval: float = 0.05  # 每0.1秒检查一次行为
 
 
 func _init(npc_ref: NPC):
