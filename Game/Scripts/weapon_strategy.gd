@@ -33,8 +33,15 @@ class MeleeWeaponStrategy extends WeaponStrategy:
 		if not weapon_node._data:
 			return
 		print("[MeleeWeaponStrategy] attack: holder=", holder.name, " weapon=", weapon_node._data.name, " range=", range)
-		var mouse_pos = holder.get_global_mouse_position()
-		var direction = holder.global_position.direction_to(mouse_pos)
+		var direction: Vector2
+		if holder is Player:
+			var mouse_pos = holder.get_global_mouse_position()
+			direction = holder.global_position.direction_to(mouse_pos)
+		else:
+			if holder.current_attack_target:
+				direction = holder.global_position.direction_to(holder.current_attack_target.global_position)
+			else:
+				direction = Vector2(1, 0)
 		var angle = direction.angle()
 		_create_hit_area(angle)
 		_start_swing(angle)

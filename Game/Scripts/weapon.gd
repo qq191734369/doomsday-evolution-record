@@ -72,6 +72,10 @@ func attack() -> void:
 	if not _data:
 		print("[Weapon] attack: no data")
 		return
+	var current_time = Time.get_ticks_msec() / 1000.0
+	if current_time - last_attack_time < attack_cooldown:
+		return
+	last_attack_time = current_time
 	if _strategy:
 		_strategy.attack()
 

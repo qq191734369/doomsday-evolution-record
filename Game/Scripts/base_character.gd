@@ -35,7 +35,7 @@ var isDead = false
 
 
 var _data: GameData.CharacterInfo = GameData.CharacterInfo.new({
-	"speed": 200
+	"speed": 100
 })
 
 var data: GameData.CharacterInfo:
@@ -391,13 +391,13 @@ func updateSkillCooldowns(delta: float):
 func _process(delta: float) -> void:
 	updateSkillCooldowns(delta)
 	if weapon and weapon.is_attacking and weapon._data:
-		var current_time = Time.get_ticks_msec() / 1000.0
-		if current_time - weapon.last_attack_time >= weapon.attack_cooldown:
-			weapon.last_attack_time = current_time
-			weapon.attack()
+		weapon.attack()
 
 func hasWeapon() -> bool:
 	return EquipmentManager.has_weapon(data)
+	
+func is_using_melee_weapon():
+	return EquipmentManager.is_using_melee_weapon(data)
 
 func get_effective_attack_range() -> float:
 	# 计算有效攻击范围，取NPC默认攻击范围和武器攻击范围的最大值

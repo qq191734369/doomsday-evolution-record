@@ -255,6 +255,7 @@ func is_outof_max_follow_range() -> bool:
 func is_following():
 	return follow_target.state_machine.getCurrentStateName() == "Run"
 
+
 func should_attack() -> bool:
 	if not in_party:
 		return false

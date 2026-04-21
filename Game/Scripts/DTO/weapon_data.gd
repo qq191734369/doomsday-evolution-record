@@ -18,7 +18,7 @@ class WeaponInfo extends EquipmentData.EquipmentInfo:
 	var effects: Array[Dictionary] = []
 	var animation_path: String = ""
 	var projectile_speed: float = 500.0
-	var projectile_range: float = 300
+	var projectile_range: float
 
 	func _init(data: Dictionary = {}) -> void:
 		super(data)

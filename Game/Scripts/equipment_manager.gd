@@ -112,3 +112,9 @@ func get_weapon(character_data) -> WeaponData.WeaponInfo:
 	if equipment:
 		return equipment.weapon
 	return null
+	
+func is_using_melee_weapon(character_data) -> bool:
+	var weapon = get_weapon(character_data)
+	if weapon == null:
+		return false
+	return weapon is WeaponData.MeleeWeaponInfo

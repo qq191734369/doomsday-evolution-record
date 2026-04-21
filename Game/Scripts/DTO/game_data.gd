@@ -396,7 +396,7 @@ var player: CharacterInfo = CharacterInfo.new({
 			"weapon_type": 2,
 			"name": "Gun",
 			"damage": 50,
-			"range": 200.0
+			"projectile_range": 300
 		}
 	}
 })
@@ -424,7 +424,7 @@ var npcDictionary: Dictionary[String, CharacterInfo] = {
 				"weapon_type": 2,
 				"name": "Gun",
 				"damage": 50,
-				"range": 200.0
+				"projectile_range": 300
 			}
 		}
 	})

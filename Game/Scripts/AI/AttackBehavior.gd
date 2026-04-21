@@ -57,24 +57,19 @@ func update(_delta: float) -> void:
 		npc.set_move_target(npc.current_attack_target.global_position)
 		npc.state_machine.switchTo("Run")
 
+
 func attackWithWeapon():
-	if not npc.weapon:
-		return
-	var current_time = Time.get_ticks_msec() / 1000.0
-	if current_time - npc.weapon.last_attack_time < npc.weapon.attack_cooldown:
-		return
-	npc.weapon.last_attack_time = current_time
 	npc.attack()
 	
 	# 玩家在移动时 只跟玩家走
-	if npc.is_following():
+	if npc.is_following() and not npc.is_using_melee_weapon():
 		# 一边攻击一边移动
 		_run_to_follow_target()
 	else :
 		# 计算与目标的距离
 		var distance = npc.global_position.distance_to(npc.current_attack_target.global_position)
 		# 计算何时进行走位 躲避怪物
-		var min_enemy_distance = max(npc.get_effective_attack_range() / 3, 50)
+		var min_enemy_distance = npc.get_effective_attack_range() / 3
 		
 		# 如果距离小于攻击范围的一半，执行放风筝操作
 		if distance < min_enemy_distance and not npc.is_following():
