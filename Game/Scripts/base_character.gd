@@ -27,6 +27,9 @@ var maxHealth:
 		
 var isDead = false
 
+
+const DAMAGE_NUMBER = preload("res://Game/Scene/DamageNumber.tscn")
+
 @onready var area_2d_body: Area2D = $Area2D_Body
 @onready var animaitedSprite2D: AnimatedSprite2D = $AnimatedSprite2D
 @onready var state_machine: StateMachine = $StateMachine
@@ -34,9 +37,7 @@ var isDead = false
 @onready var weapon: Weapon = $Equipment_Level/Slot_Weapon/Weapon
 
 
-var _data: GameData.CharacterInfo = GameData.CharacterInfo.new({
-	"speed": 150
-})
+var _data: GameData.CharacterInfo = GameData.CharacterInfo.new({})
 
 var data: GameData.CharacterInfo:
 	get:
@@ -475,16 +476,22 @@ func updateInvincibleEffect(newValue: bool):
 func getHit(damage: int, from: Node2D = null):
 	if isDead || isInvincible:
 		return
-	
+
 	startBlink()
 	currentHealth -= damage
-	
+	_show_damage_number(damage)
+
 	if from:
 		knockBackDirection = (global_position - from.global_position).normalized()
-	
+
 	if isDead:
 		state_machine.switchTo("Die")
 	else :
 		state_machine.switchTo("Hurt")
+
+func _show_damage_number(damage: int) -> void:
+	var dmg_node = DAMAGE_NUMBER.instantiate()
+	get_tree().current_scene.add_child(dmg_node)
+	dmg_node.initialize(damage, global_position + Vector2(0, -40))
 	
 	

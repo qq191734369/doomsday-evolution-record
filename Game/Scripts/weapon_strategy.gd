@@ -69,6 +69,7 @@ class MeleeWeaponStrategy extends WeaponStrategy:
 	func _on_swing_finished(area: Area2D) -> void:
 		if area:
 			area.rotation = 0.0
+			area.position = Vector2.ZERO
 
 	func _create_hit_area(base_angle: float) -> void:
 		var hit_area = weapon_node.area_2d
@@ -85,7 +86,7 @@ class MeleeWeaponStrategy extends WeaponStrategy:
 		hit_area.rotation = base_angle
 		#holder.add_child(hit_area)
 		#hit_area.set_as_top_level(true)
-		hit_area.global_position = holder.global_position + Vector2.from_angle(base_angle) * (range / 2)
+		#hit_area.global_position = holder.global_position + Vector2.from_angle(base_angle) * (range / 2)
 		
 		collision_shape.disabled = false
 		
@@ -98,6 +99,10 @@ class MeleeWeaponStrategy extends WeaponStrategy:
 		)
 
 	func _on_hit_area_entered(area: Area2D) -> void:
+		var grassNode = area as Grass
+		if grassNode:
+			grassNode.getCut()
+
 		var body = area.get_parent()
 		if body is EnemyCharacter and not body.isDead:
 			body.getHit(holder.attackDamage, holder)

@@ -48,6 +48,11 @@ func update(_delta: float) -> void:
 	else:
 		# 无攻击目标
 		if not npc.target:
+			if npc.current_attack_target:
+				# 走到攻击范围内
+				npc.set_move_target(npc.current_attack_target.global_position)
+				npc.state_machine.switchTo("Run")
+				return
 			npc.state_machine.switchTo("Idle")
 			return
 		# 还在攻击动画中
@@ -66,8 +71,6 @@ func attackWithWeapon():
 		# 一边攻击一边移动
 		_run_to_follow_target()
 	else :
-		npc.set_move_target(null)
-		npc.state_machine.switchTo("Idle")
 		# 计算与目标的距离
 		var distance = npc.global_position.distance_to(npc.current_attack_target.global_position)
 		# 计算何时进行走位 躲避怪物
@@ -84,9 +87,10 @@ func attackWithWeapon():
 			# 切换到奔跑状态
 			npc.state_machine.switchTo("Run")
 		else:
-			if npc.velocity == Vector2.ZERO:
-				# 正常攻击
-				npc.state_machine.switchTo("Idle")
+			npc.set_move_target(null)
+			# 正常攻击
+			npc.state_machine.switchTo("Idle")
+		
 				
 
 func end() -> void:

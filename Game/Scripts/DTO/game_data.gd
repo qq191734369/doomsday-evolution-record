@@ -329,7 +329,7 @@ var player: CharacterInfo = CharacterInfo.new({
 				"weapon_type": 1,
 				"damage": 25,
 				"attack_speed": 1.5,
-				"range": 80
+				"range": 50
 			},
 			{
 				"id": "helmet_001",
