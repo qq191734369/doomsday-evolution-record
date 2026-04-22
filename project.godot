@@ -27,6 +27,7 @@ BagManager="*uid://bkgpspinuexwk"
 DropManager="*uid://bnrmrj5sbhi58"
 TextureManager="*res://Game/Scripts/texture_manager.gd"
 LoadingManager="*res://Game/Scripts/loading_manager.gd"
+TooltipManager="*uid://cv2rmoos5spvv"
 
 [display]
 

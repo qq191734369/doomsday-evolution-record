@@ -65,6 +65,15 @@ func _ready() -> void:
 		label_description.text = _pending_des
 		_pending_des = ""
 	mouse_filter = Control.MOUSE_FILTER_STOP
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
+
+func _on_mouse_entered() -> void:
+	if _data != null:
+		TooltipManager.show_item(_data)
+
+func _on_mouse_exited() -> void:
+	TooltipManager.hide()
 
 
 func _can_drop_data(_pos: Vector2, data: Variant) -> bool:

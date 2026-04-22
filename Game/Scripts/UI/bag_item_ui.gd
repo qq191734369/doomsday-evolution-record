@@ -49,8 +49,17 @@ var is_dragging: bool = false
 func _ready():
 	ghost.visible = false
 	gui_input.connect(_on_gui_input)
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
 
-func _on_gui_input(event: InputEvent):
+func _on_mouse_entered() -> void:
+	if _data != null:
+		TooltipManager.show_item(_data)
+
+func _on_mouse_exited() -> void:
+	TooltipManager.hide()
+
+func _on_gui_input(event: InputEvent) -> void:
 	if not _data:
 		return
 	if event is InputEventMouseButton:

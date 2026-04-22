@@ -23,6 +23,15 @@ func _ready() -> void:
 	pick_up_area.body_entered.connect(_on_pick_up_area_body_entered)
 	pick_up_area.body_exited.connect(_on_pick_up_area_body_exited)
 	connect("body_entered", _on_body_entered)
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
+
+func _on_mouse_entered() -> void:
+	if item_data != null:
+		TooltipManager.show_item(item_data)
+
+func _on_mouse_exited() -> void:
+	TooltipManager.hide()
 
 func init(info: ItemData.ItemInfo, cnt: int = 1) -> void:
 	item_data = info
