@@ -19,7 +19,7 @@ func update():
 	super.update()
 	character.updateAnimation()
 
-func run_to_target(delta):
+func run_to_target(_delta):
 	var c = character as NPC
 	
 	if not c:
@@ -64,7 +64,7 @@ func run_to_target(delta):
 			c.velocity = Vector2.ZERO
 
 	
-func update_follow_state(delta: float):
+func update_follow_state(_delta: float):
 	var currentCharacter = character as NPC
 	
 	# 跟随逻辑

@@ -16,9 +16,9 @@ func _ready() -> void:
 	modulate.a = 0.0
 	print("[DamageNumber] created at ", global_position)
 
-func initialize(damage: int, position: Vector2) -> void:
+func initialize(damage: int, pos: Vector2) -> void:
 	_damage = damage
-	global_position = position
+	global_position = pos
 	_label_setup()
 	_start_animation()
 	print("[DamageNumber] initialized with damage=", damage, " at ", position)

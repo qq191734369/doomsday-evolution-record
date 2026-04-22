@@ -11,6 +11,8 @@ var playerDetectionRadius = 100 # 检测玩家范围
 var playerDirection: Vector2
 var playerAngle: float
 
+var _last_attacker: BaseCharacter = null
+
 func _init() -> void:
 	#data.speed = 100
 	pass
@@ -70,4 +72,9 @@ func _on_area_2d_body_area_entered(area: Area2D) -> void:
 		player.getHit(data.get_attack_damage(), self)
 	elif target is NPC:
 		target.getHit(data.get_attack_damage(), self)
+
+func getHit(damage: int, from: Node2D = null) -> void:
+	if from is BaseCharacter:
+		_last_attacker = from
+	super(damage, from)
 	

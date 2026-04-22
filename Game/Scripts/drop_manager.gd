@@ -36,6 +36,14 @@ func spawn_drop(enemy_pos: Vector2, drop_config: Array) -> void:
 	dropped_items_container.add_child(dropped_item)
 	dropped_item.init(item_info, count)
 	dropped_item.scatter_at_position(enemy_pos, scatter_range)
+	_emit_drop_message(item_info)
+
+func _emit_drop_message(item_info: ItemData.ItemInfo) -> void:
+	if not item_info:
+		return
+	var rarity = item_info.rarity if "rarity" in item_info else 0
+	var item_name = item_info.name if item_info.name else "物品"
+	GlobalMessageBus.emit_drop_message(item_name, rarity)
 
 func create_item_info(item_id: String) -> ItemData.ItemInfo:
 	var data = {"id": item_id, "name": item_id}

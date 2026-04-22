@@ -112,6 +112,7 @@ func add_member(member: BaseCharacter):
 	_clearInvalidMembers()
 	_add_member_to_gamedata(member.data.name)
 	_add_member_to_instance_list(member)
+	GlobalMessageBus.emit_party_change_message(member.data.name, true)
 
 func _remove_from_gamedata(member: BaseCharacter):
 	var game_data = DataManager.game_data
@@ -164,5 +165,7 @@ func _clearNpcMembersInstanceList():
 
 func remove_member(member: BaseCharacter):
 	_clearInvalidMembers()
+	var member_name = member.data.name
 	_remove_from_gamedata(member)
 	_remove_from_instance_list(member)
+	GlobalMessageBus.emit_party_change_message(member_name, false)

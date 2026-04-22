@@ -132,7 +132,7 @@ class SkillInfo:
 		particle_effect_path = data.get("particle_effect_path", particle_effect_path)
 
 	# 检查技能是否可用
-	func is_usable(character) -> bool:
+	func is_usable(_character) -> bool:
 		return true
 
 # 近战技能类
@@ -214,7 +214,7 @@ class PassiveSkillInfo extends SkillInfo:
 		trigger_condition = data.get("trigger_condition", trigger_condition)
 
 	# 被动技能总是可用的
-	func is_usable(character) -> bool:
+	func is_usable(_character) -> bool:
 		return true
 
 # 天赋技能类
@@ -261,7 +261,7 @@ class TalentSkillInfo extends SkillInfo:
 	func can_upgrade() -> bool:
 		return current_level < max_level
 
-	func is_usable(character) -> bool:
+	func is_usable(_character) -> bool:
 		return true
 
 # 技能槽位类

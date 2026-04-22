@@ -8,11 +8,10 @@ const NPC_HEALTH_BAR_SCENE = preload("res://Game/Scene/NPCHealthBar.tscn")
 @onready var control_game_over: Control = $Control_GameOver
 @onready var npc_health_container: VBoxContainer = $Control_HUD/NPCHealthContainer
 @onready var control_party_detail: PartyDetailController = $Control_PartyDetail
-
+@onready var global_message_component: GlobalMessageComponent = $GlobalMessageComponent
 
 var ui_layers: Array = []
 
-# 存储NPC血条的字典 {npc: health_bar_instance}
 var npc_health_bars: Dictionary = {}
 
 var has_active_ui_layer: bool:
@@ -24,7 +23,7 @@ func _ready() -> void:
 	control_party_detail.visible = false
 	GameManager.playerHealthUpdated_signal.connect(updateHealthProgressBar)
 	GameManager.gameover_signal.connect(showGameOverUI)
-	
+
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("show_party_ui"):
 		togglePartyPanel()

@@ -54,8 +54,3 @@ func _ready() -> void:
 			progress_bar.max_value = max_value
 			progress_bar.value = int(value)
 			
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

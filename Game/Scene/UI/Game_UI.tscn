@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bvcfs1yoj6dec" path="res://Game/Scene/UI/CharacterDetail_UI.tscn" id="7_0d7dm"]
 [ext_resource type="Texture2D" uid="uid://cv75nmas4b8ei" path="res://Assets/UI/Status/title_bg.png" id="8_0d7dm"]
 [ext_resource type="PackedScene" uid="uid://fl2na3ps4ptg" path="res://Game/Scene/UI/BagContainer_UI.tscn" id="9_vhvky"]
+[ext_resource type="PackedScene" uid="uid://qlifmqjl7vk6" path="res://Game/Scene/UI/GlobalMessageComponent.tscn" id="10_0d7dm"]
 
 [node name="Game_UI" type="CanvasLayer" unique_id=1473725006]
 script = ExtResource("1_a8peb")
@@ -43,6 +44,12 @@ offset_top = 192.0
 offset_right = 443.0
 offset_bottom = 192.0
 theme = ExtResource("3_3hvup")
+
+[node name="GlobalMessageComponent" parent="." unique_id=999900001 instance=ExtResource("10_0d7dm")]
+offset_left = 0.0
+offset_top = -253.0
+offset_right = 703.0
+offset_bottom = 0.0
 
 [node name="Control_GameOver" type="Control" parent="." unique_id=124175415]
 visible = false

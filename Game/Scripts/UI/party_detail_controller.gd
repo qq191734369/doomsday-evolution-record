@@ -88,7 +88,7 @@ func _ensure_character_bag_size(character_data: GameData.CharacterInfo):
 	while character_data.bag.materals.size() < bag_container.slot_num:
 		character_data.bag.materals.append(null)
 
-func _on_tab_changed(tab_type: String):
+func _on_tab_changed(_tab_type: String):
 	_ensure_bag_arrays_size()
 	await bag_container.init_slot(_get_current_bag_data(), active_character_data)
 

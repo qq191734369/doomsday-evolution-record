@@ -550,7 +550,7 @@ func get_effective_attack_range() -> float:
 	var effective_range = data.attack_range
 	if hasWeapon() and data.equipment.weapon:
 		effective_range = max(effective_range, data.equipment.weapon.range + 20, data.equipment.weapon.projectile_range)
-	print(effective_range)
+
 	return effective_range
 
 func attack():

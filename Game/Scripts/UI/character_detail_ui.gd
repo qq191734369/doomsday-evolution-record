@@ -146,10 +146,6 @@ func _refresh_character_weapon():
 	_current_character_node.refresh_equipment()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
 
 func update(val: BaseCharacter):
 	_current_character_node = val
