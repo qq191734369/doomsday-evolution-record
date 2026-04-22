@@ -26,5 +26,6 @@ position = Vector2(14, 503)
 to_coordinate = Vector2(1300, 401)
 
 [node name="Level" type="Node2D" parent="." unique_id=1207379172]
+y_sort_enabled = true
 
 [node name="EnemyLevel" type="Node2D" parent="Level" unique_id=91452444]

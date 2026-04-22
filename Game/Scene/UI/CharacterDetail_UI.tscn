@@ -41,7 +41,7 @@ offset_right = 166.5
 offset_bottom = 570.0
 grow_horizontal = 2
 texture = ExtResource("2_yiie1")
-expand_mode = 1
+expand_mode = 4
 stretch_mode = 4
 
 [node name="TextureRect_Name" type="TextureRect" parent="." unique_id=1370792902]

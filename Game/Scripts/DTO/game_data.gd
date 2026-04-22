@@ -427,6 +427,13 @@ var npcDictionary: Dictionary[String, CharacterInfo] = {
 				"projectile_range": 300
 			}
 		}
+	}),
+	"ZhuangFangYi": CharacterInfo.new({
+		"name": "ZhuangFangYi",
+		"speed": 200,
+		"dialogueId": "zhuangfangyi_join_start",
+		"scene": "main",
+		"position": Vector2(720.0, 300.0)
 	})
 }
 

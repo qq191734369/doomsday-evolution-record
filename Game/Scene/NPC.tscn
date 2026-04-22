@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cdcmam8w3evcf"]
 
 [ext_resource type="Script" uid="uid://cbq6o7gptxl5q" path="res://Game/Scripts/NPC/npc.gd" id="1_2qhf0"]
-[ext_resource type="SpriteFrames" uid="uid://ddlf0aimbmic5" path="res://Assets/Animation/Characters/LiMei/LiMei.tres" id="2_4fgm8"]
 [ext_resource type="Shader" uid="uid://bco0qmit4gfe8" path="res://Game/Shader/character.tres" id="2_on8fm"]
+[ext_resource type="SpriteFrames" uid="uid://belo2eburq174" path="res://Assets/Animation/Characters/ZhuangFangYi/ZhuangFangYi.tres" id="3_i2hp8"]
 [ext_resource type="Texture2D" uid="uid://fmht73ygj24i" path="res://Assets/Animation/shadow.png" id="4_y1k1p"]
 [ext_resource type="Script" uid="uid://cfxv8qect0vpa" path="res://Game/Scripts/StateMachine/state_machine.gd" id="5_2ucft"]
 [ext_resource type="Script" uid="uid://b63rs5sdxmmie" path="res://Game/Scripts/StateMachine/NPC/npc_idle.gd" id="6_0a8vs"]
@@ -44,7 +44,7 @@ material = SubResource("ShaderMaterial_ixmp6")
 instance_shader_parameters/Blink = 0.0
 instance_shader_parameters/InvincibleEffect = false
 scale = Vector2(0.4, 0.4)
-sprite_frames = ExtResource("2_4fgm8")
+sprite_frames = ExtResource("3_i2hp8")
 animation = &"attack"
 offset = Vector2(0, -80)
 
