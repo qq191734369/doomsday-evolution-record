@@ -70,12 +70,14 @@ func _unhandled_input(_event: InputEvent) -> void:
 	inputDirection = Input.get_vector("left", "right", "up", "down")
 	facingDirection = GetDirectionName()
 
-	if _event.is_action_pressed("skill_1"):
-		useSkill("basic_attack")
+	if _event.is_action_pressed("talent_skill"):
+		useTalentSkill()
+	elif _event.is_action_pressed("skill_1"):
+		useActiveSkillFromSlot(0)
 	elif _event.is_action_pressed("skill_2"):
-		useSkill("fire_ball")
+		useActiveSkillFromSlot(1)
 	elif _event.is_action_pressed("skill_3"):
-		useSkill("heal")
+		useActiveSkillFromSlot(2)
 	elif _event.is_action_pressed("interact"):
 		try_pick_up_item()
 

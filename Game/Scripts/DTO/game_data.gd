@@ -46,6 +46,10 @@ class CharacterInfo:
 	var attack_range = 50.0 # 攻击范围
 	var enemy_detection_range = 150.0 # 检测一定范围内的敌人
 	var scene: String # 当前所在场景
+	var talent_skill_id: String = ""       # 天赋技能ID
+	var talent_level: int = 1               # 天赋等级（1-6）
+	var passive_skill_ids: Array = []      # 被动技能ID列表（最多3个）
+	var active_skill_ids: Array = []       # 主动技能ID列表（最多3个）
 
 	func _init(data: Dictionary) -> void:
 		base_attributes["max_health"] = data.get("maxHealth", 200)
@@ -81,6 +85,10 @@ class CharacterInfo:
 		battle_attributes["crit_damage"] = data.get("crit_damage", 0.0)
 		bag = BagData.BagInfo.new(data.get("bag", {}))
 		sync_equipment_modifiers()
+		talent_skill_id = data.get("talent_skill_id", "")
+		talent_level = data.get("talent_level", 1)
+		passive_skill_ids = data.get("passive_skill_ids", [])
+		active_skill_ids = data.get("active_skill_ids", [])
 
 	# 装备变化时的回调，子类可重写
 	func on_equipment_changed():
@@ -99,13 +107,13 @@ class CharacterInfo:
 		modifiers.append_array(new_modifiers)
 
 	# 移除指定来源的修饰符
-	func remove_modifiers_by_source(source: String, source_id: String = ""):
+	func remove_modifiers_by_source(source: SkillData.ModifierSource, source_id: String = ""):
 		modifiers = modifiers.filter(func(m): return not (m.source == source and (source_id == "" or m.source_id == source_id)))
 
 	# 同步装备修饰符
 	func sync_equipment_modifiers():
-		remove_modifiers_by_source("equipment")
-		remove_modifiers_by_source("weapon")
+		remove_modifiers_by_source(SkillData.ModifierSource.EQUIPMENT)
+		remove_modifiers_by_source(SkillData.ModifierSource.WEAPON)
 		if equipment:
 			var all_equipment = [
 				equipment.weapon,
@@ -226,6 +234,60 @@ class CharacterInfo:
 		on_equipment_changed()
 		return old_item
 
+	func get_talent_skill() -> SkillData.TalentSkillInfo:
+		if talent_skill_id.is_empty():
+			return null
+		return SkillManager.get_talent_skill(talent_skill_id)
+
+	func can_upgrade_talent() -> bool:
+		var talent = get_talent_skill()
+		if not talent:
+			return false
+		return talent_level < talent.max_level and talent.talent_type == SkillData.TalentType.PASSIVE
+
+	func can_equip_passive_skill() -> bool:
+		return passive_skill_ids.size() < 3
+
+	func can_equip_active_skill() -> bool:
+		return active_skill_ids.size() < 3
+
+	func equip_talent_skill(talent_id: String) -> bool:
+		if talent_id.is_empty() or not SkillManager.has_talent_skill(talent_id):
+			return false
+		talent_skill_id = talent_id
+		talent_level = 1
+		return true
+
+	func equip_passive_skill(skill_id: String) -> bool:
+		if not can_equip_passive_skill() or not SkillManager.has_passive_skill(skill_id):
+			return false
+		passive_skill_ids.append(skill_id)
+		return true
+
+	func equip_active_skill(skill_id: String) -> bool:
+		if not can_equip_active_skill() or not SkillManager.has_active_skill(skill_id):
+			return false
+		active_skill_ids.append(skill_id)
+		return true
+
+	func unequip_talent_skill() -> String:
+		var old_id = talent_skill_id
+		talent_skill_id = ""
+		talent_level = 1
+		return old_id
+
+	func unequip_passive_skill(skill_id: String) -> bool:
+		if passive_skill_ids.has(skill_id):
+			passive_skill_ids.erase(skill_id)
+			return true
+		return false
+
+	func unequip_active_skill(skill_id: String) -> bool:
+		if active_skill_ids.has(skill_id):
+			active_skill_ids.erase(skill_id)
+			return true
+		return false
+
 class Equipment:
 	var weapon: WeaponData.WeaponInfo
 	var helmet: EquipmentData.HelmetInfo
@@ -310,6 +372,10 @@ var player: CharacterInfo = CharacterInfo.new({
 	"name": "Player",
 	"position": Vector2(689.0, 373.0),
 	"attackDamage": 50,
+	"talent_skill_id": "talent_strength",
+	"talent_level": 1,
+	"passive_skill_ids": ["passive_vitality"],
+	"active_skill_ids": ["basic_attack", "fire_ball", "heal"],
 	"bag": {
 		"consume": [{
 			"id": "water",
@@ -630,6 +696,10 @@ func _serialize_player() -> Dictionary:
 		"experience": player.experience,
 		"equipment": serialized_equipment,
 		"skills": player.skills,
+		"talent_skill_id": player.talent_skill_id,
+		"talent_level": player.talent_level,
+		"passive_skill_ids": player.passive_skill_ids,
+		"active_skill_ids": player.active_skill_ids,
 		"modifiers": player.modifiers,
 		"currentState": player.currentState
 	}
@@ -663,6 +733,10 @@ func _serialize_npcs() -> Dictionary:
 			"dialogueId": npc.dialogueId,
 			"equipment": serialized_equipment,
 			"skills": npc.skills,
+			"talent_skill_id": npc.talent_skill_id,
+			"talent_level": npc.talent_level,
+			"passive_skill_ids": npc.passive_skill_ids,
+			"active_skill_ids": npc.active_skill_ids,
 			"modifiers": npc.modifiers
 		}
 	return data
@@ -727,7 +801,10 @@ func _deserialize_player(data: Dictionary):
 	player.equipment = Equipment.new(equipment_data)
 	
 	player.skills = data.get("skills", [])
-	player.modifiers = data.get("modifiers", [])
+	player.talent_skill_id = data.get("talent_skill_id", "")
+	player.talent_level = data.get("talent_level", 1)
+	player.passive_skill_ids = data.get("passive_skill_ids", [])
+	player.active_skill_ids = data.get("active_skill_ids", [])
 	player.currentState = data.get("currentState", "Idle")
 
 func _deserialize_npcs(data: Dictionary):
@@ -753,7 +830,10 @@ func _deserialize_npcs(data: Dictionary):
 		npc_info.equipment = Equipment.new(equipment_data)
 		
 		npc_info.skills = npc_data.get("skills", [])
-		npc_info.modifiers = npc_data.get("modifiers", [])
+		npc_info.talent_skill_id = npc_data.get("talent_skill_id", "")
+		npc_info.talent_level = npc_data.get("talent_level", 1)
+		npc_info.passive_skill_ids = npc_data.get("passive_skill_ids", [])
+		npc_info.active_skill_ids = npc_data.get("active_skill_ids", [])
 		npcDictionary[npc_id] = npc_info
 
 func _deserialize_enemies(data: Dictionary):

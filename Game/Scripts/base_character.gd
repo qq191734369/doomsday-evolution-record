@@ -59,6 +59,7 @@ var isInvincible: bool = false
 # 技能相关
 var skills: Array = []
 var skill_cooldowns: Dictionary = {}
+var talent_level: int = 1
 
 # 法力值属性
 var currentMana:
@@ -215,60 +216,196 @@ func setCurrentManaValue(value: int):
 func initSkills():
 	if not data:
 		return
+	data.modifiers = data.modifiers.filter(func(m): return m.source != SkillData.ModifierSource.SKILL and m.source != SkillData.ModifierSource.TALENT)
 	skills = data.skills
 	skill_cooldowns.clear()
 	for skill_id in skills:
 		skill_cooldowns[skill_id] = 0.0
-		# 应用被动技能
-		var skill = SkillManager.get_skill(skill_id)
-		if skill and skill.type == SkillData.SkillType.PASSIVE:
-			applyPassiveSkill(skill)
+	initTalentSkill()
+	initPassiveSkills()
+	initActiveSkills()
 
-func applyPassiveSkill(skill):
-	if not skill or skill.type != SkillData.SkillType.PASSIVE:
+func initTalentSkill():
+	if not data or data.talent_skill_id.is_empty():
 		return
-	
-	# 被动技能效果已经通过修饰符系统应用
-	# 这里可以添加额外的逻辑，如粒子效果、动画等
-	print("应用被动技能: " + skill.name)
-	print("效果: " + skill.passive_effect + "，提升" + str(int(skill.effect_value * 100)) + "%")
+	talent_level = data.talent_level
+	var talent = SkillManager.get_talent_skill(data.talent_skill_id)
+	if not talent:
+		return
+	if talent.talent_type == SkillData.TalentType.PASSIVE:
+		applyTalentPassive(talent, talent_level)
+
+func applyTalentPassive(talent: SkillData.TalentSkillInfo, level: int):
+	var effect_value = talent.get_current_effect_value()
+	var modifier_id = talent.id + "_" + str(level)
+	var modifier = ModifierUtils.create_modifier(
+		modifier_id,
+		talent.passive_effect,
+		effect_value,
+		SkillData.ModifierType.PERCENTAGE,
+		SkillData.ModifierSource.TALENT,
+		talent.id
+	)
+	_data.add_modifier(modifier)
+	print("应用天赋被动: " + talent.name + " Lv." + str(level) + "，效果: " + talent.passive_effect + " +" + str(int(effect_value * 100)) + "%")
+
+func initPassiveSkills():
+	if not data:
+		return
+	for skill_id in data.passive_skill_ids:
+		var skill = SkillManager.get_passive_skill(skill_id)
+		if skill:
+			applyPassiveSkillEffect(skill)
+
+func initActiveSkills():
+	if not data:
+		return
+	for skill_id in data.active_skill_ids:
+		if not skill_cooldowns.has(skill_id):
+			skill_cooldowns[skill_id] = 0.0
+
+func applyPassiveSkillEffect(skill: SkillData.PassiveSkillInfo):
+	if not skill:
+		return
+	var modifier = ModifierUtils.create_modifier(
+		skill.id,
+		skill.passive_effect,
+		skill.effect_value,
+		SkillData.ModifierType.PERCENTAGE,
+		SkillData.ModifierSource.SKILL,
+		skill.id
+	)
+	data.add_modifier(modifier)
+	print("应用被动技能: " + skill.name + "，效果: " + skill.passive_effect + " +" + str(int(skill.effect_value * 100)) + "%")
+
+func removePassiveSkillEffect(skill: SkillData.PassiveSkillInfo):
+	if not skill:
+		return
+	ModifierUtils.remove_modifier_by_id(data, skill.id)
+	print("移除被动技能: " + skill.name)
 
 func learnSkill(skill_id: String):
-	if not skills.has(skill_id):
-		skills.append(skill_id)
-		skill_cooldowns[skill_id] = 0.0
-		data.skills = skills
-		# 检查是否是被动技能
+	if skills.has(skill_id):
+		return
 	var skill = SkillManager.get_skill(skill_id)
-	if skill and skill.type == SkillData.SkillType.PASSIVE:
-		# 应用被动技能修饰符
-		ModifierUtils.apply_passive_skill(data, skill_id)
-		applyPassiveSkill(skill)
+	if not skill:
+		return
+	if SkillManager.has_talent_skill(skill_id):
+		data.equip_talent_skill(skill_id)
+		skills.append(skill_id)
+	elif SkillManager.has_passive_skill(skill_id):
+		if data.equip_passive_skill(skill_id):
+			skills.append(skill_id)
+			applyPassiveSkillEffect(skill)
+	elif SkillManager.has_active_skill(skill_id):
+		if data.equip_active_skill(skill_id):
+			skills.append(skill_id)
+			skill_cooldowns[skill_id] = 0.0
+			data.skills = skills
 
 func forgetSkill(skill_id: String):
-	if skills.has(skill_id):
+	if not skills.has(skill_id):
+		return
+	var skill = SkillManager.get_skill(skill_id)
+	if not skill:
+		return
+	if SkillManager.has_talent_skill(skill_id):
+		data.unequip_talent_skill()
 		skills.erase(skill_id)
-		skill_cooldowns.erase(skill_id)
-		data.skills = skills
+	elif SkillManager.has_passive_skill(skill_id):
+		if data.unequip_passive_skill(skill_id):
+			removePassiveSkillEffect(skill)
+			skills.erase(skill_id)
+	elif SkillManager.has_active_skill(skill_id):
+		if data.unequip_active_skill(skill_id):
+			skill_cooldowns.erase(skill_id)
+			skills.erase(skill_id)
+			data.skills = skills
 
 func canUseSkill(skill_id: String) -> bool:
-	if not skills.has(skill_id):
+	if not skill_cooldowns.has(skill_id):
 		return false
-	
 	var skill = SkillManager.get_skill(skill_id)
 	if not skill:
 		return false
-	
-	# 被动技能不能主动使用
 	if skill.type == SkillData.SkillType.PASSIVE:
 		return false
-	
 	if skill_cooldowns.get(skill_id, 0.0) > 0:
 		return false
-	
 	if data.currentMana < skill.mana_cost:
 		return false
-	
+	return true
+
+func canUseTalentSkill() -> bool:
+	if not data or data.talent_skill_id.is_empty():
+		return false
+	var talent = SkillManager.get_talent_skill(data.talent_skill_id)
+	if not talent:
+		return false
+	if talent.talent_type != SkillData.TalentType.ACTIVE:
+		return false
+	if skill_cooldowns.get(data.talent_skill_id, 0.0) > 0:
+		return false
+	if data.currentMana < talent.mana_cost:
+		return false
+	return true
+
+func useTalentSkill(target = null) -> bool:
+	if not canUseTalentSkill():
+		return false
+	var talent = SkillManager.get_talent_skill(data.talent_skill_id)
+	if not talent:
+		return false
+	currentMana -= talent.mana_cost
+	skill_cooldowns[data.talent_skill_id] = talent.cooldown
+	match talent.type:
+		SkillData.SkillType.MELEE:
+			executeTalentMeleeSkill(talent, target)
+		SkillData.SkillType.BUFF:
+			executeTalentBuffSkill(talent, target)
+	return true
+
+func executeTalentMeleeSkill(talent: SkillData.TalentSkillInfo, target):
+	var damage = talent.get_current_damage()
+	var attack_count = talent.get_current_attack_count()
+	var attack_range = talent.get_current_range(talent.range)
+	for i in range(attack_count):
+		executeMeleeAttackWithDamage(damage, attack_range, talent.id)
+
+func executeTalentBuffSkill(talent: SkillData.TalentSkillInfo, target):
+	print("执行天赋增益技能: " + talent.name)
+
+func executeMeleeAttackWithDamage(damage: int, range: float, skill_id: String):
+	var area = Area2D.new()
+	var collision_shape = CollisionShape2D.new()
+	var circle_shape = CircleShape2D.new()
+	circle_shape.radius = range
+	collision_shape.shape = circle_shape
+	area.add_child(collision_shape)
+	area.global_position = global_position
+	area.monitorable = true
+	area.monitoring = true
+	area.collision_layer = 2
+	area.collision_mask = 2
+	var enemies = area.get_overlapping_bodies()
+	for enemy in enemies:
+		if enemy is EnemyCharacter:
+			enemy.getHit(damage, self)
+	area.queue_free()
+
+func upgradeTalentSkill() -> bool:
+	if not data or data.talent_skill_id.is_empty():
+		return false
+	var talent = SkillManager.get_talent_skill(data.talent_skill_id) as SkillData.TalentSkillInfo
+	if not talent or not talent.can_upgrade():
+		return false
+	if talent.talent_type != SkillData.TalentType.PASSIVE:
+		return false
+	var old_modifier_id = talent.id + "_" + str(talent_level)
+	_data.remove_modifiers_by_source(SkillData.ModifierSource.TALENT, talent.id)
+	talent_level += 1
+	data.talent_level = talent_level
+	applyTalentPassive(talent, talent_level)
 	return true
 
 func useSkill(skill_id: String, target = null):
@@ -301,6 +438,12 @@ func useSkill(skill_id: String, target = null):
 			executeUtilitySkill(skill, target)
 	
 	return true
+
+func useActiveSkillFromSlot(slot_index: int, target = null) -> bool:
+	if not data or slot_index < 0 or slot_index >= data.active_skill_ids.size():
+		return false
+	var skill_id = data.active_skill_ids[slot_index]
+	return useSkill(skill_id, target)
 
 func executeMeleeSkill(skill, target):
 	# 近战技能逻辑

@@ -70,7 +70,7 @@ class EquipmentInfo extends ItemData.ItemInfo:
 					"attribute": config.get("attribute", ""),
 					"type": config.get("type", SkillData.ModifierType.FLAT),
 					"value": value,
-					"source": "equipment",
+					"source": SkillData.ModifierSource.EQUIPMENT,
 					"source_id": id
 				}))
 		return modifiers

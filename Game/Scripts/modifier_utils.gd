@@ -1,24 +1,15 @@
 class_name ModifierUtils
 
-# 创建修饰符
-static func create_modifier(id: String, attribute: String, value: float, modifier_type: SkillData.ModifierType, source: String) -> Dictionary:
-	return {
+static func create_modifier(id: String, attribute: String, value: float, modifier_type: SkillData.ModifierType, source: SkillData.ModifierSource, source_id: String = "") -> SkillData.Modifier:
+	var data = {
 		"id": id,
 		"attribute": attribute,
 		"value": value,
-		"type": modifier_type,  # SkillData.ModifierType.PERCENTAGE or SkillData.ModifierType.FLAT
-		"source": source  # "skill", "equipment", "talent"
+		"type": modifier_type,
+		"source": source,
+		"source_id": source_id
 	}
+	return SkillData.Modifier.new(data)
 
-# 应用被动技能修饰符
-static func apply_passive_skill(character_data, skill_id: String):
-	var skill = SkillManager.get_skill(skill_id)
-	if skill and skill.type == SkillData.SkillType.PASSIVE:
-		var modifier = create_modifier(
-			skill.id,
-			skill.passive_effect,
-			skill.effect_value,
-			SkillData.ModifierType.PERCENTAGE,
-			"skill"
-		)
-		character_data.add_modifier(modifier)
+static func remove_modifier_by_id(character_data, modifier_id: String):
+	character_data.modifiers = character_data.modifiers.filter(func(m): return m.id != modifier_id)

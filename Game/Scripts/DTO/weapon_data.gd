@@ -52,7 +52,7 @@ class WeaponInfo extends EquipmentData.EquipmentInfo:
 					"attribute": config.get("attribute", ""),
 					"type": config.get("type", SkillData.ModifierType.FLAT),
 					"value": value,
-					"source": "weapon",
+					"source": SkillData.ModifierSource.WEAPON,
 					"source_id": id
 				}))
 		return modifiers

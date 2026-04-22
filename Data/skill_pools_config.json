@@ -1,0 +1,169 @@
+{
+	"talent_pool": [
+		{
+			"id": "talent_strength",
+			"name": "力量天赋",
+			"talent_type": "PASSIVE",
+			"rarity": "COMMON",
+			"passive_effect": "attack_damage",
+			"base_effect_value": 0.1,
+			"effect_value_per_level": 0.05,
+			"max_level": 6,
+			"description": "永久提升攻击力，每级+5%"
+		},
+		{
+			"id": "talent_vitality",
+			"name": "生命天赋",
+			"talent_type": "PASSIVE",
+			"rarity": "COMMON",
+			"passive_effect": "max_health",
+			"base_effect_value": 0.1,
+			"effect_value_per_level": 0.05,
+			"max_level": 6,
+			"description": "永久提升最大生命值，每级+5%"
+		},
+		{
+			"id": "talent_fire_blade",
+			"name": "火焰刀",
+			"talent_type": "ACTIVE",
+			"rarity": "RARE",
+			"skill_type": "MELEE",
+			"base_damage": 30,
+			"damage_per_level": 15,
+			"attack_count": 1,
+			"attack_count_per_level": 1,
+			"range": 80.0,
+			"range_per_level": 5.0,
+			"cooldown": 5.0,
+			"mana_cost": 20,
+			"max_level": 6,
+			"description": "挥出一道火焰刀，升级增加攻击段数和范围"
+		},
+		{
+			"id": "talent_ice_shield",
+			"name": "冰霜护盾",
+			"talent_type": "ACTIVE",
+			"rarity": "RARE",
+			"skill_type": "BUFF",
+			"buff_type": "defense",
+			"buff_value": 0.2,
+			"buff_duration": 10.0,
+			"cooldown": 15.0,
+			"mana_cost": 30,
+			"max_level": 6,
+			"description": "为自己施加冰霜护盾，升级增加防御力和持续时间"
+		}
+	],
+	"active_pool": [
+		{
+			"id": "basic_attack",
+			"name": "基础攻击",
+			"skill_type": "MELEE",
+			"rarity": "COMMON",
+			"damage": 20,
+			"cooldown": 1.0,
+			"mana_cost": 0,
+			"range": 50.0,
+			"description": "基础近战攻击"
+		},
+		{
+			"id": "fire_ball",
+			"name": "火球术",
+			"skill_type": "MAGIC",
+			"rarity": "UNCOMMON",
+			"damage": 40,
+			"cooldown": 3.0,
+			"mana_cost": 20,
+			"range": 200.0,
+			"description": "发射一个火球，造成范围伤害"
+		},
+		{
+			"id": "heal",
+			"name": "治疗术",
+			"skill_type": "HEAL",
+			"rarity": "COMMON",
+			"heal_amount": 50,
+			"cooldown": 5.0,
+			"mana_cost": 30,
+			"range": 100.0,
+			"description": "治疗自身或队友"
+		},
+		{
+			"id": "thunder_strike",
+			"name": "雷霆一击",
+			"skill_type": "MAGIC",
+			"rarity": "RARE",
+			"damage": 80,
+			"cooldown": 8.0,
+			"mana_cost": 40,
+			"range": 150.0,
+			"description": "召唤雷霆攻击敌人，造成大量魔法伤害"
+		},
+		{
+			"id": "power_strike",
+			"name": "强力打击",
+			"skill_type": "MELEE",
+			"rarity": "UNCOMMON",
+			"damage": 60,
+			"cooldown": 4.0,
+			"mana_cost": 15,
+			"range": 60.0,
+			"description": "全力一击，造成高额近战伤害"
+		},
+		{
+			"id": "quick_shot",
+			"name": "快速射击",
+			"skill_type": "RANGED",
+			"rarity": "UNCOMMON",
+			"damage": 25,
+			"cooldown": 2.0,
+			"mana_cost": 10,
+			"range": 300.0,
+			"projectile_speed": 600.0,
+			"projectile_count": 2,
+			"description": "快速射出两支箭矢"
+		}
+	],
+	"passive_pool": [
+		{
+			"id": "passive_strength",
+			"name": "力量提升",
+			"skill_type": "PASSIVE",
+			"rarity": "COMMON",
+			"passive_effect": "attack_damage",
+			"effect_value": 0.2,
+			"trigger_condition": "always",
+			"description": "永久提升20%攻击力"
+		},
+		{
+			"id": "passive_vitality",
+			"name": "生命增强",
+			"skill_type": "PASSIVE",
+			"rarity": "COMMON",
+			"passive_effect": "max_health",
+			"effect_value": 0.15,
+			"trigger_condition": "always",
+			"description": "永久提升15%最大生命值"
+		},
+		{
+			"id": "passive_speed",
+			"name": "疾风步",
+			"skill_type": "PASSIVE",
+			"rarity": "UNCOMMON",
+			"passive_effect": "speed",
+			"effect_value": 0.15,
+			"trigger_condition": "always",
+			"description": "永久提升15%移动速度"
+		},
+		{
+			"id": "passive_crit",
+			"name": "暴击精通",
+			"skill_type": "PASSIVE",
+			"rarity": "RARE",
+			"passive_effect": "crit_rate",
+			"effect_value": 0.1,
+			"trigger_condition": "always",
+			"description": "永久提升10%暴击率"
+		}
+	]
+}
