@@ -2,12 +2,13 @@ extends Control
 
 class_name GlobalMessageComponent
 
-@export var max_visible_messages: int = 5
+@export var max_visible_messages: int = GlobalMessageBus.MAX_VISIBLE_MESSAGES
 @export var message_spacing: float = 5.0
-@export var default_lifetime: float = 5.0
+@export var default_lifetime: float = GlobalMessageBus.MESSAGE_LIFETIME
 @export var fadeout_duration: float = 0.5
 
 @onready var container: VBoxContainer = $MarginContainer/ScrollContainer/VBoxContainer
+@onready var scroll_container: ScrollContainer = $MarginContainer/ScrollContainer
 
 var _active_messages: Array = []
 var _tween_map: Dictionary = {}
@@ -34,6 +35,7 @@ func _add_message_item(msg: GlobalMessageBus.Message) -> void:
 		_fade_out_and_remove(oldest)
 
 	_reposition_messages()
+	_scroll_to_bottom()
 
 func _create_message_label(msg: GlobalMessageBus.Message) -> RichTextLabel:
 	var label = RichTextLabel.new()
@@ -67,9 +69,14 @@ func _reposition_messages() -> void:
 	for i in range(_active_messages.size()):
 		var msg_item = _active_messages[i]
 		if msg_item and is_instance_valid(msg_item):
-			var target_pos = Vector2(0, i * (msg_item.get_content_height() + message_spacing))
-			var tween = create_tween()
-			tween.tween_property(msg_item, "position", target_pos, 0.2)
+			msg_item.position = Vector2(0, i * (msg_item.get_content_height() + message_spacing))
+	_scroll_to_bottom()
+
+func _scroll_to_bottom() -> void:
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if scroll_container:
+		scroll_container.scroll_vertical = scroll_container.get_v_scroll_bar().max_value
 
 func _fade_out_and_remove(item: Control) -> void:
 	if not is_instance_valid(item):

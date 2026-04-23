@@ -50,6 +50,8 @@ class CharacterInfo:
 	var talent_level: int = 1               # 天赋等级（1-6）
 	var passive_skill_ids: Array = []      # 被动技能ID列表（最多3个）
 	var active_skill_ids: Array = []       # 主动技能ID列表（最多3个）
+	var free_points: int = 0               # 自由属性点
+	var free_points_per_level: int = 5      # 每级自由属性点成长值
 
 	func _init(data: Dictionary) -> void:
 		base_attributes["max_health"] = data.get("maxHealth", 200)
@@ -89,6 +91,8 @@ class CharacterInfo:
 		talent_level = data.get("talent_level", 1)
 		passive_skill_ids = data.get("passive_skill_ids", [])
 		active_skill_ids = data.get("active_skill_ids", [])
+		free_points = data.get("free_points", 0)
+		free_points_per_level = data.get("free_points_per_level", LevelData.DEFAULT_FREE_POINTS_PER_LEVEL)
 
 	# 装备变化时的回调，子类可重写
 	func on_equipment_changed():
@@ -352,6 +356,7 @@ class EnemyInfo:
 	var position: Vector2 = Vector2.ZERO
 	var type: String = "Zombie"
 	var scene: String = ""
+	var experience: int = 50
 
 class SceneInfo:
 	var name: String = ""
@@ -700,6 +705,8 @@ func _serialize_player() -> Dictionary:
 		"talent_level": player.talent_level,
 		"passive_skill_ids": player.passive_skill_ids,
 		"active_skill_ids": player.active_skill_ids,
+		"free_points": player.free_points,
+		"free_points_per_level": player.free_points_per_level,
 		"modifiers": player.modifiers,
 		"currentState": player.currentState
 	}
@@ -728,6 +735,8 @@ func _serialize_npcs() -> Dictionary:
 			"speed": npc.base_attributes["speed"],
 			"position": [npc.position.x, npc.position.y],
 			"name": npc.name,
+			"level": npc.level,
+			"experience": npc.experience,
 			"scene": npc.scene,
 			"inParty": npc.inParty,
 			"dialogueId": npc.dialogueId,
@@ -737,6 +746,8 @@ func _serialize_npcs() -> Dictionary:
 			"talent_level": npc.talent_level,
 			"passive_skill_ids": npc.passive_skill_ids,
 			"active_skill_ids": npc.active_skill_ids,
+			"free_points": npc.free_points,
+			"free_points_per_level": npc.free_points_per_level,
 			"modifiers": npc.modifiers
 		}
 	return data
@@ -752,7 +763,8 @@ func _serialize_enemies() -> Dictionary:
 			"speed": enemy.speed,
 			"position": [enemy.position.x, enemy.position.y],
 			"type": enemy.type,
-			"scene": enemy.scene
+			"scene": enemy.scene,
+			"experience": enemy.experience
 		}
 	return data
 
@@ -805,6 +817,8 @@ func _deserialize_player(data: Dictionary):
 	player.talent_level = data.get("talent_level", 1)
 	player.passive_skill_ids = data.get("passive_skill_ids", [])
 	player.active_skill_ids = data.get("active_skill_ids", [])
+	player.free_points = data.get("free_points", 0)
+	player.free_points_per_level = data.get("free_points_per_level", LevelData.DEFAULT_FREE_POINTS_PER_LEVEL)
 	player.currentState = data.get("currentState", "Idle")
 
 func _deserialize_npcs(data: Dictionary):
@@ -821,19 +835,23 @@ func _deserialize_npcs(data: Dictionary):
 		if "position" in npc_data and npc_data["position"] is Array:
 			npc_info.position = Vector2(npc_data["position"][0], npc_data["position"][1])
 		npc_info.name = npc_data.get("name", "NPC")
+		npc_info.level = npc_data.get("level", 1)
+		npc_info.experience = npc_data.get("experience", 0)
 		npc_info.scene = npc_data.get("scene", "")
 		npc_info.inParty = npc_data.get("inParty", false)
 		npc_info.dialogueId = npc_data.get("dialogueId", "")
-		
+
 		# 反序列化装备
 		var equipment_data = npc_data.get("equipment", {})
 		npc_info.equipment = Equipment.new(equipment_data)
-		
+
 		npc_info.skills = npc_data.get("skills", [])
 		npc_info.talent_skill_id = npc_data.get("talent_skill_id", "")
 		npc_info.talent_level = npc_data.get("talent_level", 1)
 		npc_info.passive_skill_ids = npc_data.get("passive_skill_ids", [])
 		npc_info.active_skill_ids = npc_data.get("active_skill_ids", [])
+		npc_info.free_points = npc_data.get("free_points", 0)
+		npc_info.free_points_per_level = npc_data.get("free_points_per_level", LevelData.DEFAULT_FREE_POINTS_PER_LEVEL)
 		npcDictionary[npc_id] = npc_info
 
 func _deserialize_enemies(data: Dictionary):
@@ -849,6 +867,7 @@ func _deserialize_enemies(data: Dictionary):
 			enemy_info.position = Vector2(enemy_data["position"][0], enemy_data["position"][1])
 		enemy_info.type = enemy_data.get("type", "Zombie")
 		enemy_info.scene = enemy_data.get("scene", "")
+		enemy_info.experience = enemy_data.get("experience", 50)
 		enemyDictionary[enemy_id] = enemy_info
 
 func _deserialize_scenes(data: Dictionary):

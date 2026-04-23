@@ -46,10 +46,6 @@ offset_bottom = 192.0
 theme = ExtResource("3_3hvup")
 
 [node name="GlobalMessageComponent" parent="." unique_id=999900001 instance=ExtResource("10_0d7dm")]
-offset_left = 0.0
-offset_top = -253.0
-offset_right = 703.0
-offset_bottom = 0.0
 
 [node name="Control_GameOver" type="Control" parent="." unique_id=124175415]
 visible = false

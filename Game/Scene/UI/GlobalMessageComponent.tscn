@@ -4,13 +4,12 @@
 
 [node name="GlobalMessageComponent" type="Control" unique_id=999900001]
 layout_mode = 3
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = -300.0
-offset_right = 803.0
-offset_bottom = 20.0
+anchor_top = 1.005
+anchor_bottom = 1.005
+offset_left = 4.0
+offset_top = -330.40002
+offset_right = 787.0
+offset_bottom = -10.400024
 grow_vertical = 0
 script = ExtResource("1")
 

@@ -29,6 +29,7 @@ TextureManager="*res://Game/Scripts/texture_manager.gd"
 LoadingManager="*res://Game/Scripts/loading_manager.gd"
 TooltipManager="*uid://cv2rmoos5spvv"
 GlobalMessageBus="*uid://cwr3i2xtr4lk7"
+LevelSystem="*uid://bubvih8kp0gwf"
 
 [display]
 
