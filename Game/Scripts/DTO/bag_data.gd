@@ -1,34 +1,41 @@
 class_name BagData
 
 class BagInfo:
+	const DEFAULT_BAG_SIZE = 36
+
 	var consume: Array[ItemData.ConsumableItemInfo] = []
 	var equipment: Array[EquipmentData.EquipmentInfo] = []
 	var materals: Array[ItemData.MaterialItemInfo] = []
 
 	func _init(data: Dictionary = {}) -> void:
+		for i in DEFAULT_BAG_SIZE:
+			consume.append(null)
+			equipment.append(null)
+			materals.append(null)
+
 		var consume_data = data.get("consume", [])
-		for item_data in consume_data:
-			if item_data == null:
-				consume.append(null)
-			else:
-				var item = ItemData.ConsumableItemInfo.new(item_data)
-				consume.append(item)
+		for i in consume_data.size():
+			if i < DEFAULT_BAG_SIZE:
+				if consume_data[i] == null:
+					consume[i] = null
+				else:
+					consume[i] = ItemData.ConsumableItemInfo.new(consume_data[i])
 
 		var equipment_data = data.get("equipment", [])
-		for item_data in equipment_data:
-			if item_data == null:
-				equipment.append(null)
-			else:
-				var item = EquipmentData.create_equipment(item_data)
-				equipment.append(item)
+		for i in equipment_data.size():
+			if i < DEFAULT_BAG_SIZE:
+				if equipment_data[i] == null:
+					equipment[i] = null
+				else:
+					equipment[i] = EquipmentData.create_equipment(equipment_data[i])
 
 		var materals_data = data.get("materals", [])
-		for item_data in materals_data:
-			if item_data == null:
-				materals.append(null)
-			else:
-				var item = ItemData.MaterialItemInfo.new(item_data)
-				materals.append(item)
+		for i in materals_data.size():
+			if i < DEFAULT_BAG_SIZE:
+				if materals_data[i] == null:
+					materals[i] = null
+				else:
+					materals[i] = ItemData.MaterialItemInfo.new(materals_data[i])
 
 	func add_item(item: Variant, count: int = 1) -> bool:
 		if item is ItemData.ConsumableItemInfo:
