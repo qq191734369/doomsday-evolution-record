@@ -14,6 +14,7 @@ var _active_messages: Array = []
 var _tween_map: Dictionary = {}
 
 func _ready() -> void:
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if GlobalMessageBus:
 		GlobalMessageBus.message_received.connect(_on_message_received)
 	GlobalMessageBus.clear_expired_messages()
@@ -39,6 +40,7 @@ func _add_message_item(msg: GlobalMessageBus.Message) -> void:
 
 func _create_message_label(msg: GlobalMessageBus.Message) -> RichTextLabel:
 	var label = RichTextLabel.new()
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.bbcode_enabled = true
 	label.fit_content = true
 	label.scroll_active = false
