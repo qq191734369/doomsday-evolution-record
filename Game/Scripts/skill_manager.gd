@@ -13,34 +13,60 @@ func _ready() -> void:
 func _initialize():
 	var loaded = _load_skill_pools_from_config()
 	if not loaded:
-		print("[SkillManager] 配置文件加载失败，使用硬编码默认技能池")
-		_init_hardcoded_pools()
+		push_error("[SkillManager] 配置文件加载失败，技能系统将无法正常工作")
 	_config_loaded = loaded
 
 func _load_skill_pools_from_config() -> bool:
 	var config_file = FileAccess.open(CONFIG_FILE_PATH, FileAccess.READ)
 	if not config_file:
-		print("[SkillManager] 无法打开配置文件: " + CONFIG_FILE_PATH)
+		push_error("[SkillManager] 无法打开配置文件: " + CONFIG_FILE_PATH)
+		push_error("[SkillManager] 请确保文件存在且路径正确")
 		return false
 
 	var json_string = config_file.get_as_text()
 	config_file.close()
 
+	if json_string.is_empty():
+		push_error("[SkillManager] 配置文件为空: " + CONFIG_FILE_PATH)
+		return false
+
 	var json = JSON.new()
-	if json.parse(json_string) != OK:
-		print("[SkillManager] JSON解析失败")
+	var parse_result = json.parse(json_string)
+	if parse_result != OK:
+		push_error("[SkillManager] JSON解析失败: " + json.get_error_message())
+		push_error("[SkillManager] 错误位置: 行 " + str(json.get_error_line()))
 		return false
 
 	var config_data = json.get_data()
 	if not config_data is Dictionary:
-		print("[SkillManager] 配置数据格式错误")
+		push_error("[SkillManager] 配置数据格式错误，应为字典类型")
+		return false
+
+	if not config_data.has("talent_pool"):
+		push_error("[SkillManager] 配置缺少必需字段: talent_pool")
+		return false
+	if not config_data.has("active_pool"):
+		push_error("[SkillManager] 配置缺少必需字段: active_pool")
+		return false
+	if not config_data.has("passive_pool"):
+		push_error("[SkillManager] 配置缺少必需字段: passive_pool")
 		return false
 
 	_load_talent_pool_from_config(config_data.get("talent_pool", []))
 	_load_active_pool_from_config(config_data.get("active_pool", []))
 	_load_passive_pool_from_config(config_data.get("passive_pool", []))
 
+	if talent_pool.is_empty():
+		push_warning("[SkillManager] 天赋技能池为空")
+	if active_pool.is_empty():
+		push_warning("[SkillManager] 主动技能池为空")
+	if passive_pool.is_empty():
+		push_warning("[SkillManager] 被动技能池为空")
+
 	print("[SkillManager] 技能池配置加载成功")
+	print("  - 天赋技能: %d 个" % talent_pool.size())
+	print("  - 主动技能: %d 个" % active_pool.size())
+	print("  - 被动技能: %d 个" % passive_pool.size())
 	return true
 
 func _load_talent_pool_from_config(talent_list: Array) -> void:
@@ -225,203 +251,6 @@ func _parse_rarity(rarity_str: String) -> SkillData.SkillRarity:
 		"LEGENDARY": return SkillData.SkillRarity.LEGENDARY
 		_: return SkillData.SkillRarity.COMMON
 
-func _init_hardcoded_pools():
-	_init_talent_pool_hardcoded()
-	_init_active_pool_hardcoded()
-	_init_passive_pool_hardcoded()
-
-func _init_talent_pool_hardcoded():
-	var talent_strength = SkillData.TalentSkillInfo.new({
-		"id": "talent_strength",
-		"name": "力量天赋",
-		"talent_type": SkillData.TalentType.PASSIVE,
-		"rarity": SkillData.SkillRarity.COMMON,
-		"passive_effect": "attack_damage",
-		"base_effect_value": 0.1,
-		"effect_value_per_level": 0.05,
-		"max_level": 6,
-		"description": "永久提升攻击力，每级+5%"
-	})
-	talent_pool[talent_strength.id] = talent_strength
-
-	var talent_vitality = SkillData.TalentSkillInfo.new({
-		"id": "talent_vitality",
-		"name": "生命天赋",
-		"talent_type": SkillData.TalentType.PASSIVE,
-		"rarity": SkillData.SkillRarity.COMMON,
-		"passive_effect": "max_health",
-		"base_effect_value": 0.1,
-		"effect_value_per_level": 0.05,
-		"max_level": 6,
-		"description": "永久提升最大生命值，每级+5%"
-	})
-	talent_pool[talent_vitality.id] = talent_vitality
-
-	var talent_fire_blade = SkillData.TalentSkillInfo.new({
-		"id": "talent_fire_blade",
-		"name": "火焰刀",
-		"talent_type": SkillData.TalentType.ACTIVE,
-		"rarity": SkillData.SkillRarity.RARE,
-		"type": SkillData.SkillType.MELEE,
-		"base_damage": 30,
-		"damage_per_level": 15,
-		"attack_count": 1,
-		"attack_count_per_level": 1,
-		"range": 80.0,
-		"range_per_level": 5.0,
-		"cooldown": 5.0,
-		"mana_cost": 20,
-		"max_level": 6,
-		"description": "挥出一道火焰刀，升级增加攻击段数和范围"
-	})
-	talent_pool[talent_fire_blade.id] = talent_fire_blade
-
-	var talent_ice_shield = SkillData.TalentSkillInfo.new({
-		"id": "talent_ice_shield",
-		"name": "冰霜护盾",
-		"talent_type": SkillData.TalentType.ACTIVE,
-		"rarity": SkillData.SkillRarity.RARE,
-		"type": SkillData.SkillType.BUFF,
-		"buff_type": "defense",
-		"buff_value": 0.2,
-		"buff_duration": 10.0,
-		"cooldown": 15.0,
-		"mana_cost": 30,
-		"max_level": 6,
-		"description": "为自己施加冰霜护盾，升级增加防御力和持续时间"
-	})
-	talent_pool[talent_ice_shield.id] = talent_ice_shield
-
-func _init_active_pool_hardcoded():
-	var basic_attack = SkillData.MeleeSkillInfo.new({
-		"id": "basic_attack",
-		"name": "基础攻击",
-		"type": SkillData.SkillType.MELEE,
-		"rarity": SkillData.SkillRarity.COMMON,
-		"damage": 20,
-		"cooldown": 1.0,
-		"mana_cost": 0,
-		"range": 50.0,
-		"description": "基础近战攻击"
-	})
-	active_pool[basic_attack.id] = basic_attack
-
-	var fire_ball = SkillData.MagicSkillInfo.new({
-		"id": "fire_ball",
-		"name": "火球术",
-		"type": SkillData.SkillType.MAGIC,
-		"rarity": SkillData.SkillRarity.UNCOMMON,
-		"damage": 40,
-		"cooldown": 3.0,
-		"mana_cost": 20,
-		"range": 200.0,
-		"description": "发射一个火球，造成范围伤害"
-	})
-	active_pool[fire_ball.id] = fire_ball
-
-	var heal = SkillData.HealSkillInfo.new({
-		"id": "heal",
-		"name": "治疗术",
-		"type": SkillData.SkillType.HEAL,
-		"rarity": SkillData.SkillRarity.COMMON,
-		"heal_amount": 50,
-		"cooldown": 5.0,
-		"mana_cost": 30,
-		"range": 100.0,
-		"description": "治疗自身或队友"
-	})
-	active_pool[heal.id] = heal
-
-	var thunder_strike = SkillData.MagicSkillInfo.new({
-		"id": "thunder_strike",
-		"name": "雷霆一击",
-		"type": SkillData.SkillType.MAGIC,
-		"rarity": SkillData.SkillRarity.RARE,
-		"damage": 80,
-		"cooldown": 8.0,
-		"mana_cost": 40,
-		"range": 150.0,
-		"description": "召唤雷霆攻击敌人，造成大量魔法伤害"
-	})
-	active_pool[thunder_strike.id] = thunder_strike
-
-	var power_strike = SkillData.MeleeSkillInfo.new({
-		"id": "power_strike",
-		"name": "强力打击",
-		"type": SkillData.SkillType.MELEE,
-		"rarity": SkillData.SkillRarity.UNCOMMON,
-		"damage": 60,
-		"cooldown": 4.0,
-		"mana_cost": 15,
-		"range": 60.0,
-		"description": "全力一击，造成高额近战伤害"
-	})
-	active_pool[power_strike.id] = power_strike
-
-	var quick_shot = SkillData.RangedSkillInfo.new({
-		"id": "quick_shot",
-		"name": "快速射击",
-		"type": SkillData.SkillType.RANGED,
-		"rarity": SkillData.SkillRarity.UNCOMMON,
-		"damage": 25,
-		"cooldown": 2.0,
-		"mana_cost": 10,
-		"range": 300.0,
-		"projectile_speed": 600.0,
-		"projectile_count": 2,
-		"description": "快速射出两支箭矢"
-	})
-	active_pool[quick_shot.id] = quick_shot
-
-func _init_passive_pool_hardcoded():
-	var passive_strength = SkillData.PassiveSkillInfo.new({
-		"id": "passive_strength",
-		"name": "力量提升",
-		"type": SkillData.SkillType.PASSIVE,
-		"rarity": SkillData.SkillRarity.COMMON,
-		"passive_effect": "attack_damage",
-		"effect_value": 0.2,
-		"trigger_condition": "always",
-		"description": "永久提升20%攻击力"
-	})
-	passive_pool[passive_strength.id] = passive_strength
-
-	var passive_vitality = SkillData.PassiveSkillInfo.new({
-		"id": "passive_vitality",
-		"name": "生命增强",
-		"type": SkillData.SkillType.PASSIVE,
-		"rarity": SkillData.SkillRarity.COMMON,
-		"passive_effect": "max_health",
-		"effect_value": 0.15,
-		"trigger_condition": "always",
-		"description": "永久提升15%最大生命值"
-	})
-	passive_pool[passive_vitality.id] = passive_vitality
-
-	var passive_speed = SkillData.PassiveSkillInfo.new({
-		"id": "passive_speed",
-		"name": "疾风步",
-		"type": SkillData.SkillType.PASSIVE,
-		"rarity": SkillData.SkillRarity.UNCOMMON,
-		"passive_effect": "speed",
-		"effect_value": 0.15,
-		"trigger_condition": "always",
-		"description": "永久提升15%移动速度"
-	})
-	passive_pool[passive_speed.id] = passive_speed
-
-	var passive_crit = SkillData.PassiveSkillInfo.new({
-		"id": "passive_crit",
-		"name": "暴击精通",
-		"type": SkillData.SkillType.PASSIVE,
-		"rarity": SkillData.SkillRarity.RARE,
-		"passive_effect": "crit_rate",
-		"effect_value": 0.1,
-		"trigger_condition": "always",
-		"description": "永久提升10%暴击率"
-	})
-	passive_pool[passive_crit.id] = passive_crit
-
 func get_skill(skill_id: String) -> SkillData.SkillInfo:
 	if skill_id in talent_pool:
 		return talent_pool[skill_id]
@@ -518,7 +347,13 @@ func get_all_passive_skills() -> Dictionary:
 	return passive_pool
 
 func reload_from_config() -> bool:
+	print("[SkillManager] 重新加载技能池配置...")
 	talent_pool.clear()
 	active_pool.clear()
 	passive_pool.clear()
-	return _load_skill_pools_from_config()
+	var result = _load_skill_pools_from_config()
+	if result:
+		print("[SkillManager] 技能池配置重载成功")
+	else:
+		push_error("[SkillManager] 技能池配置重载失败")
+	return result

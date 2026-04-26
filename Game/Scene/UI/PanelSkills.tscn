@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://b0dmb0tfopf3t"]
+
+[ext_resource type="Texture2D" uid="uid://m5bevnni5sq5" path="res://Assets/UI/Status/status_bg.png" id="1_axfyt"]
+[ext_resource type="Script" uid="uid://cn11cpfgq82c" path="res://Game/Scripts/UI/panel_skills.gd" id="1_detwv"]
+[ext_resource type="PackedScene" uid="uid://cfg1vjmlj5k1w" path="res://Game/Scene/UI/SkillItem.tscn" id="2_detwv"]
+[ext_resource type="Texture2D" uid="uid://cv75nmas4b8ei" path="res://Assets/UI/Status/title_bg.png" id="2_f5b5g"]
+
+[node name="Panel_Skills" type="Panel" unique_id=294235703]
+anchors_preset = -1
+anchor_left = 0.717
+anchor_right = 0.717
+offset_left = -332.64
+offset_top = 38.0
+offset_right = 331.36
+offset_bottom = 444.0
+script = ExtResource("1_detwv")
+
+[node name="NinePatchRect_BG" type="NinePatchRect" parent="." unique_id=1193371007]
+layout_mode = 0
+offset_right = 664.0
+offset_bottom = 406.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_axfyt")
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect_BG" unique_id=1075836763]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 30
+
+[node name="ScrollContainer" type="ScrollContainer" parent="NinePatchRect_BG/MarginContainer" unique_id=336128536]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect_BG/MarginContainer/ScrollContainer" unique_id=1491908844]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TalentSkill_Slot" type="HBoxContainer" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer" unique_id=2097561960]
+layout_mode = 2
+
+[node name="SkillItem_Talent" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer/TalentSkill_Slot" unique_id=437058136 instance=ExtResource("2_detwv")]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer" unique_id=548466520]
+layout_mode = 2
+
+[node name="VBoxContainer_ActiveSkillList" type="VBoxContainer" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=75298385]
+layout_mode = 2
+
+[node name="VBoxContainer_PassiveSkillList" type="VBoxContainer" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=841692116]
+layout_mode = 2
+
+[node name="TextureRect_Name" type="TextureRect" parent="." unique_id=213205255]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.508
+anchor_top = 0.014
+anchor_right = 0.508
+anchor_bottom = 0.014
+offset_left = -167.228
+offset_top = -26.158
+offset_right = 178.772
+offset_bottom = 32.842
+texture = ExtResource("2_f5b5g")
+expand_mode = 1
+
+[node name="Label_CharacterName" type="Label" parent="TextureRect_Name" unique_id=251015509]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -17.5
+offset_right = 69.0
+offset_bottom = 17.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "技能"
+horizontal_alignment = 1
