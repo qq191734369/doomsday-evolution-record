@@ -41,6 +41,7 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect_BG/MarginContainer/ScrollContainer" unique_id=1491908844]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 10
 
 [node name="TalentSkill_Slot" type="HBoxContainer" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer" unique_id=2097561960]
 layout_mode = 2
@@ -51,6 +52,7 @@ size_flags_horizontal = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer" unique_id=548466520]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="VBoxContainer_ActiveSkillList" type="VBoxContainer" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=75298385]
 layout_mode = 2

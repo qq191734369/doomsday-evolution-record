@@ -12,23 +12,6 @@ expand_mode = 1
 script = ExtResource("2_o053u")
 item_database = ExtResource("3_cy538")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1315053853]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="TextureRect_ItemView" type="TextureRect" parent="MarginContainer" unique_id=1795954809]
-layout_mode = 2
-expand_mode = 2
-stretch_mode = 4
-
 [node name="Label_Description" type="Label" parent="." unique_id=1885150696]
 layout_mode = 0
 offset_left = 12.0
@@ -46,6 +29,23 @@ offset_top = 16.0
 offset_right = 51.0
 offset_bottom = 47.0
 theme_override_font_sizes/font_size = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1315053853]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="TextureRect_ItemView" type="TextureRect" parent="MarginContainer" unique_id=1795954809]
+layout_mode = 2
+expand_mode = 2
+stretch_mode = 4
 
 [node name="Ghost" type="TextureRect" parent="." unique_id=999999999]
 visible = false

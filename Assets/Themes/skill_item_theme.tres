@@ -1,0 +1,10 @@
+[gd_resource type="Theme" format=3 uid="uid://bhg73vcrlk0wd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ed6en"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+shadow_color = Color(0.6437199, 0.41860846, 0.12220053, 0.6)
+shadow_size = 2
+
+[resource]
+Label/colors/font_color = Color(0, 0, 0, 1)
+Panel/styles/panel = SubResource("StyleBoxFlat_ed6en")

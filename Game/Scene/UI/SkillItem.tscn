@@ -1,37 +1,61 @@
 [gd_scene format=3 uid="uid://cfg1vjmlj5k1w"]
 
 [ext_resource type="Script" uid="uid://b27ab5cl5l6ip" path="res://Game/Scripts/UI/skill_item.gd" id="1_iohp4"]
+[ext_resource type="Theme" uid="uid://bhg73vcrlk0wd" path="res://Assets/Themes/skill_item_theme.tres" id="1_jn5ok"]
+[ext_resource type="Texture2D" uid="uid://2uwqxcl88emt" path="res://Assets/UI/Skill/skill_bg.png" id="3_87cs5"]
 
-[node name="SkillItem" type="Panel" unique_id=437058136]
-custom_minimum_size = Vector2(280, 60)
+[node name="SkillItem" type="MarginContainer" unique_id=603011115]
+custom_minimum_size = Vector2(280, 70)
+offset_right = 280.0
+offset_bottom = 70.0
+theme = ExtResource("1_jn5ok")
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
 script = ExtResource("1_iohp4")
 
-[node name="SkillBg" type="NinePatchRect" parent="." unique_id=1188306606]
+[node name="MarginContainer" type="Panel" parent="." unique_id=994447467]
+layout_mode = 2
+theme = ExtResource("1_jn5ok")
+
+[node name="SkillBg" type="NinePatchRect" parent="MarginContainer" unique_id=1188306606]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_jn5ok")
+theme_type_variation = &"skill_bg"
+texture = ExtResource("3_87cs5")
+region_rect = Rect2(23, 21, 284, 127)
+patch_margin_left = 20
+patch_margin_top = 19
+patch_margin_right = 14
+patch_margin_bottom = 21
 
-[node name="Icon" type="NinePatchRect" parent="SkillBg" unique_id=1943773334]
+[node name="Icon" type="NinePatchRect" parent="MarginContainer/SkillBg" unique_id=1943773334]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.289
 anchor_bottom = 1.0
 
-[node name="SkillName" type="Label" parent="SkillBg" unique_id=483520264]
+[node name="SkillName" type="Label" parent="MarginContainer/SkillBg" unique_id=483520264]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.36100003
-anchor_top = -0.025
+anchor_top = 0.057000004
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -0.08000946
+anchor_bottom = 0.582
+offset_left = -1.0800095
+offset_top = 0.009999752
+offset_right = -1.0
+offset_bottom = 0.0099983215
 text = "技能名称"
 vertical_alignment = 1
 
-[node name="Level" type="Label" parent="SkillBg" unique_id=708812540]
+[node name="Level" type="Label" parent="MarginContainer/SkillBg" unique_id=708812540]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.37100002

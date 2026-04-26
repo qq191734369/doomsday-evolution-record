@@ -1,13 +1,13 @@
-extends Panel
+extends MarginContainer
 
 class_name SkillItemNode
 
 signal mouse_entered_skill(skill_data: SkillData.SkillInfo, level: int, is_talent: bool)
 signal mouse_exited_skill()
 
-@onready var icon: NinePatchRect = $SkillBg/Icon
-@onready var skill_name: Label = $SkillBg/SkillName
-@onready var level: Label = $SkillBg/Level
+@onready var icon: NinePatchRect = $MarginContainer/SkillBg/Icon
+@onready var skill_name: Label = $MarginContainer/SkillBg/SkillName
+@onready var level: Label = $MarginContainer/SkillBg/Level
 
 var data: SkillData.SkillInfo
 var skill_level: int = 0
@@ -15,8 +15,15 @@ var is_talent: bool = false
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
+	_set_children_mouse_filter_ignore(self)
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
+
+func _set_children_mouse_filter_ignore(node: Node) -> void:
+	for child in node.get_children():
+		if child is Control:
+			child.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			_set_children_mouse_filter_ignore(child)
 
 func update_with_talent(talent: SkillData.TalentSkillInfo, lv: int):
 	data = talent
