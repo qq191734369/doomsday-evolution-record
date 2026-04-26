@@ -31,7 +31,7 @@ func _on_mouse_entered() -> void:
 		TooltipManager.show_item(item_data)
 
 func _on_mouse_exited() -> void:
-	TooltipManager.hide()
+	TooltipManager.hide_item()
 
 func init(info: ItemData.ItemInfo, cnt: int = 1) -> void:
 	item_data = info

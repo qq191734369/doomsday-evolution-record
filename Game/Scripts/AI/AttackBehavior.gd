@@ -77,7 +77,7 @@ func attackWithWeapon():
 		var min_enemy_distance = maxf(npc.get_effective_attack_range() / 3, 50.0)
 		
 		# 如果距离小于攻击范围的一半，执行放风筝操作
-		if distance < min_enemy_distance and not npc.is_following():
+		if distance < min_enemy_distance and not (npc.is_following() and not npc.is_using_melee_weapon()):
 			# 计算后退方向（与目标相反的方向）
 			var retreat_direction = (npc.global_position - npc.current_attack_target.global_position).normalized()
 			# 设置移动目标为后退位置

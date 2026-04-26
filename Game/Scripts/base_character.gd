@@ -247,42 +247,45 @@ func applyTalentPassive(talent: SkillData.TalentSkillInfo, level: int):
 		talent.id
 	)
 	_data.add_modifier(modifier)
-	print("应用天赋被动: " + talent.name + " Lv." + str(level) + "，效果: " + talent.passive_effect + " +" + str(int(effect_value * 100)) + "%")
+	print(data.id + "应用天赋被动: " + talent.name + " Lv." + str(level) + "，效果: " + talent.passive_effect + " +" + str(int(effect_value * 100)) + "%")
 
 func initPassiveSkills():
 	if not data:
 		return
-	for skill_id in data.passive_skill_ids:
+	for skill_id in data.passive_skill_ids.keys():
+		var level = data.passive_skill_ids[skill_id]
 		var skill = SkillManager.get_passive_skill(skill_id)
 		if skill:
-			applyPassiveSkillEffect(skill)
+			applyPassiveSkillEffect(skill, level)
 
 func initActiveSkills():
 	if not data:
 		return
-	for skill_id in data.active_skill_ids:
+	for skill_id in data.active_skill_ids.keys():
 		if not skill_cooldowns.has(skill_id):
 			skill_cooldowns[skill_id] = 0.0
 
-func applyPassiveSkillEffect(skill: SkillData.PassiveSkillInfo):
+func applyPassiveSkillEffect(skill: SkillData.PassiveSkillInfo, level: int = 1):
 	if not skill:
 		return
+	var effect_value = skill.effect_value
+	var modifier_id = skill.id + "_" + str(level)
 	var modifier = ModifierUtils.create_modifier(
-		skill.id,
+		modifier_id,
 		skill.passive_effect,
-		skill.effect_value,
+		effect_value,
 		SkillData.ModifierType.PERCENTAGE,
 		SkillData.ModifierSource.SKILL,
 		skill.id
 	)
 	data.add_modifier(modifier)
-	print("应用被动技能: " + skill.name + "，效果: " + skill.passive_effect + " +" + str(int(skill.effect_value * 100)) + "%")
+	print(data.id + "应用被动技能: " + skill.name + " Lv." + str(level) + "，效果: " + skill.passive_effect + " +" + str(int(effect_value * 100)) + "%")
 
 func removePassiveSkillEffect(skill: SkillData.PassiveSkillInfo):
 	if not skill:
 		return
 	ModifierUtils.remove_modifier_by_id(data, skill.id)
-	print("移除被动技能: " + skill.name)
+	print(data.id + "移除被动技能: " + skill.name)
 
 func learnSkill(skill_id: String):
 	if skills.has(skill_id):
@@ -294,11 +297,11 @@ func learnSkill(skill_id: String):
 		data.equip_talent_skill(skill_id)
 		skills.append(skill_id)
 	elif SkillManager.has_passive_skill(skill_id):
-		if data.equip_passive_skill(skill_id):
+		if data.equip_passive_skill(skill_id, 1):
 			skills.append(skill_id)
-			applyPassiveSkillEffect(skill)
+			applyPassiveSkillEffect(skill, 1)
 	elif SkillManager.has_active_skill(skill_id):
-		if data.equip_active_skill(skill_id):
+		if data.equip_active_skill(skill_id, 1):
 			skills.append(skill_id)
 			skill_cooldowns[skill_id] = 0.0
 			data.skills = skills
@@ -442,7 +445,7 @@ func useSkill(skill_id: String, target = null):
 func useActiveSkillFromSlot(slot_index: int, target = null) -> bool:
 	if not data or slot_index < 0 or slot_index >= data.active_skill_ids.size():
 		return false
-	var skill_id = data.active_skill_ids[slot_index]
+	var skill_id = data.active_skill_ids.keys()[slot_index]
 	return useSkill(skill_id, target)
 
 func executeMeleeSkill(skill, target):
@@ -513,7 +516,7 @@ func executeBuffSkill(skill, target):
 	if target is BaseCharacter:
 		# 应用增益效果
 		# 这里可以添加状态系统来管理增益效果
-		print("应用增益: " + skill.name)
+		print(data.id + "应用增益: " + skill.name)
 
 func executeHealSkill(skill, target):
 	# 治疗技能逻辑
@@ -522,11 +525,11 @@ func executeHealSkill(skill, target):
 	
 	if target is BaseCharacter:
 		target.currentHealth += skill.heal_amount
-		print("治疗: " + str(skill.heal_amount))
+		print(data.id + "治疗: " + str(skill.heal_amount))
 
 func executeUtilitySkill(skill, target):
 	# 实用技能逻辑
-	print("执行实用技能: " + skill.name)
+	print(data.id + "执行实用技能: " + skill.name)
 
 func updateSkillCooldowns(delta: float):
 	for skill_id in skill_cooldowns.keys():

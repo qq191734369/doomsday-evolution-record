@@ -3,15 +3,16 @@
 [ext_resource type="Script" uid="uid://b27ab5cl5l6ip" path="res://Game/Scripts/UI/skill_item.gd" id="1_iohp4"]
 
 [node name="SkillItem" type="Panel" unique_id=437058136]
-custom_minimum_size = Vector2(280, 80)
+custom_minimum_size = Vector2(280, 60)
 script = ExtResource("1_iohp4")
 
 [node name="SkillBg" type="NinePatchRect" parent="." unique_id=1188306606]
-custom_minimum_size = Vector2(280, 80)
-layout_mode = 0
-offset_top = 2.0
-offset_right = 280.0
-offset_bottom = 82.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Icon" type="NinePatchRect" parent="SkillBg" unique_id=1943773334]
 layout_mode = 1

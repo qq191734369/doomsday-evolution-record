@@ -48,12 +48,13 @@ class CharacterInfo:
 	var scene: String # 当前所在场景
 	var talent_skill_id: String = ""       # 天赋技能ID
 	var talent_level: int = 1               # 天赋等级（1-6）
-	var passive_skill_ids: Array = []      # 被动技能ID列表（最多3个）
-	var active_skill_ids: Array = []       # 主动技能ID列表（最多3个）
+	var passive_skill_ids: Dictionary = {}      # 被动技能字典 {skill_id: level}
+	var active_skill_ids: Dictionary = {}       # 主动技能字典 {skill_id: level}
 	var free_points: int = 0               # 自由属性点
 	var free_points_per_level: int = 5      # 每级自由属性点成长值
 
 	func _init(data: Dictionary) -> void:
+		id = data.get("id", "")
 		base_attributes["max_health"] = data.get("maxHealth", 200)
 		currentHealth = data.get("currentHealth", 200)
 		base_attributes["max_mana"] = data.get("maxMana", 100)
@@ -89,8 +90,8 @@ class CharacterInfo:
 		sync_equipment_modifiers()
 		talent_skill_id = data.get("talent_skill_id", "")
 		talent_level = data.get("talent_level", 1)
-		passive_skill_ids = data.get("passive_skill_ids", [])
-		active_skill_ids = data.get("active_skill_ids", [])
+		passive_skill_ids = _parse_skill_dict(data.get("passive_skill_ids", {}))
+		active_skill_ids = _parse_skill_dict(data.get("active_skill_ids", {}))
 		free_points = data.get("free_points", 0)
 		free_points_per_level = data.get("free_points_per_level", LevelData.DEFAULT_FREE_POINTS_PER_LEVEL)
 
@@ -262,16 +263,46 @@ class CharacterInfo:
 		talent_level = 1
 		return true
 
-	func equip_passive_skill(skill_id: String) -> bool:
+	func equip_passive_skill(skill_id: String, level: int = 1) -> bool:
 		if not can_equip_passive_skill() or not SkillManager.has_passive_skill(skill_id):
 			return false
-		passive_skill_ids.append(skill_id)
+		passive_skill_ids[skill_id] = level
 		return true
 
-	func equip_active_skill(skill_id: String) -> bool:
+	func equip_active_skill(skill_id: String, level: int = 1) -> bool:
 		if not can_equip_active_skill() or not SkillManager.has_active_skill(skill_id):
 			return false
-		active_skill_ids.append(skill_id)
+		active_skill_ids[skill_id] = level
+		return true
+
+	func get_passive_skill_level(skill_id: String) -> int:
+		return passive_skill_ids.get(skill_id, 0)
+
+	func get_active_skill_level(skill_id: String) -> int:
+		return active_skill_ids.get(skill_id, 0)
+
+	func upgrade_passive_skill(skill_id: String) -> bool:
+		if not passive_skill_ids.has(skill_id):
+			return false
+		var skill = SkillManager.get_passive_skill(skill_id)
+		if not skill or not skill.has("max_level"):
+			return false
+		var current_level = passive_skill_ids[skill_id]
+		if current_level >= skill.max_level:
+			return false
+		passive_skill_ids[skill_id] = current_level + 1
+		return true
+
+	func upgrade_active_skill(skill_id: String) -> bool:
+		if not active_skill_ids.has(skill_id):
+			return false
+		var skill = SkillManager.get_active_skill(skill_id)
+		if not skill or not skill.has("max_level"):
+			return false
+		var current_level = active_skill_ids[skill_id]
+		if current_level >= skill.max_level:
+			return false
+		active_skill_ids[skill_id] = current_level + 1
 		return true
 
 	func unequip_talent_skill() -> String:
@@ -291,6 +322,17 @@ class CharacterInfo:
 			active_skill_ids.erase(skill_id)
 			return true
 		return false
+
+	static func _parse_skill_dict(data) -> Dictionary:
+		if data is Dictionary:
+			return data
+		if data is Array:
+			var result = {}
+			for skill_id in data:
+				if skill_id is String:
+					result[skill_id] = 1
+			return result
+		return {}
 
 class Equipment:
 	var weapon: WeaponData.WeaponInfo
@@ -374,13 +416,14 @@ class GameStateInfo:
 
 # 玩家信息
 var player: CharacterInfo = CharacterInfo.new({
+	"id": "Player",
 	"name": "Player",
 	"position": Vector2(689.0, 373.0),
 	"attackDamage": 50,
 	"talent_skill_id": "talent_strength",
 	"talent_level": 1,
-	"passive_skill_ids": ["passive_vitality"],
-	"active_skill_ids": ["basic_attack", "fire_ball", "heal"],
+	"passive_skill_ids": {"passive_vitality": 1},
+	"active_skill_ids": {"basic_attack": 1, "fire_ball": 1, "heal": 1},
 	"bag": {
 		"consume": [{
 			"id": "water",
@@ -475,15 +518,21 @@ var player: CharacterInfo = CharacterInfo.new({
 # npc信息
 var npcDictionary: Dictionary[String, CharacterInfo] = {
 	"LiMei": CharacterInfo.new({
+		"id": "LiMei",
 		"name": "LiMei",
 		"speed": 200,
 		"dialogueId": "limei_join_start",
 		"scene": "main",
 		"position": Vector2(689.0, 373.0),
 		"maxHealth": 500,
-		"attackDamage": 30
+		"attackDamage": 30,
+		"talent_skill_id": "talent_vitality",
+		"talent_level": 1,
+		"passive_skill_ids": {"passive_strength": 2},
+		"active_skill_ids": {"power_strike": 1, "thunder_strike": 1}
 	}),
 	"ZhaoXinEr": CharacterInfo.new({
+		"id": "ZhaoXinEr",
 		"name": "ZhaoXinEr",
 		"speed": 200,
 		"dialogueId": "zhaoxiner_join_start",
@@ -497,14 +546,23 @@ var npcDictionary: Dictionary[String, CharacterInfo] = {
 				"damage": 50,
 				"projectile_range": 300
 			}
-		}
+		},
+		"talent_skill_id": "talent_fire_blade",
+		"talent_level": 2,
+		"passive_skill_ids": {"passive_crit": 3},
+		"active_skill_ids": {"quick_shot": 1, "fire_ball": 2}
 	}),
 	"ZhuangFangYi": CharacterInfo.new({
+		"id": "ZhuangFangYi",
 		"name": "ZhuangFangYi",
 		"speed": 200,
 		"dialogueId": "zhuangfangyi_join_start",
 		"scene": "main",
-		"position": Vector2(720.0, 300.0)
+		"position": Vector2(720.0, 300.0),
+		"talent_skill_id": "talent_ice_shield",
+		"talent_level": 1,
+		"passive_skill_ids": {"passive_vitality": 2, "passive_speed": 1},
+		"active_skill_ids": {"heal": 1, "basic_attack": 1}
 	})
 }
 

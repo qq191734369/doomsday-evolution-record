@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ba0ti45qjpolv"]
 
-[ext_resource type="Script" uid="uid://cmvlwtp0u00av" path="res://Game/Scripts/game_ui_manager.gd" id="1_a8peb"]
+[ext_resource type="Script" uid="uid://cmvlwtp0u00av" path="res://Game/Scripts/Global/game_ui_manager.gd" id="1_a8peb"]
 [ext_resource type="Texture2D" uid="uid://dej2yyjvbpmbp" path="res://Assets/Animation/Characters/Player/Avartar_Player.png" id="2_dbni7"]
 [ext_resource type="Theme" uid="uid://wgmbmuq0tq12" path="res://Game/Scene/UI_Theme/game_ui_theme.tres" id="3_3hvup"]
 [ext_resource type="PackedScene" uid="uid://birn7jxlf3c7q" path="res://Game/Scene/UI/PartyItem.tscn" id="4_1y113"]

@@ -57,7 +57,7 @@ func _on_mouse_entered() -> void:
 		TooltipManager.show_item(_data)
 
 func _on_mouse_exited() -> void:
-	TooltipManager.hide()
+	TooltipManager.hide_item()
 
 func _on_gui_input(event: InputEvent) -> void:
 	if not _data:

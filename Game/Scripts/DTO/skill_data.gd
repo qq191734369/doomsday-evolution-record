@@ -109,6 +109,8 @@ class SkillInfo:
 	var range: float = 50.0
 	var duration: float = 0.0
 	var cast_time: float = 0.0
+	var max_level: int = 6
+	var current_level: int = 1
 	var description: String = ""
 	var effects: Array[Dictionary] = []
 	var animation_path: String = ""
@@ -126,6 +128,8 @@ class SkillInfo:
 		range = data.get("range", range)
 		duration = data.get("duration", duration)
 		cast_time = data.get("cast_time", cast_time)
+		max_level = data.get("max_level", max_level)
+		current_level = data.get("current_level", current_level)
 		description = data.get("description", description)
 		effects = data.get("effects", effects)
 		animation_path = data.get("animation_path", animation_path)
@@ -219,8 +223,6 @@ class PassiveSkillInfo extends SkillInfo:
 
 # 天赋技能类
 class TalentSkillInfo extends SkillInfo:
-	var max_level: int = 6
-	var current_level: int = 1
 	var talent_type: TalentType = TalentType.PASSIVE
 	var passive_effect: String = ""
 	var base_effect_value: float = 0.0
@@ -234,8 +236,6 @@ class TalentSkillInfo extends SkillInfo:
 	func _init(data: Dictionary = {}) -> void:
 		super(data)
 		type = SkillType.PASSIVE
-		max_level = data.get("max_level", max_level)
-		current_level = data.get("current_level", current_level)
 		talent_type = data.get("talent_type", talent_type)
 		passive_effect = data.get("passive_effect", passive_effect)
 		base_effect_value = data.get("base_effect_value", base_effect_value)
@@ -245,6 +245,7 @@ class TalentSkillInfo extends SkillInfo:
 		attack_count = data.get("attack_count", attack_count)
 		attack_count_per_level = data.get("attack_count_per_level", attack_count_per_level)
 		range_per_level = data.get("range_per_level", range_per_level)
+		max_level = data.get("max_level", 6)
 
 	func get_current_effect_value() -> float:
 		return base_effect_value + effect_value_per_level * (current_level - 1)

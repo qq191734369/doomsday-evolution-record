@@ -73,7 +73,7 @@ func _on_mouse_entered() -> void:
 		TooltipManager.show_item(_data)
 
 func _on_mouse_exited() -> void:
-	TooltipManager.hide()
+	TooltipManager.hide_item()
 
 
 func _can_drop_data(_pos: Vector2, data: Variant) -> bool:

@@ -61,9 +61,11 @@
 			"skill_type": "MELEE",
 			"rarity": "COMMON",
 			"damage": 20,
+			"damage_per_level": 5,
 			"cooldown": 1.0,
 			"mana_cost": 0,
 			"range": 50.0,
+			"max_level": 6,
 			"description": "基础近战攻击"
 		},
 		{
@@ -72,9 +74,11 @@
 			"skill_type": "MAGIC",
 			"rarity": "UNCOMMON",
 			"damage": 40,
+			"damage_per_level": 10,
 			"cooldown": 3.0,
 			"mana_cost": 20,
 			"range": 200.0,
+			"max_level": 6,
 			"description": "发射一个火球，造成范围伤害"
 		},
 		{
@@ -83,9 +87,11 @@
 			"skill_type": "HEAL",
 			"rarity": "COMMON",
 			"heal_amount": 50,
+			"heal_amount_per_level": 15,
 			"cooldown": 5.0,
 			"mana_cost": 30,
 			"range": 100.0,
+			"max_level": 6,
 			"description": "治疗自身或队友"
 		},
 		{
@@ -94,9 +100,11 @@
 			"skill_type": "MAGIC",
 			"rarity": "RARE",
 			"damage": 80,
+			"damage_per_level": 20,
 			"cooldown": 8.0,
 			"mana_cost": 40,
 			"range": 150.0,
+			"max_level": 6,
 			"description": "召唤雷霆攻击敌人，造成大量魔法伤害"
 		},
 		{
@@ -105,9 +113,11 @@
 			"skill_type": "MELEE",
 			"rarity": "UNCOMMON",
 			"damage": 60,
+			"damage_per_level": 15,
 			"cooldown": 4.0,
 			"mana_cost": 15,
 			"range": 60.0,
+			"max_level": 6,
 			"description": "全力一击，造成高额近战伤害"
 		},
 		{
@@ -116,11 +126,13 @@
 			"skill_type": "RANGED",
 			"rarity": "UNCOMMON",
 			"damage": 25,
+			"damage_per_level": 5,
 			"cooldown": 2.0,
 			"mana_cost": 10,
 			"range": 300.0,
 			"projectile_speed": 600.0,
 			"projectile_count": 2,
+			"max_level": 6,
 			"description": "快速射出两支箭矢"
 		}
 	],
@@ -132,6 +144,7 @@
 			"rarity": "COMMON",
 			"passive_effect": "attack_damage",
 			"effect_value": 0.2,
+			"max_level": 6,
 			"trigger_condition": "always",
 			"description": "永久提升20%攻击力"
 		},
@@ -142,6 +155,7 @@
 			"rarity": "COMMON",
 			"passive_effect": "max_health",
 			"effect_value": 0.15,
+			"max_level": 6,
 			"trigger_condition": "always",
 			"description": "永久提升15%最大生命值"
 		},
@@ -152,6 +166,7 @@
 			"rarity": "UNCOMMON",
 			"passive_effect": "speed",
 			"effect_value": 0.15,
+			"max_level": 6,
 			"trigger_condition": "always",
 			"description": "永久提升15%移动速度"
 		},
@@ -162,6 +177,7 @@
 			"rarity": "RARE",
 			"passive_effect": "crit_rate",
 			"effect_value": 0.1,
+			"max_level": 6,
 			"trigger_condition": "always",
 			"description": "永久提升10%暴击率"
 		}

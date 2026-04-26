@@ -5,6 +5,7 @@ class_name PartyDetailController
 @onready var v_box_container_party_list: VBoxContainer = $Panel_BG/Panel_PartyList/NinePatchRect_PartyBG/MarginContainer/ScrollContainer/VBoxContainer_PartyList
 @onready var bag_container: BagContainerNode = $Panel_BG/Bag
 @onready var character_detail_ui: CharacterDetailUI = $Panel_BG/CharacterDetailUI
+@onready var panel_skills: SkillPanelNode = $Panel_BG/Panel_Skills
 
 
 const PARTY_ITEM = preload("uid://birn7jxlf3c7q")
@@ -21,11 +22,12 @@ func _set_active_member(item_node: PartyItemNode):
 	
 	is_opening_member = true
 	item_node.setActive(true)
-	var data = item_node.data
+	var data = item_node.character
 	# 更新面板
 	character_detail_ui.update(item_node.character)
+	panel_skills.update(data.data)
 	
-	await load_bag_items(data)
+	await load_bag_items(data.data)
 	active_party_item = item_node
 	is_opening_member = false
 

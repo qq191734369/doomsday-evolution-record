@@ -16,6 +16,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+NodeExtentions="*uid://c6nd42cahre8d"
 GameManager="*uid://n2gtidukqddd"
 PartyManager="*uid://dbqjoc5rgcu5k"
 DialogManager="*uid://c23aaw7uctfvl"
@@ -26,7 +27,7 @@ EquipmentManager="*uid://b032ocxbqg83x"
 BagManager="*uid://bkgpspinuexwk"
 DropManager="*uid://bnrmrj5sbhi58"
 TextureManager="*res://Game/Scripts/texture_manager.gd"
-LoadingManager="*res://Game/Scripts/loading_manager.gd"
+LoadingManager="*res://Game/Scripts/Global/loading_manager.gd"
 TooltipManager="*uid://cv2rmoos5spvv"
 GlobalMessageBus="*uid://cwr3i2xtr4lk7"
 LevelSystem="*uid://bubvih8kp0gwf"
