@@ -31,7 +31,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 60
+theme_override_constants/margin_top = 38
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 30
 
@@ -41,7 +41,12 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect_BG/MarginContainer/ScrollContainer" unique_id=1491908844]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 10
+theme_override_constants/separation = 0
+
+[node name="Label_Talent" type="Label" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer" unique_id=736801061]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "天赋"
 
 [node name="TalentSkill_Slot" type="HBoxContainer" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer" unique_id=2097561960]
 layout_mode = 2
@@ -57,8 +62,42 @@ theme_override_constants/separation = 10
 [node name="VBoxContainer_ActiveSkillList" type="VBoxContainer" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=75298385]
 layout_mode = 2
 
+[node name="Label_ActiveSkill" type="Label" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer_ActiveSkillList" unique_id=1602104304]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "主动技能"
+
+[node name="SkillItem_Talent" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer_ActiveSkillList" unique_id=603011115 instance=ExtResource("2_detwv")]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="SkillItem_Talent2" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer_ActiveSkillList" unique_id=2077381562 instance=ExtResource("2_detwv")]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="SkillItem_Talent3" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer_ActiveSkillList" unique_id=2015028258 instance=ExtResource("2_detwv")]
+layout_mode = 2
+size_flags_horizontal = 0
+
 [node name="VBoxContainer_PassiveSkillList" type="VBoxContainer" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=841692116]
 layout_mode = 2
+
+[node name="Label_PassiveSkill" type="Label" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer_PassiveSkillList" unique_id=434461094]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "被动技能"
+
+[node name="SkillItem_Talent" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer_PassiveSkillList" unique_id=406156513 instance=ExtResource("2_detwv")]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="SkillItem_Talent2" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer_PassiveSkillList" unique_id=1778946269 instance=ExtResource("2_detwv")]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="SkillItem_Talent3" parent="NinePatchRect_BG/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer_PassiveSkillList" unique_id=1567038069 instance=ExtResource("2_detwv")]
+layout_mode = 2
+size_flags_horizontal = 0
 
 [node name="TextureRect_Name" type="TextureRect" parent="." unique_id=213205255]
 layout_mode = 1

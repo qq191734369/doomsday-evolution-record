@@ -27,7 +27,8 @@ func _update_talent_skill(d: GameData.CharacterInfo):
 
 func _update_active_skills(d: GameData.CharacterInfo):
 	for child in v_box_container_active_skill_list.get_children():
-		child.queue_free()
+		if child is SkillItemNode:
+			child.queue_free()
 	for skill_id in d.active_skill_ids.keys():
 		var level = d.active_skill_ids[skill_id]
 		var skill = SkillManager.get_active_skill(skill_id)
@@ -38,7 +39,8 @@ func _update_active_skills(d: GameData.CharacterInfo):
 
 func _update_passive_skills(d: GameData.CharacterInfo):
 	for child in v_box_container_passive_skill_list.get_children():
-		child.queue_free()
+		if child is SkillItemNode:
+			child.queue_free()
 	for skill_id in d.passive_skill_ids.keys():
 		var level = d.passive_skill_ids[skill_id]
 		var skill = SkillManager.get_passive_skill(skill_id)
