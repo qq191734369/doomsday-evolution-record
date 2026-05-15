@@ -613,7 +613,7 @@ func updateBlink(newValue: float):
 	animaitedSprite2D.set_instance_shader_parameter("Blink", newValue)
 	if avatar_node:
 		if avatar_node.has_method("set_blink"):
-			avatar_node.set_blink(true, newValue)
+			avatar_node.set_blink(newValue)
 		elif avatar_node.has_method("set_instance_shader_parameter"):
 			avatar_node.set_instance_shader_parameter("Blink", newValue)
 

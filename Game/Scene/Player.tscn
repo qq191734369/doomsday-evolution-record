@@ -47,6 +47,7 @@ shape = SubResource("CircleShape2D_dikuv")
 [node name="AvatarNode" parent="." unique_id=1690051779 instance=ExtResource("2_tasat")]
 material = SubResource("ShaderMaterial_6bh3k")
 scale = Vector2(0.5, 0.5)
+character_shader = ExtResource("2_t44g8")
 avatar_texture = ExtResource("4_6bh3k")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=684841681]

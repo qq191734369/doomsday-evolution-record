@@ -86,6 +86,18 @@ func try_pick_up_item() -> void:
 	if nearest_item and nearest_item.can_be_picked_up():
 		nearest_item.pick_up_by(self)
 
+func enable_invincible_effect() -> void:
+	if avatar_node:
+		avatar_node.set_invincible_effect(true)
+
+func disable_invincible_effect() -> void:
+	if avatar_node:
+		avatar_node.set_invincible_effect(false)
+
+func set_blink_effect(value: float) -> void:
+	if avatar_node:
+		avatar_node.set_blink(value)
+
 
 func _physics_process(_delta: float) -> void:
 	# 移动控制
