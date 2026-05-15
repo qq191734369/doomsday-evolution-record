@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cbq6o7gptxl5q" path="res://Game/Scripts/NPC/npc.gd" id="1_2qhf0"]
 [ext_resource type="Shader" uid="uid://bco0qmit4gfe8" path="res://Game/Shader/character.tres" id="2_on8fm"]
-[ext_resource type="PackedScene" uid="uid://cq3k5yhx2g7p4" path="res://Game/Scene/AvatarFrame.tscn" id="2_y1k1p"]
+[ext_resource type="PackedScene" uid="uid://le75qer2tffl" path="res://Game/Scene/AvatarNode.tscn" id="2_y1k1p"]
 [ext_resource type="SpriteFrames" uid="uid://belo2eburq174" path="res://Assets/Animation/Characters/ZhuangFangYi/ZhuangFangYi.tres" id="3_i2hp8"]
 [ext_resource type="Texture2D" uid="uid://fmht73ygj24i" path="res://Assets/Animation/shadow.png" id="4_y1k1p"]
 [ext_resource type="Script" uid="uid://cfxv8qect0vpa" path="res://Game/Scripts/StateMachine/state_machine.gd" id="5_2ucft"]
@@ -17,7 +17,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_dikuv"]
 radius = 14.167776
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_y1k1p"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2ucft"]
 shader = ExtResource("2_on8fm")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ixmp6"]
@@ -43,13 +43,10 @@ position = Vector2(1, -2)
 scale = Vector2(0.5, 0.34000146)
 shape = SubResource("CircleShape2D_dikuv")
 
-[node name="AvatarFrame" parent="." unique_id=1072461774 instance=ExtResource("2_y1k1p")]
-material = SubResource("ShaderMaterial_y1k1p")
-clip_contents = false
-offset_left = -25.0
-offset_top = -45.0
-offset_right = 25.0
-offset_bottom = 5.0
+[node name="AvatarNode" parent="." unique_id=1456674500 instance=ExtResource("2_y1k1p")]
+material = SubResource("ShaderMaterial_2ucft")
+instance_shader_parameters/InvincibleEffect = false
+scale = Vector2(0.5, 0.5)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=684841681]
 visible = false

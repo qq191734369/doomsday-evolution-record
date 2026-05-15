@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://le75qer2tffl"]
+
+[ext_resource type="Script" uid="uid://jjh87gtcyp62" path="res://Game/Scripts/UI/avatar_node.gd" id="1_avatar_node"]
+[ext_resource type="Texture2D" uid="uid://dej2yyjvbpmbp" path="res://Assets/Animation/Characters/Player/Avartar_Player.png" id="2_8p84u"]
+[ext_resource type="Texture2D" uid="uid://baqv40jo2fbfh" path="res://Assets/UI/Avartar_Border.png" id="4_fs6hf"]
+
+[node name="AvatarNode" type="Node2D" unique_id=1456674500]
+script = ExtResource("1_avatar_node")
+border_texture = ExtResource("4_fs6hf")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=200240067]
+use_parent_material = true
+offset = Vector2(0, -64)
+
+[node name="AvatarSprite" type="Sprite2D" parent="." unique_id=1856024890]
+use_parent_material = true
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_8p84u")
+offset = Vector2(0, -64)
+
+[node name="BorderSprite" type="Sprite2D" parent="." unique_id=1500299180]
+use_parent_material = true
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("4_fs6hf")
+offset = Vector2(0, -49)
