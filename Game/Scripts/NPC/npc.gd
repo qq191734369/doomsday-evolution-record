@@ -76,6 +76,8 @@ func _ready() -> void:
 	var sprite_frames = load("res://Assets/Animation/Characters/" + data.name + "/" + data.name + ".tres")
 	if animaitedSprite2D and sprite_frames:
 		animaitedSprite2D.sprite_frames = sprite_frames
+		
+	avatar_frame.set_avatar(load("res://Assets/Animation/Characters/{name}/Avartar_{name}.png".format({ "name": data.name })))
 	# 初始化行为管理器
 	behavior_manager = BehaviorManager.new(self)
 	setEnemyDetectionRadius()

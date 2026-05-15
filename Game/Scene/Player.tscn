@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b8spo04c78kno" path="res://Game/Scripts/player.gd" id="1_dikuv"]
 [ext_resource type="Texture2D" uid="uid://fmht73ygj24i" path="res://Assets/Animation/shadow.png" id="2_dikuv"]
 [ext_resource type="Shader" uid="uid://bco0qmit4gfe8" path="res://Game/Shader/character.tres" id="2_t44g8"]
+[ext_resource type="Texture2D" uid="uid://dej2yyjvbpmbp" path="res://Assets/Animation/Characters/Player/Avartar_Player.png" id="2_tasat"]
 [ext_resource type="SpriteFrames" uid="uid://bklgpat71elh0" path="res://Assets/Animation/Characters/Player/Player.tres" id="3_t44g8"]
 [ext_resource type="Script" uid="uid://cfxv8qect0vpa" path="res://Game/Scripts/StateMachine/state_machine.gd" id="4_0vtvt"]
 [ext_resource type="Script" uid="uid://761ddqlnrmhm" path="res://Game/Scripts/StateMachine/PlayerStates/player_idle.gd" id="5_coiqp"]
@@ -12,9 +13,13 @@
 [ext_resource type="Script" uid="uid://b5uc25quifafm" path="res://Game/Scripts/StateMachine/PlayerStates/player_die.gd" id="9_46o5m"]
 [ext_resource type="PackedScene" uid="uid://bv0bvm46gcguh" path="res://Game/Scene/Weapon.tscn" id="11_ixmp6"]
 [ext_resource type="Script" uid="uid://bh28yqevc8sm" path="res://Game/Scripts/slot_weapon.gd" id="11_k3ghj"]
+[ext_resource type="PackedScene" uid="uid://cq3k5yhx2g7p4" path="res://Game/Scene/AvatarFrame.tscn" id="12_avatar"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dikuv"]
 radius = 14.167776
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6bh3k"]
+shader = ExtResource("2_t44g8")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ixmp6"]
 shader = ExtResource("2_t44g8")
@@ -39,9 +44,19 @@ position = Vector2(1, -2)
 scale = Vector2(0.5, 0.34000146)
 shape = SubResource("CircleShape2D_dikuv")
 
+[node name="AvatarFrame" parent="." unique_id=226721300 instance=ExtResource("12_avatar")]
+material = SubResource("ShaderMaterial_6bh3k")
+instance_shader_parameters/InvincibleEffect = false
+clip_contents = false
+offset_left = -24.0
+offset_top = -44.0
+offset_right = 26.0
+offset_bottom = 6.0
+avatar_texture = ExtResource("2_tasat")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=684841681]
+visible = false
 material = SubResource("ShaderMaterial_ixmp6")
-instance_shader_parameters/Blink = 0.0
 instance_shader_parameters/InvincibleEffect = false
 scale = Vector2(0.4, 0.4)
 sprite_frames = ExtResource("3_t44g8")

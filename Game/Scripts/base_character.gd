@@ -35,6 +35,7 @@ const DAMAGE_NUMBER = preload("res://Game/Scene/DamageNumber.tscn")
 @onready var state_machine: StateMachine = $StateMachine
 @onready var slot_weapon: Node2D = $Equipment_Level/Slot_Weapon
 @onready var weapon: Weapon = $Equipment_Level/Slot_Weapon/Weapon
+@onready var avatar_frame: AvatarFrame = $AvatarFrame
 
 
 var _data: GameData.CharacterInfo = GameData.CharacterInfo.new({})
@@ -610,6 +611,8 @@ func updateDieAnimation():
 	
 func updateBlink(newValue: float):
 	animaitedSprite2D.set_instance_shader_parameter("Blink", newValue)
+	if avatar_frame:
+		avatar_frame.set_instance_shader_parameter("Blink", newValue)
 
 func startBlink():
 	var blinkTween = get_tree().create_tween()
@@ -617,6 +620,8 @@ func startBlink():
 	
 func updateInvincibleEffect(newValue: bool):
 	animaitedSprite2D.set_instance_shader_parameter("InvincibleEffect", newValue)
+	if avatar_frame:
+		avatar_frame.set_instance_shader_parameter("InvincibleEffect", newValue)
 	
 
 func getHit(damage: int, from: Node2D = null):

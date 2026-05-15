@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://cq3k5yhx2g7p4"]
+
+[ext_resource type="Script" uid="uid://ba4k46omseww" path="res://Game/Scripts/UI/avatar_frame.gd" id="1_avatar"]
+[ext_resource type="Shader" uid="uid://g20sod80c1k7" path="res://Game/Shader/avatar_mask.gdshader" id="2_mask"]
+[ext_resource type="Shader" uid="uid://dghlcdm2o85l5" path="res://Game/Shader/avatar_border.gdshader" id="3_border"]
+[ext_resource type="Texture2D" uid="uid://dej2yyjvbpmbp" path="res://Assets/Animation/Characters/Player/Avartar_Player.png" id="3_hqocm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mask"]
+shader = ExtResource("2_mask")
+shader_parameter/avatar_size = 0.45
+shader_parameter/smoothness = 0.02
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_border"]
+shader = ExtResource("3_border")
+shader_parameter/border_size = 0.48
+shader_parameter/border_thickness = 0.05
+shader_parameter/smoothness = 0.02
+shader_parameter/border_color = Color(0, 0, 0, 1)
+
+[node name="AvatarFrame" type="Control" unique_id=1072461774]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 64.0
+offset_bottom = 64.0
+script = ExtResource("1_avatar")
+border_color = Color(0, 0, 0, 1)
+
+[node name="AvatarTextureRect" type="TextureRect" parent="." unique_id=372023480]
+material = SubResource("ShaderMaterial_mask")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.032
+anchor_top = 0.062000003
+anchor_right = 0.96300006
+anchor_bottom = 1.0
+offset_left = -0.048000097
+offset_top = 0.031999826
+offset_right = 0.36799622
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_hqocm")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BorderRect" type="ColorRect" parent="." unique_id=1160739805]
+material = SubResource("ShaderMaterial_border")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
