@@ -563,6 +563,18 @@ var npcDictionary: Dictionary[String, CharacterInfo] = {
 		"talent_level": 1,
 		"passive_skill_ids": {"passive_vitality": 2, "passive_speed": 1},
 		"active_skill_ids": {"heal": 1, "basic_attack": 1}
+	}),
+	"FeiXue": CharacterInfo.new({
+		"id": "FeiXue",
+		"name": "FeiXue",
+		"speed": 200,
+		"dialogueId": "feixue_join_start",
+		"scene": "main",
+		"position": Vector2(780.0, 300.0),
+		"talent_skill_id": "talent_ice_shield",
+		"talent_level": 1,
+		"passive_skill_ids": {"passive_vitality": 2, "passive_speed": 1},
+		"active_skill_ids": {"heal": 1, "basic_attack": 1}
 	})
 }
 
