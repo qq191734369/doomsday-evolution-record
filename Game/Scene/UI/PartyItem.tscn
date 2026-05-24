@@ -17,11 +17,16 @@ patch_margin_bottom = 42
 script = ExtResource("1_rk6p3")
 
 [node name="NinePatchRect_AvartarBg" parent="." unique_id=1246263112 instance=ExtResource("3_rk6p3")]
-layout_mode = 0
-offset_left = -16.0
-offset_top = -15.0
-offset_right = 149.0
-offset_bottom = 152.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.037
+anchor_top = 0.060000002
+anchor_right = 0.44000003
+anchor_bottom = 0.90800005
+offset_left = 0.15999985
+offset_top = 1.9073486e-06
+offset_right = 36.199997
+offset_bottom = 39.799988
 
 [node name="NinePatchRect_Content" type="NinePatchRect" parent="." unique_id=900981770]
 layout_mode = 1
