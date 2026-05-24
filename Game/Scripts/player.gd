@@ -46,6 +46,12 @@ func _ready() -> void:
 	#print("攻击力: " + str(data.get_attack_damage()))
 	#print("速度: " + str(data.get_speed()))
 
+func _process(delta: float) -> void:
+	_update_attack_direction()
+	
+func _update_attack_direction() -> void:
+	attackDirection = "left" if global_position.direction_to(get_global_mouse_position()).x < 0 else "right"
+
 
 func _render_party_members():
 	# 渲染队伍成员

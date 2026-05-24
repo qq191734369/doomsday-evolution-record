@@ -10,27 +10,38 @@ func enter():
 	character.updateAttackAnimation()
 	# 拿到攻击方向和该方向碰撞体
 	facingDirection = character.attackDirection
-	var collisionNode = attacck_hit_box.get_node("CollisionShape2D_" + facingDirection)
-	if collisionNode:
-		attackCollisionShape = collisionNode
 	
-	# 召唤剑气
-	spawnSlashVFX()
+	if character.hasWeapon():
+		pass
+	else:
+		var collisionNode = attacck_hit_box.get_node("CollisionShape2D_" + facingDirection)
+		if collisionNode:
+			attackCollisionShape = collisionNode
+
+		# 召唤剑气
+		spawnSlashVFX()
 	
 func update():
 	super.update()
-	# 攻击碰撞体处理
-	if parentStateMachine.animated_sprite_2d.is_playing() == true:
-		if attackCollisionShape:
-			# 可以通过第几帧 判断是否开启碰撞体 做的更细
-			attackCollisionShape.disabled = false
+	
+	if character.hasWeapon():
+		if Input.is_action_pressed("attack"):
+			pass
+		else:
+			parentStateMachine.switchTo("Idle")
+	else:
+		# 攻击碰撞体处理
+		if parentStateMachine.animated_sprite_2d.is_playing() == true:
+			if attackCollisionShape:
+				# 可以通过第几帧 判断是否开启碰撞体 做的更细
+				attackCollisionShape.disabled = false
 
-	# 攻击结束
-	if parentStateMachine.animated_sprite_2d.frame_progress == 1:
-		parentStateMachine.switchTo("Idle")
+		# 攻击结束
+		if parentStateMachine.animated_sprite_2d.frame_progress == 1:
+			parentStateMachine.switchTo("Idle")
 
-		if attackCollisionShape:
-			attackCollisionShape.disabled = true
+			if attackCollisionShape:
+				attackCollisionShape.disabled = true
 
 func ready():
 	super.ready()

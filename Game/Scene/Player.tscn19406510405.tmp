@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://ba6tj4nvsql2e"]
+
+[ext_resource type="Script" uid="uid://b8spo04c78kno" path="res://Game/Scripts/player.gd" id="1_dikuv"]
+[ext_resource type="Texture2D" uid="uid://fmht73ygj24i" path="res://Assets/Animation/shadow.png" id="2_dikuv"]
+[ext_resource type="Shader" uid="uid://bco0qmit4gfe8" path="res://Game/Shader/character.tres" id="2_t44g8"]
+[ext_resource type="SpriteFrames" uid="uid://bklgpat71elh0" path="res://Assets/Animation/Characters/Player/Player.tres" id="3_t44g8"]
+[ext_resource type="Script" uid="uid://cfxv8qect0vpa" path="res://Game/Scripts/StateMachine/state_machine.gd" id="4_0vtvt"]
+[ext_resource type="Script" uid="uid://761ddqlnrmhm" path="res://Game/Scripts/StateMachine/PlayerStates/player_idle.gd" id="5_coiqp"]
+[ext_resource type="Script" uid="uid://pw7innqg621d" path="res://Game/Scripts/StateMachine/PlayerStates/player_run.gd" id="6_6lrsw"]
+[ext_resource type="Script" uid="uid://ogf2yehu27ce" path="res://Game/Scripts/StateMachine/PlayerStates/player_attack.gd" id="7_6lrsw"]
+[ext_resource type="Script" uid="uid://c3n2poldwv3at" path="res://Game/Scripts/StateMachine/PlayerStates/player_hurt.gd" id="8_txpm5"]
+[ext_resource type="Script" uid="uid://b5uc25quifafm" path="res://Game/Scripts/StateMachine/PlayerStates/player_die.gd" id="9_46o5m"]
+[ext_resource type="PackedScene" uid="uid://bv0bvm46gcguh" path="res://Game/Scene/Weapon.tscn" id="11_ixmp6"]
+[ext_resource type="Script" uid="uid://bh28yqevc8sm" path="res://Game/Scripts/slot_weapon.gd" id="11_k3ghj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dikuv"]
+radius = 14.167776
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ixmp6"]
+shader = ExtResource("2_t44g8")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_coiqp"]
+size = Vector2(56.701195, 28.170158)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_46o5m"]
+radius = 12.676629
+height = 32.358547
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
+radius = 100.0
+
+[node name="Player" type="CharacterBody2D" unique_id=1029835329]
+y_sort_enabled = true
+collision_layer = 2
+script = ExtResource("1_dikuv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=651975218]
+position = Vector2(1, -2)
+scale = Vector2(0.5, 0.34000146)
+shape = SubResource("CircleShape2D_dikuv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=684841681]
+material = SubResource("ShaderMaterial_ixmp6")
+instance_shader_parameters/Blink = 0.0
+instance_shader_parameters/InvincibleEffect = false
+scale = Vector2(0.4, 0.4)
+sprite_frames = ExtResource("3_t44g8")
+animation = &"attack_gun"
+offset = Vector2(0, -80)
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=266940423]
+visible = false
+position = Vector2(0, -1)
+scale = Vector2(2, 2)
+texture = ExtResource("2_dikuv")
+offset = Vector2(0, 1)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1860962432]
+zoom = Vector2(1.75, 1.75)
+
+[node name="StateMachine" type="Node" parent="." unique_id=748162336]
+script = ExtResource("4_0vtvt")
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1056090385]
+script = ExtResource("5_coiqp")
+
+[node name="Run" type="Node" parent="StateMachine" unique_id=176724785]
+script = ExtResource("6_6lrsw")
+
+[node name="Attack" type="Node" parent="StateMachine" unique_id=1469415007]
+script = ExtResource("7_6lrsw")
+
+[node name="Hurt" type="Node" parent="StateMachine" unique_id=583566779]
+script = ExtResource("8_txpm5")
+
+[node name="Die" type="Node" parent="StateMachine" unique_id=88164956]
+script = ExtResource("9_46o5m")
+
+[node name="DebugLabel" type="Label" parent="." unique_id=1345008191]
+z_index = 100
+offset_left = 22.0
+offset_top = -7.0
+offset_right = 62.0
+offset_bottom = 16.0
+scale = Vector2(0.48715386, 0.5124827)
+text = "state"
+
+[node name="Equipment_Level" type="Node2D" parent="." unique_id=1315691324]
+
+[node name="Slot_Weapon" type="Node2D" parent="Equipment_Level" unique_id=1711246313]
+position = Vector2(0, -24)
+script = ExtResource("11_k3ghj")
+radius = 32.0
+
+[node name="Weapon" parent="Equipment_Level/Slot_Weapon" unique_id=396455914 instance=ExtResource("11_ixmp6")]
+
+[node name="AttacckHitBox" type="Area2D" parent="." unique_id=833487808]
+collision_layer = 0
+collision_mask = 12
+
+[node name="CollisionShape2D_left" type="CollisionShape2D" parent="AttacckHitBox" unique_id=156184486]
+position = Vector2(-22.713213, -22.000002)
+rotation = -3.1415925
+scale = Vector2(0.6953366, -2.1299136)
+shape = SubResource("RectangleShape2D_coiqp")
+
+[node name="CollisionShape2D_right" type="CollisionShape2D" parent="AttacckHitBox" unique_id=957599668]
+position = Vector2(22, -22)
+rotation = -3.1415925
+scale = Vector2(0.6953366, -2.1299136)
+shape = SubResource("RectangleShape2D_coiqp")
+
+[node name="Area2D_Body" type="Area2D" parent="." unique_id=1367508037]
+position = Vector2(-2, 0)
+scale = Vector2(0.6861945, 0.8706094)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_Body" unique_id=1553362486]
+position = Vector2(4, -18)
+scale = Vector2(1.1043946, 1.1125345)
+shape = SubResource("CapsuleShape2D_46o5m")
+
+[node name="EnemyDetectionArea" type="Area2D" parent="." unique_id=999999999]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetectionArea" unique_id=999999998]
+shape = SubResource("CircleShape2D_detection")
+
+[connection signal="area_entered" from="AttacckHitBox" to="StateMachine/Attack" method="_on_attacck_hit_box_area_entered"]

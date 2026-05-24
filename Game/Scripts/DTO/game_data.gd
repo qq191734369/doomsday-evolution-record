@@ -435,6 +435,13 @@ var player: CharacterInfo = CharacterInfo.new({
 		}],
 		"equipment": [
 			{
+				"id": "gun",
+				"weapon_type": 2,
+				"name": "Gun",
+				"damage": 50,
+				"projectile_range": 300
+			},
+			{
 				"id": "sword_001",
 				"name": "铁剑",
 				"rarity": 0,
@@ -503,15 +510,6 @@ var player: CharacterInfo = CharacterInfo.new({
 				"defense": 2
 			}
 		]
-	},
-	"equipment": {
-		"weapon": {
-			"id": "gun",
-			"weapon_type": 2,
-			"name": "Gun",
-			"damage": 50,
-			"projectile_range": 300
-		}
 	}
 })
 

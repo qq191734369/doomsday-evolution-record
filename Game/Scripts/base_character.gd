@@ -539,12 +539,16 @@ func _process(delta: float) -> void:
 	updateSkillCooldowns(delta)
 	if weapon and weapon.is_attacking and weapon._data:
 		weapon.attack()
+		
 
 func hasWeapon() -> bool:
 	return EquipmentManager.has_weapon(data)
 	
 func is_using_melee_weapon():
 	return EquipmentManager.is_using_melee_weapon(data)
+
+func is_using_ranged_weapon():
+	return EquipmentManager.is_using_ranged_weapon(data)
 
 func get_effective_attack_range() -> float:
 	# 计算有效攻击范围，取NPC默认攻击范围和武器攻击范围的最大值
@@ -557,9 +561,9 @@ func get_effective_attack_range() -> float:
 	return effective_range
 
 func attack():
-	if hasWeapon() and weapon:
-		weapon.attack()
-	else :
+	#if hasWeapon() and weapon:
+		#weapon.attack()
+	#else :
 		state_machine.switchTo("Attack")
 
 func start_attack():
@@ -585,12 +589,12 @@ func GetDirectionName() -> String:
 		if inputDirection.x > 0:
 			facingDirection = "left"
 			flip = true
-			attackDirection = "right"
+		
 		elif inputDirection.x < 0:
 			# 通过flip控制素材朝向
 			facingDirection = "left"
 			flip = false
-			attackDirection = "left"
+
 	
 	return facingDirection
 	
@@ -600,7 +604,15 @@ func updateAnimation():
 
 func updateAttackAnimation():
 	#animaitedSprite2D.flip_h = !flip
-	animaitedSprite2D.play("attack")	
+	if attackDirection == "left":
+		animaitedSprite2D.flip_h = false
+	else:
+		animaitedSprite2D.flip_h = true
+		
+	if is_using_ranged_weapon():
+		animaitedSprite2D.play("attack_gun")
+	else:
+		animaitedSprite2D.play("attack")
 	
 func updateHurtAnimation():
 	animaitedSprite2D.play("hurt")

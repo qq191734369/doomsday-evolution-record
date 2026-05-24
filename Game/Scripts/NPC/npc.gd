@@ -88,9 +88,10 @@ func _process(delta: float) -> void:
 	# 如果还没有获取到玩家，尝试获取
 	if PartyManager.is_in_party(self) and not player:
 		_try_get_player()
+		
+	update_character_facing_deriction()
 	# 更新行为管理器
 	behavior_manager.update(delta)
-	update_character_facing_deriction()
 
 func _input(event):
 	# 非队伍员 可响应对话
