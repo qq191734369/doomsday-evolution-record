@@ -1,45 +1,35 @@
 extends Node2D
 
+class_name WeaponSlot
+
 @export var radius := 30.0          # 武器环绕半径
 
 @onready var weapon: Weapon = $Weapon
 
-func _process(_delta):
-	if not weapon:
-		return
+var _position
+var rotation_center
+
+func _ready() -> void:
+	_position = position
+	rotation_center = Vector2(0, position.y)
 	
-	# 获取角色全局坐标
-	var slot_pos = global_position
-	var direction = Vector2.ZERO
-	
-	# 检测持有者类型
-	var holder = get_parent().get_parent()
-	if holder is Player:
-		# 玩家的武器跟随鼠标
-		var mouse_pos = get_global_mouse_position()
-		direction = slot_pos.direction_to(mouse_pos)
-	elif holder is NPC:
-		# NPC的武器指向攻击目标
-		if holder.current_attack_target:
-			# 有攻击目标时，直接指向攻击目标
-			direction = slot_pos.direction_to(holder.current_attack_target.global_position)
-		else:
-			# 无攻击目标时，指向移动目标（通常是玩家）
-			if holder.target:
-				direction = slot_pos.direction_to(holder.target.global_position)
-			else:
-				# 默认方向：向右
-				direction = Vector2(1, 0)
+func _update_position():
+	var offset = rotation_center - _position
+	var target_position = rotation_center + offset
+	position = target_position
+	_position = position
+	rotation += deg_to_rad(180)
+	if weapon:
+		weapon.sprite_2d_weapon.flip_v = !weapon.sprite_2d_weapon.flip_v
+
+func show_weapon(character: BaseCharacter):
+	visible = true
+	if character.attackDirection == "left":
+		if position.x > 0:
+			_update_position()
 	else:
-		# 默认行为：跟随鼠标
-		var mouse_pos = get_global_mouse_position()
-		direction = slot_pos.direction_to(mouse_pos)
-	
-	var base_angle = direction.angle()
-	weapon.position = direction * radius
-	weapon.rotation = base_angle
-	
-	if direction.x < 0:
-		weapon.sprite_2d_weapon.flip_v = true
-	else :
-		weapon.sprite_2d_weapon.flip_v = false
+		if position.x < 0:
+			_update_position()
+
+func hide_weapon():
+	visible = false

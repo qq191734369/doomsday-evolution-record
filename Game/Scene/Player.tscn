@@ -88,7 +88,7 @@ text = "state"
 [node name="Equipment_Level" type="Node2D" parent="." unique_id=1315691324]
 
 [node name="Slot_Weapon" type="Node2D" parent="Equipment_Level" unique_id=1711246313]
-position = Vector2(0, -24)
+position = Vector2(6, -30)
 script = ExtResource("11_k3ghj")
 radius = 32.0
 

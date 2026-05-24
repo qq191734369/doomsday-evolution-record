@@ -139,6 +139,7 @@ class RangedWeaponStrategy extends WeaponStrategy:
 				direction = Vector2(1, 0)
 		_spawn_projectile(direction)
 
+
 	func _spawn_projectile(direction: Vector2) -> void:
 		if not projectile_scene:
 			return

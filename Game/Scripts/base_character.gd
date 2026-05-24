@@ -33,7 +33,7 @@ const DAMAGE_NUMBER = preload("res://Game/Scene/DamageNumber.tscn")
 @onready var area_2d_body: Area2D = $Area2D_Body
 @onready var animaitedSprite2D: AnimatedSprite2D = $AnimatedSprite2D
 @onready var state_machine: StateMachine = $StateMachine
-@onready var slot_weapon: Node2D = $Equipment_Level/Slot_Weapon
+@onready var slot_weapon: WeaponSlot = $Equipment_Level/Slot_Weapon
 @onready var weapon: Weapon = $Equipment_Level/Slot_Weapon/Weapon
 
 
@@ -60,6 +60,8 @@ var isInvincible: bool = false
 var skills: Array = []
 var skill_cooldowns: Dictionary = {}
 var talent_level: int = 1
+
+var is_attacking: bool = false
 
 # 法力值属性
 var currentMana:
@@ -173,7 +175,6 @@ func initEquipment():
 		return
 	if data.equipment.weapon:
 		print("初始化武器:character:{0}, weapon: {1}, type: {2}".format([data.name, data.equipment.weapon.name, data.equipment.weapon.type]))
-		slot_weapon.visible = true
 		weapon.holder = self
 		weapon.updateData(data.equipment.weapon)
 
@@ -184,7 +185,6 @@ func refresh_equipment():
 		return
 	if data.equipment.weapon:
 		print("[BaseCharacter] refresh_equipment: weapon=", data.equipment.weapon.name, " type=", data.equipment.weapon.weapon_type)
-		slot_weapon.visible = true
 		weapon.holder = self
 		weapon.updateData(data.equipment.weapon)
 	else:
@@ -537,8 +537,11 @@ func updateSkillCooldowns(delta: float):
 
 func _process(delta: float) -> void:
 	updateSkillCooldowns(delta)
-	if weapon and weapon.is_attacking and weapon._data:
+	if weapon and is_attacking:
+		slot_weapon.show_weapon(self)
 		weapon.attack()
+	else :
+		slot_weapon.hide_weapon()
 		
 
 func hasWeapon() -> bool:
@@ -569,12 +572,12 @@ func attack():
 func start_attack():
 	if GameManager.game_ui_manager.has_active_ui_layer:
 		return
-	if hasWeapon() and weapon and weapon.has_method("start_attack"):
-		weapon.start_attack()
+	is_attacking = true
+		
 
 func stop_attack():
-	if hasWeapon() and weapon and weapon.has_method("stop_attack"):
-		weapon.stop_attack()
+	is_attacking = false
+		
 
 # 获取朝向
 func GetDirectionName() -> String:

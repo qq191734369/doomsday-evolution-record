@@ -12,7 +12,7 @@ func enter():
 	facingDirection = character.attackDirection
 	
 	if character.hasWeapon():
-		pass
+		character.start_attack()
 	else:
 		var collisionNode = attacck_hit_box.get_node("CollisionShape2D_" + facingDirection)
 		if collisionNode:
@@ -26,8 +26,10 @@ func update():
 	
 	if character.hasWeapon():
 		if Input.is_action_pressed("attack"):
-			pass
+			character.updateAttackAnimation()
+			character.start_attack()
 		else:
+			character.stop_attack()
 			parentStateMachine.switchTo("Idle")
 	else:
 		# 攻击碰撞体处理

@@ -47,6 +47,7 @@ func _ready() -> void:
 	#print("速度: " + str(data.get_speed()))
 
 func _process(delta: float) -> void:
+	super(delta)
 	_update_attack_direction()
 	
 func _update_attack_direction() -> void:
