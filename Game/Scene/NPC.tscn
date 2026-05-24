@@ -104,7 +104,7 @@ shape = SubResource("RectangleShape2D_coiqp")
 [node name="Equipment_Level" type="Node2D" parent="." unique_id=1137989167]
 
 [node name="Slot_Weapon" type="Node2D" parent="Equipment_Level" unique_id=2095755004]
-position = Vector2(0, -24)
+position = Vector2(6, -30)
 script = ExtResource("11_i2hp8")
 radius = 32.0
 

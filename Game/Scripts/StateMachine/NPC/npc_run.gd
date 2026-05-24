@@ -2,6 +2,7 @@ extends State
 
 func enter():
 	super.enter()
+	print("npc enter Run")
 
 func updatePhysics(delta: float):
 	super.updatePhysics(delta)
@@ -60,8 +61,10 @@ func run_to_target(_delta):
 	# 如果目标是坐标，当接近目标时停止移动
 	if c.target is Vector2:
 		var distance = c.global_position.distance_to(c.target)
-		if distance < 10:
+		if distance < 2:
 			c.velocity = Vector2.ZERO
+			parentStateMachine.switchTo("Idle")
+			
 
 	
 func update_follow_state(_delta: float):

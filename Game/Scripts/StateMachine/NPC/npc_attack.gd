@@ -16,18 +16,21 @@ func ready():
 
 func enter():
 	super.enter()
-	#print("NPC enter attack")
+	print("NPC enter attack")
 	
-	# 没有武器时使用默认攻击
-	character.updateAttackAnimation()
+	if character.hasWeapon():
+		character.start_attack()
+	else:
+		# 没有武器时使用默认攻击
+		character.updateAttackAnimation()
 
-	facingDirection = character.attackDirection
-	var collisionNode = attacck_hit_box.get_node("CollisionShape2D_" + facingDirection)
-	if collisionNode:
-		attackCollisionShape = collisionNode
+		facingDirection = character.attackDirection
+		var collisionNode = attacck_hit_box.get_node("CollisionShape2D_" + facingDirection)
+		if collisionNode:
+			attackCollisionShape = collisionNode
 
-	# 召唤剑气
-	spawnSlashVFX()
+		# 召唤剑气
+		spawnSlashVFX()
 
 func updatePhysics(delta: float):
 	super.updatePhysics(delta)
@@ -35,6 +38,8 @@ func updatePhysics(delta: float):
 
 func exit():
 	super.exit()
+	if character.hasWeapon():
+		character.stop_attack()
 	if attackCollisionShape:
 		attackCollisionShape.set_deferred("disabled", true)
 
@@ -43,18 +48,29 @@ func update():
 	
 	var c = character as NPC
 	
-	# 攻击碰撞体处理
-	if c.animaitedSprite2D.is_playing() == true:
-		if attackCollisionShape:
-			# 可以通过第几帧 判断是否开启碰撞体 做的更细
-			attackCollisionShape.disabled = false
-	# 攻击结束
-	else :
-		#print("npm attacking frame done")
-		parentStateMachine.switchTo("Idle")
+	if c.current_attack_target:
+		var direction = c.global_position.direction_to(c.current_attack_target.global_position)
+		if direction.x < 0:
+			c.attackDirection = "left"
+		else :
+			c.attackDirection = "right"
+	
+	if c.hasWeapon():
+		c.updateAttackAnimation()
+		c.start_attack()
+	else:
+		# 攻击碰撞体处理
+		if c.animaitedSprite2D.is_playing() == true:
+			if attackCollisionShape:
+				# 可以通过第几帧 判断是否开启碰撞体 做的更细
+				attackCollisionShape.disabled = false
+		# 攻击结束
+		else :
+			#print("npm attacking frame done")
+			parentStateMachine.switchTo("Idle")
 
-		if attackCollisionShape:
-			attackCollisionShape.disabled = true
+			if attackCollisionShape:
+				attackCollisionShape.disabled = true
 	
 
 func spawnSlashVFX():

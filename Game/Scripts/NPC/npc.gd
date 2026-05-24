@@ -85,6 +85,7 @@ func _try_get_player():
 		player = get_tree().root.get_node("SceneRoot/Level/Player")
 
 func _process(delta: float) -> void:
+	super(delta)
 	# 如果还没有获取到玩家，尝试获取
 	if PartyManager.is_in_party(self) and not player:
 		_try_get_player()
@@ -180,14 +181,6 @@ func update_character_facing_deriction():
 		return
 
 	var target_direction = global_position.direction_to(target_position)
-
-	# 更新攻击时面向
-	if target_direction.x < 0:
-		attackDirection = "left"
-	else :
-		attackDirection = "right"
-
-
 
 	# 更新NPC自身朝向
 	playerDirection = target_direction
@@ -289,7 +282,7 @@ func should_attack() -> bool:
 
 func start_attack():
 	if current_attack_target:
-		state_machine.switchTo("Attack")
+		is_attacking = true
 
 func check_return_to_player() -> bool:
 	if not player:

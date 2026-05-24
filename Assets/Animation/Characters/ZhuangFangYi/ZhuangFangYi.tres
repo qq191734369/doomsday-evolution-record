@@ -27,6 +27,10 @@ region = Rect2(672, 672, 168, 168)
 atlas = ExtResource("1_nsqeb")
 region = Rect2(840, 672, 168, 168)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_qu1j8"]
+atlas = ExtResource("1_nsqeb")
+region = Rect2(680, 504, 85, 168)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_22kg0"]
 atlas = ExtResource("2_2jq24")
 region = Rect2(599, 0, 84, 168)
@@ -183,6 +187,14 @@ animations = [{
 "loop": false,
 "name": &"attack",
 "speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qu1j8")
+}],
+"loop": true,
+"name": &"attack_gun",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
