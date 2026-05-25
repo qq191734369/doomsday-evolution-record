@@ -435,6 +435,17 @@ var player: CharacterInfo = CharacterInfo.new({
 		}],
 		"equipment": [
 			{
+				"id": "sword_002",
+				"name": "太刀",
+				"rarity": 0,
+				"description": "一把长刀",
+				"value": 100,
+				"weapon_type": 1,
+				"damage": 35,
+				"attack_speed": 1.5,
+				"range": 64
+			},
+			{
 				"id": "gun",
 				"weapon_type": 2,
 				"name": "Gun",

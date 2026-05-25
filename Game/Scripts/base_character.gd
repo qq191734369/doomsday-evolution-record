@@ -55,6 +55,8 @@ var flip: bool
 var knockBackDirection: Vector2
 
 var isInvincible: bool = false
+# 默认武器槽位置
+var default_weapon_position: Vector2
 
 # 技能相关
 var skills: Array = []
@@ -166,6 +168,7 @@ var crit_damage:
 func _ready() -> void:
 	initEquipment()
 	initSkills()
+	default_weapon_position = slot_weapon.position
 	
 func initEquipment():
 	slot_weapon.visible = false
@@ -542,6 +545,7 @@ func _process(delta: float) -> void:
 		weapon.attack()
 	else :
 		slot_weapon.hide_weapon()
+		set_weapon_disable(true)
 		
 
 func hasWeapon() -> bool:
@@ -577,6 +581,8 @@ func start_attack():
 
 func stop_attack():
 	is_attacking = false
+	slot_weapon.position = default_weapon_position
+	slot_weapon.rotation_degrees = 0
 		
 
 # 获取朝向
@@ -600,6 +606,9 @@ func GetDirectionName() -> String:
 
 	
 	return facingDirection
+
+func set_weapon_disable(val: bool):
+	weapon.set_disable(val)
 	
 func updateAnimation():
 	animaitedSprite2D.play(state_machine.currentState.name.to_lower() + "_" + facingDirection)
@@ -616,6 +625,8 @@ func updateAttackAnimation():
 		animaitedSprite2D.play("attack_gun")
 	else:
 		animaitedSprite2D.play("attack")
+		
+	
 	
 func updateHurtAnimation():
 	animaitedSprite2D.play("hurt")

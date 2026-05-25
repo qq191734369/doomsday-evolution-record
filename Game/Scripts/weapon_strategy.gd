@@ -26,25 +26,15 @@ class MeleeWeaponStrategy extends WeaponStrategy:
 		super._init(weapon, holder)
 		swing_angle = swing_angle_deg
 		range = melee_range
-
+		_create_hit_area()
+	
 	func attack() -> void:
 		if not weapon_node or not holder:
 			return
 		if not weapon_node._data:
 			return
 		print("[MeleeWeaponStrategy] attack: holder=", holder.name, " weapon=", weapon_node._data.name, " range=", range)
-		var direction: Vector2
-		if holder is Player:
-			var mouse_pos = holder.get_global_mouse_position()
-			direction = holder.global_position.direction_to(mouse_pos)
-		else:
-			if holder.current_attack_target:
-				direction = holder.global_position.direction_to(holder.current_attack_target.global_position)
-			else:
-				direction = Vector2(1, 0)
-		var angle = direction.angle()
-		_create_hit_area(angle)
-		_start_swing(angle)
+		#_start_swing(angle)
 
 	func _start_swing(base_angle: float) -> void:
 		if not weapon_node or not holder:
@@ -71,7 +61,7 @@ class MeleeWeaponStrategy extends WeaponStrategy:
 			area.rotation = 0.0
 			area.position = Vector2.ZERO
 
-	func _create_hit_area(base_angle: float) -> void:
+	func _create_hit_area() -> void:
 		var hit_area = weapon_node.area_2d
 		hit_area.name = "MeleeHitArea"
 		var collision_shape = weapon_node.collision_shape_2d
@@ -83,7 +73,7 @@ class MeleeWeaponStrategy extends WeaponStrategy:
 		hit_area.monitoring = true
 		hit_area.collision_layer = 0
 		hit_area.collision_mask = 3 | 4
-		hit_area.rotation = base_angle
+		#hit_area.rotation = base_angle
 		#holder.add_child(hit_area)
 		#hit_area.set_as_top_level(true)
 		#hit_area.global_position = holder.global_position + Vector2.from_angle(base_angle) * (range / 2)
@@ -92,9 +82,6 @@ class MeleeWeaponStrategy extends WeaponStrategy:
 		
 		if not hit_area.area_entered.is_connected(_on_hit_area_entered):
 			hit_area.area_entered.connect(_on_hit_area_entered)
-		var timer = hit_area.get_tree().create_timer(0.2)
-		var shape_ref: CollisionShape2D = collision_shape
-		timer.timeout.connect(_disable_shape.bind(shape_ref))
 
 	func _disable_shape(shape: CollisionShape2D) -> void:
 		if is_instance_valid(shape):
@@ -144,7 +131,7 @@ class RangedWeaponStrategy extends WeaponStrategy:
 		if not projectile_scene:
 			return
 		var bullet = projectile_scene.instantiate()
-		bullet.position = holder.global_position
+		bullet.position = holder.weapon.global_position
 		if bullet.has_method("set_direction"):
 			bullet.set_direction(direction)
 		if bullet.has_method("set_speed"):

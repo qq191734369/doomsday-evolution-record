@@ -28,6 +28,9 @@ var bullet_scene: PackedScene
 func _ready() -> void:
 	bullet_scene = load("res://Game/Scene/Bullet.tscn")
 	updateWeaponTexture()
+	
+func set_disable(val: bool):
+	collision_shape_2d.disabled = val
 
 func updateData(value: Variant):
 	super.updateData(value)
