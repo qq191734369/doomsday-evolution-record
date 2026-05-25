@@ -16,7 +16,7 @@ func ready():
 
 func enter():
 	super.enter()
-	print("NPC enter attack")
+	#print("NPC enter attack")
 	
 	if character.hasWeapon():
 		character.start_attack()

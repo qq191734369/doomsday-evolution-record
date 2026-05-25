@@ -6,8 +6,35 @@ class_name AttackBehavior
 var retreat_position: Vector2
 
 var is_doing_adjust_position: bool = false
-var last_adjust_time: float
-const adjust_step: float = 1.0
+var last_adjust_time: float = Time.get_unix_time_from_system()
+const ADJUST_STEP: float = 1.0
+const ADJUST_TIME_OUT: float = 1.0
+
+var my_timer: Timer
+
+func start_cancelable_timer():
+	# 创建一个新的Timer节点
+	my_timer = Timer.new()
+	my_timer.wait_time = ADJUST_TIME_OUT
+	my_timer.one_shot = true
+	# 需要添加到当前节点才会开始工作
+	npc.add_child(my_timer)
+	my_timer.start()
+	# 监听timeout信号
+	my_timer.timeout.connect(_on_my_timer_timeout)
+	print("启动调整位置行为定时器")
+
+func _on_my_timer_timeout():
+	print("定时器触发")
+	# 触发后清理节点
+	my_timer.queue_free()
+	is_doing_adjust_position = false
+
+func cancel_timer():
+	if my_timer and my_timer.is_inside_tree():
+		print("定时器已被取消")
+		# 取消后立即清理节点
+		my_timer.queue_free()
 
 func _init(npc_ref: NPC):
 	super(npc_ref)
@@ -72,23 +99,22 @@ func update(_delta: float) -> void:
 
 
 func adjust_positon():
-	#if last_adjust_time and Time.get_unix_time_from_system() - last_adjust_time <= adjust_step:
+	#if npc.current_attack_target and npc.speed < npc.current_attack_target.speed:
+		#is_doing_adjust_position = false
 		#return
-	#last_adjust_time = Time.get_unix_time_from_system()
-	
-	if npc.current_attack_target && npc.speed < npc.current_attack_target.speed:
-		is_doing_adjust_position = false
-		return
 		
 	var current_state = npc.state_machine.getCurrentStateName()
 
 	# 计算与目标的距离
 	var distance = npc.global_position.distance_to(npc.current_attack_target.global_position)
 	# 计算何时进行走位 躲避怪物
-	var min_enemy_distance = maxf(npc.get_effective_attack_range() / 3, 50.0)
+	var min_enemy_distance = maxf(npc.get_effective_attack_range() / 3, 80)
 		
-	# 如果距离小于攻击范围的一半，执行放风筝操作
+	# 如果距离敌人小于一定阈值，执行放风筝操作
 	if distance < min_enemy_distance:
+		# 调整过于频繁
+		if Time.get_unix_time_from_system() - last_adjust_time <= ADJUST_STEP:
+			return
 		# 计算后退方向（与目标相反的方向）
 		var retreat_direction = (npc.global_position - npc.current_attack_target.global_position).normalized()
 		# 设置移动目标为后退位置
@@ -99,10 +125,17 @@ func adjust_positon():
 		npc.state_machine.switchTo("Run")
 		
 		is_doing_adjust_position = true
+		last_adjust_time = Time.get_unix_time_from_system()
+		print(npc._data.name, "调整距离 开始", last_adjust_time)
+		if my_timer and my_timer.is_inside_tree():
+			return
+		start_cancelable_timer()
 	else:
 		npc.set_move_target(null)
 		is_doing_adjust_position = false
+		cancel_timer()
 		
+		#print(npc._data.name, "调整距离 结束", last_adjust_time)
 		if current_state == "Run":
 			npc.state_machine.switchTo("Idle")
 

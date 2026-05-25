@@ -18,13 +18,14 @@ func _ready() -> void:
 	holder = get_parent().get_parent()
 	
 func _update_position():
-	var offset = rotation_center - _position
-	var target_position = rotation_center + offset
-	position = target_position
-	_position = position
-	rotation += deg_to_rad(180)
-	if weapon:
-		weapon.sprite_2d_weapon.flip_v = !weapon.sprite_2d_weapon.flip_v
+	if holder.attackDirection == "left":
+		var new_position = default_position
+		new_position.x = - new_position.x
+		position = new_position
+		scale.x = -1
+	else :
+		position = default_position
+		scale.x = 1
 
 func _update_melee_weapon_position():
 	if not holder.animaitedSprite2D.is_playing():
@@ -41,7 +42,7 @@ func _update_melee_weapon_position():
 		Vector2(18, -25),
 		Vector2(31, -24),
 		Vector2(31, -24),
-		Vector2(24, -21),
+		Vector2(27, -18),
 	]
 	var rotation_list: Array[float] = [
 		-75,
@@ -49,7 +50,7 @@ func _update_melee_weapon_position():
 		-45,
 		-15,
 		0,
-		-30
+		15
 	]
 	
 	var frame = holder.animaitedSprite2D.frame
@@ -76,15 +77,12 @@ func _update_melee_weapon_position():
 func show_weapon(character: BaseCharacter):
 	visible = true
 	if holder.is_using_ranged_weapon():
-		if character.attackDirection == "left":
-			if position.x > 0:
-				_update_position()
-		else:
-			if position.x < 0:
-				_update_position()
+		_update_position()
 	elif holder.is_using_melee_weapon():
 		_update_melee_weapon_position()
 
 func hide_weapon():
 	visible = false
 	position = default_position
+	scale.x = 1
+	rotation_degrees = 0
