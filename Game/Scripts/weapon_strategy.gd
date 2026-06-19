@@ -71,8 +71,8 @@ class MeleeWeaponStrategy extends WeaponStrategy:
 
 		hit_area.monitorable = true
 		hit_area.monitoring = true
-		hit_area.collision_layer = 0
-		hit_area.collision_mask = 3 | 4
+		#hit_area.collision_layer = 0
+		#hit_area.collision_mask = 3 | 4
 		#hit_area.rotation = base_angle
 		#holder.add_child(hit_area)
 		#hit_area.set_as_top_level(true)
@@ -88,6 +88,7 @@ class MeleeWeaponStrategy extends WeaponStrategy:
 			shape.disabled = true
 
 	func _on_hit_area_entered(area: Area2D) -> void:
+		print("_on_hit_area_entered", area)
 		var grassNode = area as Grass
 		if grassNode:
 			grassNode.getCut()
