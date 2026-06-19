@@ -22,6 +22,9 @@ shader = ExtResource("2_8dfna")
 radius = 15.0
 height = 48.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_s7lld"]
+radius = 100.0
+
 [node name="Enemy" type="CharacterBody2D" unique_id=1029835329]
 y_sort_enabled = true
 collision_layer = 2
@@ -111,6 +114,14 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_Body" unique_id=978197719]
 position = Vector2(0, -23)
 shape = SubResource("CapsuleShape2D_2p41y")
+
+[node name="EnemyDetectionArea" type="Area2D" parent="." unique_id=431673684]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetectionArea" unique_id=86508058]
+shape = SubResource("CircleShape2D_s7lld")
+debug_color = Color(0.6188174, 0.53189486, 0.17230779, 0.41960785)
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="StateMachine/Move" method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="timeout" from="PlayerPosUpdateTimer" to="StateMachine/Move" method="_on_player_pos_update_timer_timeout"]

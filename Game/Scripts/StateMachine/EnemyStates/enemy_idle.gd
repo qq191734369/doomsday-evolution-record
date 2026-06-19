@@ -5,9 +5,8 @@ extends State
 func update():
 	super.update()
 	character.updateAnimation()
-	if not character.player:
-		return
-	if character.global_position.distance_to((character.player as BaseCharacter).global_position) <= character.playerDetectionRadius:
+	var c = character as EnemyCharacter
+	if c.attack_target:
 		parentStateMachine.switchTo("Move")
 
 func enter():
