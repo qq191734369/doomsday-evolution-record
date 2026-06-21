@@ -45,7 +45,7 @@ instance_shader_parameters/Blink = 0.0
 instance_shader_parameters/InvincibleEffect = false
 scale = Vector2(0.4, 0.4)
 sprite_frames = ExtResource("3_t44g8")
-animation = &"idle_down"
+animation = &"attack"
 offset = Vector2(0, -80)
 flip_h = true
 

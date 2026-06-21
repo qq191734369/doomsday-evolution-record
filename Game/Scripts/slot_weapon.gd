@@ -48,9 +48,9 @@ func _update_melee_weapon_position():
 		-75,
 		-60,
 		-45,
-		-15,
-		0,
-		15
+		-0,
+		15,
+		30
 	]
 	
 	var frame = holder.animaitedSprite2D.frame
